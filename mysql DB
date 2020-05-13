@@ -1,0 +1,14 @@
+create table book_board(
+book_no int not null primary key auto_increment,
+book_id varchar(30) not null,
+book_title varchar(100) not null,
+book_date datetime,
+book_readcount int default 0,
+book_group int not null,
+book_step smallint not null,
+book_indent smallint not null,
+book_content text not null,
+book_ip varchar(20),
+book_like int default 0,
+book_type varchar(20) not null
+);
