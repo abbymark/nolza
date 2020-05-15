@@ -1,1 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="book_board">
+	<!-- 최대 글번호 얻기 -->
+	<select id="maxNumber" resultType="Integer">
+		select max(num) from book_board
+	</select>
+	
+	<!-- 답글 끼워넣을 위치 확보 -->
+	<update id="reStep" parameterType="model.book.BoardDto">
+		update book_board
+		set book_step=book_step+1
+		where book_group=#{book_group} and book_step>#{book_step}
+	</update>
+	
+	<!-- 글쓰기, 답글쓰기 -->
+	<insert id="insertBoard" parameterType="model.book.BoardDto">
+		insert into board(book_id, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type)
+		values(#{book_id}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indnet}, #{book_content}, #{book_ip}, #{book_type})
+	</insert>
+	
+	<!-- 글 갯수 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from book_board
+	</select>
+	
+	<!-- 각 카테고리 글 갯수 -->
+	<select id="selectCountCategory" resultType="int">
+		select count(*) from book_board where book_type=#{book_type}
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="selectList" parameterType="java.util.HashMap" resultType="model.book.BoardDto">
+		select * from book_board 
+		where book_type=#{book_type} 
+		order by book_group desc, book_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 조횟수 -->
+	<update id="readCount" parameterType="int">
+		update book_board set readount=readcount+1
+		where book_no=#{book_no}
+	</update>
+	
+	<!-- 글내용보기, 글수정 -->
+	<select id="contentBoard" parameterType="int" resultType="model.book.BoardDto">
+		select * from book_board
+		where book_no=#{book_no}
+	</select>
+	
+	<!-- DB글수정 -->
+	<update id="updateBoard" parameterType="model.book.BoardDto">
+		update book_board set
+		book_title=#{book_title},
+		book_content=#{book_content}
+		where book_no=#{book_no}
+	</update>
+	
+	<!-- 글 삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete from book_board where book_no=#{book_no} 
+	</delete>
+</mapper>
