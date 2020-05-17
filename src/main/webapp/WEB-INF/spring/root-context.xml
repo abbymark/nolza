@@ -16,7 +16,7 @@
 	 <!-- SqlSessionFactoryBean은 스프링 연동 모듈  -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
-		<property name="configLocation" value="classpath:memboard/sql/mybatis-config.xml"/>
+		<property name="configLocation" value="classpath:mybatis/sql/mybatis-config.xml"/>
 	</bean>
 		<!-- <property name="mapperLocations" value="classpath*:memboard/sql/*.xml"/>-->
 

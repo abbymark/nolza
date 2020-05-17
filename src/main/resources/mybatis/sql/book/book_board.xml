@@ -10,14 +10,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 답글 끼워넣을 위치 확보 -->
-	<update id="reStep" parameterType="model.book.BoardDto">
+	<update id="reStep" parameterType="model.book.Book_boardDto">
 		update book_board
 		set book_step=book_step+1
 		where book_group=#{book_group} and book_step>#{book_step}
 	</update>
 	
 	<!-- 글쓰기, 답글쓰기 -->
-	<insert id="insertBoard" parameterType="model.book.BoardDto">
+	<insert id="insertBoard" parameterType="model.book.Book_boardDto">
 		insert into board(book_id, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type)
 		values(#{book_id}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indnet}, #{book_content}, #{book_ip}, #{book_type})
 	</insert>
@@ -33,14 +33,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 리스트 -->
-	<select id="selectList" parameterType="java.util.HashMap" resultType="model.book.BoardDto">
+	<select id="selectList" parameterType="java.util.HashMap" resultType="model.book.Book_boardDto">
 		select * from book_board 
 		order by book_group desc, book_step asc
 		limit #{start},#{cnt}
 	</select>
 	
 	<!-- 각 카테고리 글 리스트 -->
-	<select id="selectListCategory" parameterType="java.util.HashMap" resultType="model.book.BoardDto">
+	<select id="selectListCategory" parameterType="java.util.HashMap" resultType="model.book.Book_boardDto">
 		select * from book_board 
 		where book_type=#{book_type} 
 		order by book_group desc, book_step asc
@@ -54,13 +54,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 글내용보기, 글수정 -->
-	<select id="contentBoard" parameterType="int" resultType="model.book.BoardDto">
+	<select id="contentBoard" parameterType="int" resultType="model.book.Book_boardDto">
 		select * from book_board
 		where book_no=#{book_no}
 	</select>
 	
 	<!-- DB글수정 -->
-	<update id="updateBoard" parameterType="model.book.BoardDto">
+	<update id="updateBoard" parameterType="model.book.Book_boardDto">
 		update book_board set
 		book_title=#{book_title},
 		book_content=#{book_content}
