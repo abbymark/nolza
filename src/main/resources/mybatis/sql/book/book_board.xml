@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="book_board">
 	<!-- 최대 글번호 얻기 -->
 	<select id="maxNumber" resultType="Integer">
-		select max(num) from book_board
+		select max(book_no) from book_board
 	</select>
 	
 	<!-- 답글 끼워넣을 위치 확보 -->
@@ -18,8 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 글쓰기, 답글쓰기 -->
 	<insert id="insertBoard" parameterType="model.book.Book_boardDto">
-		insert into board(book_id, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type)
-		values(#{book_id}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indnet}, #{book_content}, #{book_ip}, #{book_type})
+		insert into book_board(book_id, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type)
+		values(#{book_id}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indent}, #{book_content}, #{book_ip}, #{book_type})
 	</insert>
 	
 	<!-- 글 갯수 -->
@@ -49,13 +49,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 조횟수 -->
 	<update id="readCount" parameterType="int">
-		update book_board set readount=readcount+1
+		update book_board set book_readcount=book_readcount+1 
 		where book_no=#{book_no}
 	</update>
 	
 	<!-- 글내용보기, 글수정 -->
 	<select id="contentBoard" parameterType="int" resultType="model.book.Book_boardDto">
-		select * from book_board
+		select * from book_board 
 		where book_no=#{book_no}
 	</select>
 	

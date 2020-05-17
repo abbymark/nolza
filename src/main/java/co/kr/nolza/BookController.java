@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,11 +45,13 @@ public class BookController {
 	
 	//Db에 글쓰기
 	@RequestMapping(value="/book_writePro.do",method=RequestMethod.POST)
-	public String writePro(Book_boardDto book_boardDto, HttpServletRequest request)
+	public String writePro(@ModelAttribute("book_boardDto") Book_boardDto book_boardDto, HttpServletRequest request)
 		throws NamingException, IOException{
 		
 		int maxNum=0;//변수
+		
 		if(sqlSession.selectOne("book_board.maxNumber") != null) {
+			
 			maxNum=sqlSession.selectOne("book_board.maxNumber");
 		}
 		
@@ -72,7 +75,6 @@ public class BookController {
 			book_boardDto.setBook_step(new Integer(0));
 			book_boardDto.setBook_indent(new Integer(0));
 		}
-		
 		sqlSession.insert("book_board.insertBoard",book_boardDto);
 		return "redirect:book_list.do";
 	}//writePro() end
@@ -142,8 +144,8 @@ public class BookController {
 	throws NamingException, IOException{
 		
 		int book_no1=Integer.parseInt(book_no);
-		sqlSession.update("book_board.readCount", book_no1);//조횟수 증가
 		
+		sqlSession.update("book_board.readCount", book_no1);//조횟수 증가
 		Book_boardDto book_dto = sqlSession.selectOne("book_board.contentBoard", book_no1);
 		
 		String book_content=book_dto.getBook_content();
@@ -161,14 +163,14 @@ public class BookController {
 	@RequestMapping("book_updateForm.do")
 	public ModelAndView updateForm(String book_no, String pageNum)
 			throws NamingException, IOException{
-		
 		int book_no1 = Integer.parseInt(book_no);
 		Book_boardDto book_dto = sqlSession.selectOne("book_board.contentBoard", book_no1);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("book_dto", book_dto);
-		mv.setViewName("/board/updateForm");//뷰이름
+		System.out.println(111);
+		mv.setViewName("/book/book_updateForm");//뷰이름
 		
 		return mv;
 	}//updateForm() end
@@ -191,7 +193,7 @@ public class BookController {
 		int book_no1=Integer.parseInt(book_no);
 		sqlSession.delete("book_board.deleteBoard", book_no1);
 		
-		return "redirect:list.do";
+		return "redirect:book_list.do";
 	}// delete() end
 }
 
