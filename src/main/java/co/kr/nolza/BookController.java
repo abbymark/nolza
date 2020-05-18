@@ -225,29 +225,22 @@ public class BookController {
 	
 	//book_like update
 	@RequestMapping(value="book_likeCheck.do", method=RequestMethod.POST)
-	//public String insertLike(Model model, String book_no, String book_likeState, String book_id) {
-	public String insertLike(Model model, HttpServletRequest request) {
+	public String insertLike(Model model, String book_no, String book_likeState, String book_id) {
 		
-		System.out.println(request.getParameter("book_id"));
+		System.out.println(book_id);
 		HashMap<String,Object>map =new HashMap<String,Object>();
-//		
-//		map.put("book_no", request.getParameter("book_no"));
-//		map.put("book_likeState",request.getParameter("book_likeState"));
-//		map.put("book_id", request.getParameter("book_id"));
 		
-		map.put("book_no",new Integer(3));
-		map.put("book_likeState",new Integer(1));
-		map.put("book_id", "2");
+		map.put("book_id", book_id);
+		map.put("book_no", new Integer(book_no));
+		map.put("book_likeState", new Integer(book_likeState));
 		
-//		map.put("book_no", request.getParameter("book_no"));
-//		map.put("book_likeState",request.getParameter("book_likeState"));
-//		map.put("book_id", request.getParameter("book_id"));
+		System.out.println(book_no);
 		sqlSession.insert("book_board.insertLike", map);
-		
-		sqlSession.update("book_board.likeUpdateBoard", request.getParameter("book_no"));
-		
-		int book_like=sqlSession.selectOne("book_board.likeSelect", request.getParameter("book_no"));
-		
+		System.out.println(111);
+		sqlSession.update("book_board.likeUpdateBoard", new Integer(book_no));
+		System.out.println(222);
+		int book_like = sqlSession.selectOne("book_board.likeSelect", new Integer(book_no));
+		System.out.println(book_like);
 		model.addAttribute("book_like",book_like);
 		return "book/book_likeCheck";
 	}

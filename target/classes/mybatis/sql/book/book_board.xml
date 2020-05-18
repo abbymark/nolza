@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 좋아요테이블에 좋아요 레코드 추가 -->
 	<insert id="insertLike" parameterType="java.util.HashMap">
-		insert into book_likes(book_id, book_no, book_likeState)
+		insert into book_likes(book_id, book_no, book_likeState) 
 		values(#{book_id},#{book_no},#{book_likeState})
 	</insert>
 	
@@ -86,7 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 좋아요 갯수 -->
-	<select id="likeSelect" parameterType="int">
+	<select id="likeSelect" parameterType="int" resultType="int">
 		select book_like
 		from book_board
 		where book_no=#{book_no}
