@@ -81,7 +81,7 @@ public class BookController {
 	
 	//리스트
 	@RequestMapping("book_list.do")
-	public String list(Model model, String pageNum)throws NamingException, IOException{
+	public String list(Model model, String pageNum, String book_type)throws NamingException, IOException{
 		
 		if(pageNum==null) {
 			pageNum="1";
@@ -96,7 +96,26 @@ public class BookController {
 		int count=0;//글 전체
 		int pageBlock=10;//1블럭당 10페이지씩 표시하려고
 		
-		count=sqlSession.selectOne("book_board.selectCount");//총 글 갯수
+		model.addAttribute("book_type",book_type);//글 종류 넘기기
+		
+		if(book_type==null) {
+			count=sqlSession.selectOne("book_board.selectCount");//총 글 갯수
+		}else if(book_type.equals("free")){
+			book_type="자유게시판";
+			count=sqlSession.selectOne("book_board.selectCountCategory", book_type);
+		}else if(book_type.equals("recommendNonFiction")){
+			book_type="비소설 추천";
+			count=sqlSession.selectOne("book_board.selectCountCategory", book_type);
+		}else if(book_type.equals("recommendFiction")){
+			book_type="소설 추천";
+			count=sqlSession.selectOne("book_board.selectCountCategory", book_type);
+		}else if(book_type.equals("readingGroup")){
+			book_type="독서 모임";
+			count=sqlSession.selectOne("book_board.selectCountCategory", book_type);
+		}else if(book_type.equals("debate")){
+			book_type="토론";
+			count=sqlSession.selectOne("book_board.selectCountCategory", book_type);
+		}
 		
 		int number=count-(currentPage-1)*pageSize;//글번호
 		int pageCount=count/pageSize+(count%pageSize==0?0:1);//총 페이지 객수
@@ -112,11 +131,18 @@ public class BookController {
 		}
 		
 		//*****************************************************
-		HashMap<String, Integer> map =new HashMap<String,Integer>();
+		HashMap<String, Object> map =new HashMap<String,Object>();
 		map.put("start",startRow-1);
 		map.put("cnt",pageSize);
+		List<Book_boardDto> list=null;
+		if(book_type==null) {
+			list=sqlSession.selectList("book_board.selectList", map);
+		}else {
+			map.put("book_type",book_type);
+			list=sqlSession.selectList("book_board.selectListCategory", map);			
+		}
 		
-		List<Book_boardDto> list=sqlSession.selectList("book_board.selectList", map);
+		
 		//*****************************************************
 		
 		model.addAttribute("currentPage", currentPage);
@@ -137,6 +163,7 @@ public class BookController {
 		
 		return "/book/book_list";//뷰 리턴
 	}//list() end
+	
 	
 	//글내용보기
 	@RequestMapping("book_content.do")
@@ -195,6 +222,35 @@ public class BookController {
 		
 		return "redirect:book_list.do";
 	}// delete() end
+	
+	//book_like update
+	@RequestMapping(value="book_likeCheck.do", method=RequestMethod.POST)
+	//public String insertLike(Model model, String book_no, String book_likeState, String book_id) {
+	public String insertLike(Model model, HttpServletRequest request) {
+		
+		System.out.println(request.getParameter("book_id"));
+		HashMap<String,Object>map =new HashMap<String,Object>();
+//		
+//		map.put("book_no", request.getParameter("book_no"));
+//		map.put("book_likeState",request.getParameter("book_likeState"));
+//		map.put("book_id", request.getParameter("book_id"));
+		
+		map.put("book_no",new Integer(3));
+		map.put("book_likeState",new Integer(1));
+		map.put("book_id", "2");
+		
+//		map.put("book_no", request.getParameter("book_no"));
+//		map.put("book_likeState",request.getParameter("book_likeState"));
+//		map.put("book_id", request.getParameter("book_id"));
+		sqlSession.insert("book_board.insertLike", map);
+		
+		sqlSession.update("book_board.likeUpdateBoard", request.getParameter("book_no"));
+		
+		int book_like=sqlSession.selectOne("book_board.likeSelect", request.getParameter("book_no"));
+		
+		model.addAttribute("book_like",book_like);
+		return "book/book_likeCheck";
+	}
 }
 
 

@@ -7,13 +7,41 @@
 <head>
 <meta charset="UTF-8">
 <title>${book_title }</title>
+<script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script>
+//---------------------
+//ajax 이용하여 id사용 여부 체크
+//---------------------
+function likeCheck(){
+	alert("likeCheck():"+$("#book_no").val()+"\n"+ $("#book_id").val())
+	
+	
+	$.ajax({
+		type:'POST',
+		url:'book_likeCheck.do',
+		data:"book_no="+$("#book_no").val()+"&book_likeState="+1+"&book_id="+ $("#book_id").val(),
+		dataType:'JSON',
+		success:function(data){
+			alert("data.likeValue");
+			$("#like").val("data.likeValue");
+		}//success end
+	});//ajax end
+	
+}//idCheck() end
+</script>
 </head>
 <body>
 	<center><h2>글 내용 보기</h2></center>
+	<form>
 	<table border="1">
+		
 		<tr>
 			<td>글번호</td>
-			<td>${book_dto.book_no }</td>
+			<td>${book_dto.book_no }
+			  <input type="hidden" id="book_id" value="3">
+		     <input type="hidden" id="book_no" value="${book_dto.book_no }">
+			</td>
 			<td>조횟수</td>
 			<td>${book_dto.book_readcount }</td>
 		</tr>
@@ -29,6 +57,11 @@
 		</tr>
 		
 		<tr>
+			<td>글 종류</td>
+			<td colspan="3">${book_dto.book_type }</td>
+		</tr>
+		
+		<tr>
 			<td>글제목</td>
 			<td colspan="3">${book_dto.book_title }</td>
 		</tr>
@@ -36,6 +69,18 @@
 			<td>글내용</td>
 			<td colspan="3">
 				<textArea rows="10" cols="60" readonly>${book_content }</textArea>
+				<table>
+					<tr>
+						<td>
+							<span style="border:solid;border-width:1px;padding:5px">
+								<span id="likeCount">0</span>
+								<input type="button" id="book_like" value="좋아요" onClick="likeCheck()">
+								<input type="button" id="book_dislike" value="싫어요" onClick="dislikeCheck()">
+								<span id="dislikeCount">0</span>
+							</span>				
+						</td>
+					</tr>
+				</table>
 			</td>
 		</tr>
 		
@@ -49,6 +94,7 @@
 			</td>
 		</tr>
 	</table>
+	</form>
 </body>
 </html>
 
