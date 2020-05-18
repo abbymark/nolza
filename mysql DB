@@ -12,3 +12,11 @@ book_ip varchar(20),
 book_like int default 0,
 book_type varchar(20) not null
 );
+
+
+create table book_likes(
+book_likeno int not null primary key auto_increment,
+book_id varchar(30) not null,
+book_no int not null,
+book_likestate smallint not null
+);

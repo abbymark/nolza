@@ -14,7 +14,7 @@
 	<table border="1">
 		<tr>
 			<td align="right" colspan="2">
-				<a href="book_writeForm.do">글쓰기</a>
+				<a href="book_writeForm.do?book_type=${book_type }">글쓰기</a>
 			</td>
 		</tr>
 		
@@ -29,6 +29,7 @@
 							<td>작성자</td>
 							<td>작성일</td>
 							<td>조회</td>
+							<td>추천</td>
 							<td>ip</td>
 						</tr>
 						
@@ -67,6 +68,7 @@
 								</td>
 								
 								<td>${book_dto.book_readcount }</td>
+								<td>${book_dto.book_like }</td>
 								<td>${book_dto.book_ip }</td>
 							</tr>
 						</c:forEach>

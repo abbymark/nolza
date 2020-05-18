@@ -44,9 +44,27 @@
 			
 			<tr>
 				<td>글 종류</td>
+				<c:set var="book_type" value="${book_type }"/>
+				<c:choose>
+					<c:when test="${book_type eq 'free'}">
+						<c:set var="book_type" value="자유게시판"/>
+					</c:when>
+					<c:when test="${book_type eq 'recommendNonFiction'}">
+					 	<c:set var="book_type" value="비소설 추천"/>
+					</c:when>
+					<c:when test="${book_type eq 'recommendFiction'}">
+					 	<c:set var="book_type" value="소설 추천"/>
+					</c:when>
+					<c:when test="${book_type eq 'readingGroup'}">
+					 	<c:set var="book_type" value="독서 모임"/>
+					</c:when>
+					<c:when test="${book_type eq 'debate'}">
+					 	<c:set var="book_type" value="토론"/>
+					</c:when>
+				</c:choose>
 				<td>
 					<select name="book_type" id="book_type">
-						<option value="0">선택하세요</option>
+						<option value="${book_type }">${book_type }</option>
 						<option value="자유게시판">자유게시판</option>
 						<option value="비소설 추천">비소설 추천</option>
 						<option value="소설 추천">소설 추천</option>
@@ -64,7 +82,7 @@
 			</tr>
 			
 			<tr>
-				<td>
+				<td colspan="2">
 					<input type="submit" value="글쓰기">
 					<input type="reset" value="다시작성">
 					<input type="button" value="글목록보기" onclick="document.location.href='book_list.do'">

@@ -36,7 +36,7 @@
 				<td>글 종류</td>
 				<td>
 					<select name="book_type" id="book_type">
-						<option value="0">선택하세요</option>
+						<option value="${book_dto.book_type }">${book_dto.book_type }</option>
 						<option value="자유게시판">자유게시판</option>
 						<option value="비소설 추천">비소설 추천</option>
 						<option value="소설 추천">소설 추천</option>
