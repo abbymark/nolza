@@ -168,7 +168,7 @@ public class BookController {
 	
 	//글내용보기
 	@RequestMapping("book_content.do")
-	public String content(Model model, String book_no, String pageNum)
+	public String content(Model model, String book_no, String pageNum, HttpSession session)
 	throws NamingException, IOException{
 		
 		int book_no1=Integer.parseInt(book_no);
@@ -178,6 +178,15 @@ public class BookController {
 		
 		String book_content=book_dto.getBook_content();
 		//book_content=book_content.replaceAll("\n", "<br>");
+		
+		String mem_id=(String)session.getAttribute("mem_id");
+		HashMap<String,Object> map=new HashMap<String,Object>();
+		if(mem_id!=null) {
+			map.put("book_no", book_no1);
+			map.put("mem_id", mem_id);
+			String book_likeState= sqlSession.selectOne("book_board.likeStateCheck", map);
+			model.addAttribute("book_likeState", book_likeState);
+		}
 		
 		model.addAttribute("book_content", book_content);
 		model.addAttribute("book_dto", book_dto);
@@ -248,7 +257,13 @@ public class BookController {
 		
 		sqlSession.update("book_board.likeUpdateBoard", map);
 		
-		int book_like = sqlSession.selectOne("book_board.likeSelect", new Integer(book_no));
+		if(book_likeState.equals("1")) {
+			sqlSession.update("book_board.likeCntUpdate", book_no);
+		}else {
+			sqlSession.update("book_board.dislikeCntUpdate", book_no);
+		}
+		
+		Book_boardDto book_like = sqlSession.selectOne("book_board.likeSelect", new Integer(book_no));
 		model.addAttribute("book_like",book_like);
 		return "book/book_likeCheck";
 	}

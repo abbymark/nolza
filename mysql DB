@@ -11,6 +11,8 @@ book_indent smallint not null,
 book_content text not null,
 book_ip varchar(20),
 book_like int default 0,
+book_like_cnt int default 0,
+book_dislike_cnt int default 0,
 book_type varchar(20) not null
 );
 

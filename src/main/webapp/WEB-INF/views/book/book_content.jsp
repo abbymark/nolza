@@ -17,11 +17,13 @@ function likeCheck(book_likeState){
 	$.ajax({
 		type:'POST',
 		url:'book_likeCheck.do',
-		data:"book_no="+$("#book_no").val()+"&book_likeState="+book_likeState+"&mem_id="+ $("#mem_id").val(),
+		data:"book_no="+$("#book_no").val()+"&book_likeState="+book_likeState+"&mem_id="+ $("#reader_id").val(),
 		dataType:'JSON',
 		success:function(data){
 			//alert(data.likeValue);
 			$("#likeCount").text(data.likeValue);
+			$("#likeCnt").text(data.likeCnt);
+			$("#dislikeCnt").text(data.dislikeCnt);			
 		}//success end
 	});//ajax end
 	
@@ -38,6 +40,7 @@ function likeCheck(book_likeState){
 			
 			<td>글번호</td>
 			<td>${book_dto.book_no }
+				<input type="hidden" id="reader_id" value="${mem_id }">
 				<input type="hidden" id="mem_id" value="${book_dto.mem_id }">
 		    	<input type="hidden" id="book_no" value="${book_dto.book_no }">
 			</td>
@@ -71,8 +74,12 @@ function likeCheck(book_likeState){
 				<table border="1">
 					<tr>
 						<td>
-							<input type="button" id="book_like" value="좋아요" onClick="likeCheck(1)">
-							<input type="button" id="book_dislike" value="싫어요" onClick="likeCheck(-1)">
+							<span id="likeCnt">${book_dto.book_like_cnt }</span>
+							<c:if test="${book_likeState==null }">
+								<input type="button" id="book_like" value="좋아요" onClick="likeCheck(1)">
+								<input type="button" id="book_dislike" value="싫어요" onClick="likeCheck(-1)">
+							</c:if>
+							<span id="dislikeCnt">${book_dto.book_dislike_cnt }</span>
 						</td>
 					</tr>
 					<tr align="center">

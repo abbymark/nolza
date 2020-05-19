@@ -81,21 +81,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시판에 like 업데이트 -->
 	<update id="likeUpdateBoard" parameterType="int">
 		update book_board
-		set book_like=book_like+1
+		set book_like=book_like+#{book_likeState}
 		where book_no=#{book_no}
 	</update>
 	
-		<!-- 게시판에 like 업데이트 -->
-	<update id="dislikeUpdateBoard" parameterType="int">
+	<!-- likeCnt 업데이트 -->
+	<update id="likeCntUpdate" parameterType="String">
 		update book_board
-		set book_like=book_like-#{book_likeState}
+		set book_like_cnt=book_like_cnt+1
+		where book_no=#{book_no}
+	</update>
+	
+	<!-- dislikeCnt 업데이트 -->
+	<update id="dislikeCntUpdate" parameterType="String">
+		update book_board
+		set book_dislike_cnt=book_dislike_cnt+1
 		where book_no=#{book_no}
 	</update>
 	
 	<!-- 좋아요 갯수 -->
-	<select id="likeSelect" parameterType="int" resultType="int">
-		select book_like
+	<select id="likeSelect" parameterType="int" resultType="model.book.Book_boardDto">
+		select book_like, book_like_cnt, book_dislike_cnt
 		from book_board
 		where book_no=#{book_no}
 	</select>
+	
+	<!-- 해당 게시물에 대한 좋아요 상태 -->
+	<select id="likeStateCheck" parameterType="map" resultType="String">
+		select book_likeState
+		from book_likes
+		where mem_id=#{mem_id} and book_no=#{book_no}
+	</select>
+		
 </mapper>

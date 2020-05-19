@@ -15,6 +15,8 @@ public class Book_boardDto {
 	private String book_content;
 	private String book_ip;
 	private int book_like;
+	private int book_like_cnt;
+	private int book_dislike_cnt;
 	private String book_type;
 	
 	public Book_boardDto() {}
@@ -113,6 +115,22 @@ public class Book_boardDto {
 
 	public void setBook_like(int book_like) {
 		this.book_like = book_like;
+	}
+
+	public int getBook_like_cnt() {
+		return book_like_cnt;
+	}
+
+	public void setBook_like_cnt(int book_like_cnt) {
+		this.book_like_cnt = book_like_cnt;
+	}
+
+	public int getBook_dislike_cnt() {
+		return book_dislike_cnt;
+	}
+
+	public void setBook_dislike_cnt(int book_dislike_cnt) {
+		this.book_dislike_cnt = book_dislike_cnt;
 	}
 
 	public String getBook_type() {
