@@ -18,8 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 글쓰기, 답글쓰기 -->
 	<insert id="insertBoard" parameterType="model.book.Book_boardDto">
-		insert into book_board(book_id, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type)
-		values(#{book_id}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indent}, #{book_content}, #{book_ip}, #{book_type})
+		insert into book_board(mem_id, mem_nick, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type)
+		values(#{mem_id}, #{mem_nick}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indent}, #{book_content}, #{book_ip}, #{book_type})
 	</insert>
 	
 	<!-- 글 갯수 -->
@@ -74,14 +74,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 좋아요테이블에 좋아요 레코드 추가 -->
 	<insert id="insertLike" parameterType="java.util.HashMap">
-		insert into book_likes(book_id, book_no, book_likeState) 
-		values(#{book_id},#{book_no},#{book_likeState})
+		insert into book_likes(mem_id, book_no, book_likeState) 
+		values(#{mem_id},#{book_no},#{book_likeState})
 	</insert>
 	
 	<!-- 게시판에 like 업데이트 -->
 	<update id="likeUpdateBoard" parameterType="int">
 		update book_board
 		set book_like=book_like+1
+		where book_no=#{book_no}
+	</update>
+	
+		<!-- 게시판에 like 업데이트 -->
+	<update id="dislikeUpdateBoard" parameterType="int">
+		update book_board
+		set book_like=book_like-#{book_likeState}
 		where book_no=#{book_no}
 	</update>
 	

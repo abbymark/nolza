@@ -9,7 +9,7 @@
 <script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
 	function check(){
-		if($('#book_id').val()==''){
+		if($('#mem_id').val()==''){
 			alert("이름을 입력 하세요");
 			$("#writer").focus();
 			return false;
@@ -27,7 +27,8 @@
 			<tr>
 				<td>이름</td>
 				<td>
-					<input type="text" name="book_id" id="book_id" size="30" value="${book_dto.book_id }">
+					${mem_nick }
+					<input type="hidden" name="mem_id" id="mem_id" size="30" value="${mem_id }">
 					<input type="hidden" name="book_no" value="${book_dto.book_no }">
 				</td>
 			</tr>

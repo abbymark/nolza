@@ -1,6 +1,7 @@
 create table book_board(
 book_no int not null primary key auto_increment,
-book_id varchar(30) not null,
+mem_id varchar(30) not null,
+mem_nick varchar(50) not null,
 book_title varchar(100) not null,
 book_date datetime,
 book_readcount int default 0,
@@ -16,7 +17,19 @@ book_type varchar(20) not null
 
 create table book_likes(
 book_likeno int not null primary key auto_increment,
-book_id varchar(30) not null,
+mem_id varchar(30) not null,
 book_no int not null,
 book_likestate smallint not null
+);
+
+create table member(
+mem_id varchar(50) not null,
+mem_nick varchar(50) not null,
+mem_pw varchar(100) not null,
+mem_email varchar(50) not null,
+mem_login_state varchar(10) default 0,
+mem_grade varchar(10) default 0,
+mem_article_cnt int default 0,
+mem_reply_cnt int default 0,
+mem_login_cnt int default 0
 );

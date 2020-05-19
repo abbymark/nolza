@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class BookController {
 		model.addAttribute("book_indent", book_indent);
 		model.addAttribute("book_type", book_type);
 		
-		return "/book/book_writeForm";//뷰이름
+		return ".main.book.book_writeForm";//뷰이름
 	}//writeForm() end
 	
 	//Db에 글쓰기
@@ -161,7 +162,7 @@ public class BookController {
 		model.addAttribute("list", list);
 		model.addAttribute("pageNum", pageNum);
 		
-		return "/book/book_list";//뷰 리턴
+		return ".main.book.book_list";//뷰 리턴
 	}//list() end
 	
 	
@@ -183,7 +184,7 @@ public class BookController {
 		model.addAttribute("book_no", book_no);
 		model.addAttribute("pageNum", pageNum);
 		
-		return "/book/book_content";
+		return ".main.book.book_content";
 	}//content() end
 	
 	//글 수정 폼
@@ -197,7 +198,7 @@ public class BookController {
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("book_dto", book_dto);
 		System.out.println(111);
-		mv.setViewName("/book/book_updateForm");//뷰이름
+		mv.setViewName(".main.book.book_updateForm");//뷰이름
 		
 		return mv;
 	}//updateForm() end
@@ -216,7 +217,17 @@ public class BookController {
 	
 	//글삭제
 	@RequestMapping("book_delete.do")
-	public String delete(Model model, String book_no, String pageNum) {
+	public String delete(Model model, String book_no, String pageNum, String mem_id, HttpSession session) {
+		System.out.println(mem_id);
+		System.out.println(session.getAttribute("mem_id"));
+		String mem_id2=(String)session.getAttribute("mem_id");
+		if(mem_id2 == null) {
+			return "redirect:book_list.do";
+		}
+		
+		
+		
+		System.out.println(111);
 		int book_no1=Integer.parseInt(book_no);
 		sqlSession.delete("book_board.deleteBoard", book_no1);
 		
@@ -225,22 +236,19 @@ public class BookController {
 	
 	//book_like update
 	@RequestMapping(value="book_likeCheck.do", method=RequestMethod.POST)
-	public String insertLike(Model model, String book_no, String book_likeState, String book_id) {
+	public String insertLike(Model model, String book_no, String book_likeState, String mem_id) {
 		
-		System.out.println(book_id);
 		HashMap<String,Object>map =new HashMap<String,Object>();
 		
-		map.put("book_id", book_id);
+		map.put("mem_id", mem_id);
 		map.put("book_no", new Integer(book_no));
 		map.put("book_likeState", new Integer(book_likeState));
 		
-		System.out.println(book_no);
 		sqlSession.insert("book_board.insertLike", map);
-		System.out.println(111);
-		sqlSession.update("book_board.likeUpdateBoard", new Integer(book_no));
-		System.out.println(222);
+		
+		sqlSession.update("book_board.likeUpdateBoard", map);
+		
 		int book_like = sqlSession.selectOne("book_board.likeSelect", new Integer(book_no));
-		System.out.println(book_like);
 		model.addAttribute("book_like",book_like);
 		return "book/book_likeCheck";
 	}

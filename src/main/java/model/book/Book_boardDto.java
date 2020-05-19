@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Book_boardDto {
 	private int book_no;
-	private String book_id;
+	private String mem_id;
+	private String mem_nick;
 	private String book_title;
 	private Date book_date;
 	private int book_readcount;
@@ -26,12 +27,20 @@ public class Book_boardDto {
 		this.book_no = book_no;
 	}
 
-	public String getBook_id() {
-		return book_id;
+	public String getMem_id() {
+		return mem_id;
 	}
 
-	public void setBook_id(String book_id) {
-		this.book_id = book_id;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+
+	public String getMem_nick() {
+		return mem_nick;
+	}
+
+	public void setMem_nick(String mem_nick) {
+		this.mem_nick = mem_nick;
 	}
 
 	public String getBook_title() {
@@ -113,6 +122,7 @@ public class Book_boardDto {
 	public void setBook_type(String book_type) {
 		this.book_type = book_type;
 	}
+
 	
 	
 }

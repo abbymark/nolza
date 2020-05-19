@@ -59,7 +59,7 @@
 								</td>
 								
 								<td>
-									${book_dto.book_id }
+									${book_dto.mem_nick }
 								</td>
 								
 								

@@ -15,7 +15,8 @@
 		<input type="hidden" name="book_group" value="${book_group }">
 		<input type="hidden" name="book_step" value="${book_step }">
 		<input type="hidden" name="book_indent" value="${book_indent }">
-		
+		<input type="hidden" name="mem_id" value="${mem_id }">
+		<input type="hidden" name="mem_nick" value="${mem_nick }">
 		<table border="1">
 			<tr>
 				<td colspan="2" align="right">
@@ -26,7 +27,7 @@
 			<tr>
 				<td>이름</td>
 				<td>
-					<input type="text" name="book_id" size="30">
+					${mem_nick }
 				</td>
 			</tr>
 			<tr>
