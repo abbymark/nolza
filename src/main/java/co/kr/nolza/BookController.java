@@ -316,7 +316,9 @@ HashMap<String,Object>map =new HashMap<String,Object>();
 	
 	//댓글 기능=========================================================================================================================
 	@RequestMapping(value="book_cmt_insert.do", method=RequestMethod.POST)
-	public 
+	public String bookCmtInsert(Model model, String book_no, String mem_id, String cmt_content) {
+		
+	}
 }
 
 
