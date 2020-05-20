@@ -10,9 +10,14 @@
 <script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <script>
+
 //좋아요 싫어요 버튼 기능
 function likeCheck(book_likeState){
 	//alert("likeCheck():"+$("#book_no").val()+"\n"+ $("#mem_id").val())
+	if($("#reader_id").val()==''){
+		alert("로그인후 이용해 주시기 바랍니다");
+		return;
+	}
 	
 	$.ajax({
 		type:'POST',
@@ -27,7 +32,44 @@ function likeCheck(book_likeState){
 		}//success end
 	});//ajax end
 	
+	$("#initial").hide()
+	if(book_likeState==1){
+		$("#ifLike").show();
+		$("#afterCancel").hide()
+	}else if(book_likeState==-1){
+		$("#ifDislike").show();
+		$("#afterCancel").hide()
+	}
 }//likeCheck() end
+
+//좋아요 싫어요 취소 버튼 기능
+function likeCancel(book_likeState){
+	
+	$.ajax({
+		type:'POST',
+		url:'book_likeCancel.do',
+		data:"book_no="+$("#book_no").val()+"&book_likeState="+book_likeState+"&mem_id="+ $("#reader_id").val(),
+		/* data:{
+			book_no:$("book_no").val(),
+			book_likeState:book_likeState,
+			mem_id:$("#reader_id").val()
+		}, */
+		dataType:'JSON',
+		success:function(data){
+			$("#likeCount").text(data.likeValue);
+			$("#likeCnt").text(data.likeCnt);
+			$("#dislikeCnt").text(data.dislikeCnt);	
+		}
+	})
+	
+	$("#initial").hide()
+	if(book_likeState==1||book_likeState==-1){
+		$("#ifLike").hide()
+		$("#ifDislike").hide()
+		
+		$("#afterCancel").show()
+	}
+}
 
 </script>
 </head>
@@ -75,10 +117,32 @@ function likeCheck(book_likeState){
 					<tr>
 						<td>
 							<span id="likeCnt">${book_dto.book_like_cnt }</span>
-							<c:if test="${book_likeState==null }">
+							<span id="initial">
+								<c:if test="${book_likeState==null }">
+									<input type="button" id="book_like" value="좋아요" onClick="likeCheck(1)">
+									<input type="button" id="book_dislike" value="싫어요" onClick="likeCheck(-1)">
+								</c:if>
+								<c:if test="${book_likeState==1 }">
+									<input type="button" id="cancel_like" value="좋아요 취소" onClick="likeCancel(1)">
+								</c:if>
+								<c:if test="${book_likeState==-1 }">
+									<input type="button" id="cancel_dislike" value="싫어요 취소" onClick="likeCancel(-1)">
+								</c:if>
+							</span>
+							
+							
+							<span id="ifLike" style="display:none">
+								<input type="button" id="cancel_like" value="좋아요 취소" onClick="likeCancel(1)">
+							</span>
+							<span id="ifDislike" style="display:none">
+								<input type="button" id="cancel_dislike" value="싫어요 취소" onClick="likeCancel(-1)">
+							</span>
+							
+							
+							<span id="afterCancel" style="display:none">
 								<input type="button" id="book_like" value="좋아요" onClick="likeCheck(1)">
 								<input type="button" id="book_dislike" value="싫어요" onClick="likeCheck(-1)">
-							</c:if>
+							</span>
 							<span id="dislikeCnt">${book_dto.book_dislike_cnt }</span>
 						</td>
 					</tr>
@@ -102,6 +166,14 @@ function likeCheck(book_likeState){
 		</tr>
 	</table>
 	</form>
+	
+	<%--댓글기능 --%>
+	댓글
+	<table>
+		<c:forEach var="cmt_dto" items="${cmt_list }">
+			
+		</c:forEach>
+	</table>
 </body>
 </html>
 

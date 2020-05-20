@@ -72,16 +72,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from book_board where book_no=#{book_no} 
 	</delete>
 	
+	
+	<!-- 좋아요 기능=================================================================== -->
+	
 	<!-- 좋아요테이블에 좋아요 레코드 추가 -->
 	<insert id="insertLike" parameterType="java.util.HashMap">
 		insert into book_likes(mem_id, book_no, book_likeState) 
 		values(#{mem_id},#{book_no},#{book_likeState})
 	</insert>
 	
+	<!-- 좋아요 테이블에 좋아요 레코드 삭제 -->
+	<insert id="deleteLike" parameterType="map">
+		delete from book_likes
+		where mem_id=#{mem_id} and book_no=#{book_no}
+	</insert>
+	
 	<!-- 게시판에 like 업데이트 -->
-	<update id="likeUpdateBoard" parameterType="int">
+	<update id="likeUpdateBoard" parameterType="map">
 		update book_board
 		set book_like=book_like+#{book_likeState}
+		where book_no=#{book_no}
+	</update>
+	
+	<!-- 게시판에 like취소 업데이트 -->
+	<update id="likeCancelUpdate" parameterType="map">
+		update book_board
+		set book_like=book_like-#{book_likeState}
 		where book_no=#{book_no}
 	</update>
 	
@@ -92,10 +108,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where book_no=#{book_no}
 	</update>
 	
+	<!-- likeCnt 취소 업데이트 -->
+	<update id="likeCntCancel" parameterType="String">
+		update book_board
+		set book_like_cnt=book_like_cnt-1
+		where book_no=#{book_no}
+	</update>
+	
 	<!-- dislikeCnt 업데이트 -->
 	<update id="dislikeCntUpdate" parameterType="String">
 		update book_board
 		set book_dislike_cnt=book_dislike_cnt+1
+		where book_no=#{book_no}
+	</update>
+	
+	<!-- dislikeCnt 취소 업데이트 -->
+	<update id="dislikeCntCancel" parameterType="String">
+		update book_board
+		set book_dislike_cnt=book_dislike_cnt-1
 		where book_no=#{book_no}
 	</update>
 	

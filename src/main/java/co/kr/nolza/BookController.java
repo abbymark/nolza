@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import model.book.Book_boardDto;
 
@@ -46,7 +47,8 @@ public class BookController {
 	
 	//Db에 글쓰기
 	@RequestMapping(value="/book_writePro.do",method=RequestMethod.POST)
-	public String writePro(@ModelAttribute("book_boardDto") Book_boardDto book_boardDto, HttpServletRequest request)
+	public String writePro(@ModelAttribute("book_boardDto") Book_boardDto book_boardDto, HttpServletRequest request,
+			RedirectAttributes redirectAttr)
 		throws NamingException, IOException{
 		
 		int maxNum=0;//변수
@@ -77,6 +79,22 @@ public class BookController {
 			book_boardDto.setBook_indent(new Integer(0));
 		}
 		sqlSession.insert("book_board.insertBoard",book_boardDto);
+		
+		String type="";
+		if(book_boardDto.getBook_type().equals("자유게시판")){
+			type="free";
+		}else if(book_boardDto.getBook_type().equals("비소설 추천")){
+			type="recommendNonFiction";
+		}else if(book_boardDto.getBook_type().equals("소설 추천")){
+			type="recommendFiction";
+		}else if(book_boardDto.getBook_type().equals("독서 모임")){
+			type="readingGroup";
+		}else if(book_boardDto.getBook_type().equals("토론")){
+			type="debate";
+		}
+		
+		
+		redirectAttr.addAttribute("book_type",type);
 		return "redirect:book_list.do";
 	}//writePro() end
 	
@@ -243,7 +261,7 @@ public class BookController {
 		return "redirect:book_list.do";
 	}// delete() end
 	
-	//book_like update
+	//좋아요, 싫어요 기능 book_like update
 	@RequestMapping(value="book_likeCheck.do", method=RequestMethod.POST)
 	public String insertLike(Model model, String book_no, String book_likeState, String mem_id) {
 		
@@ -267,6 +285,38 @@ public class BookController {
 		model.addAttribute("book_like",book_like);
 		return "book/book_likeCheck";
 	}
+	
+	//좋아요 기능=========================================================================================================================
+	
+	//좋아요, 싫어요 취소 기능
+	@RequestMapping(value="book_likeCancel.do", method=RequestMethod.POST)
+	public String deleteLike(Model model, String book_no, String book_likeState, String mem_id) {
+		
+HashMap<String,Object>map =new HashMap<String,Object>();
+		
+		map.put("mem_id", mem_id);
+		map.put("book_no", new Integer(book_no));
+		map.put("book_likeState", new Integer(book_likeState));
+		
+		sqlSession.insert("book_board.deleteLike", map);
+		
+		sqlSession.update("book_board.likeCancelUpdate", map);
+		
+		if(book_likeState.equals("1")) {
+			sqlSession.update("book_board.likeCntCancel", book_no);
+		}else {
+			sqlSession.update("book_board.dislikeCntCancel", book_no);
+		}
+		
+		Book_boardDto book_like = sqlSession.selectOne("book_board.likeSelect", new Integer(book_no));
+		model.addAttribute("book_like",book_like);
+		return "book/book_likeCheck";
+	}
+	
+	
+	//댓글 기능=========================================================================================================================
+	@RequestMapping(value="book_cmt_insert.do", method=RequestMethod.POST)
+	public 
 }
 
 

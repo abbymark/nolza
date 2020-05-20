@@ -17,8 +17,13 @@ header.jsp<br>
 		${mem_nick }님 환영합니다.
 		<a href="/nolza/mem_logout.do" style="text-decoration: none;">로그아웃</a>
 	</c:if>
-	<a href="/nolza/main.do" style="text-decoration: none;">메인으로</a>
-	<a href="/nolza/book_list.do" style="text-decoration: none;">게시판</a>
+	&nbsp;&nbsp;
+	<a href="/nolza/main.do" style="text-decoration: none;">메인으로</a>&nbsp;&nbsp;
+	<a href="/nolza/book_list.do" style="text-decoration: none;">전체게시판</a>&nbsp;&nbsp;
+	<a href="/nolza/book_list.do?book_type=recommendNonFiction" style="text-decoration: none;">비소설 추천</a>&nbsp;&nbsp;
+	<a href="/nolza/book_list.do?book_type=recommendFiction" style="text-decoration: none;">소설 추천</a>&nbsp;&nbsp;
+	<a href="/nolza/book_list.do?book_type=readingGroup" style="text-decoration: none;">독서 모임</a>&nbsp;&nbsp;
+	<a href="/nolza/book_list.do?book_type=debate" style="text-decoration: none;">토론</a>&nbsp;&nbsp;
 	<a href="/nolza/mem_insertForm.do" style="text-decoration: none;">회원가입</a>
 </body>
 </html>

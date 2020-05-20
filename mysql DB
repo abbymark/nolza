@@ -35,3 +35,15 @@ mem_article_cnt int default 0,
 mem_reply_cnt int default 0,
 mem_login_cnt int default 0
 );
+
+create table book_cmt(
+cmt_no int not null primary key auto_increment,
+mem_id varchar(50) not null,
+mem_nick varchar(50) not null,
+cmt_content text not null,
+cmt_date datetime,
+cmt_ip varchar(20),
+cmt_group int not null,
+cmt_step smallint not null,
+cmt_indent smallint not null
+);
