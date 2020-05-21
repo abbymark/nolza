@@ -142,5 +142,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from book_likes
 		where mem_id=#{mem_id} and book_no=#{book_no}
 	</select>
-		
+	
+	
+	<!--댓글 기능 ===================================================================================== -->
+	<!-- 최대 댓글 번호 얻기 -->
+	<select id="cmtMaxNumber" resultType="int">
+		select max(cmt_no) from book_cmt
+	</select>
+	
+	<!-- 대댓글 끼워넣을 위치 확보 -->
+	<update id="cmtReStep" parameterType="model.book.Book_cmtDto">
+		update book_cmt
+		set cmt_step=cmt_step+1
+		where cmt_group=#{cmt_group} and cmt_step>#{cmt_step}
+	</update>
+	
+	<!-- 글쓰기, 답글쓰기 -->
+	<insert id="insertCmt" parameterType="model.book.Book_cmtDto">
+		insert into book_cmt(book_no, mem_id, mem_nick, cmt_date, cmt_group, cmt_step, cmt_indent, cmt_content, cmt_ip)
+		values(#{book_no}, #{mem_id}, #{mem_nick}, NOW(), #{cmt_group}, #{cmt_step}, #{cmt_indent}, #{cmt_content}, #{cmt_ip})
+	</insert>
+	
+	<!-- 리스트 -->
+	<select id="cmtList" parameterType="int" resultType="model.book.Book_cmtDto">
+		select * from book_cmt 
+		where book_no=#{book_no}
+		order by cmt_group desc, cmt_step asc
+		<!-- limit #{start},#{cnt} -->
+	</select>
+	
 </mapper>

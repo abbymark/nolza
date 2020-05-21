@@ -38,6 +38,7 @@ mem_login_cnt int default 0
 
 create table book_cmt(
 cmt_no int not null primary key auto_increment,
+book_no int not null,
 mem_id varchar(50) not null,
 mem_nick varchar(50) not null,
 cmt_content text not null,

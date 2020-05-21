@@ -169,11 +169,7 @@ function likeCancel(book_likeState){
 	
 	<%--댓글기능 --%>
 	댓글
-	<table>
-		<c:forEach var="cmt_dto" items="${cmt_list }">
-			
-		</c:forEach>
-	</table>
+	<%@ include file="book_cmt.jsp" %>
 </body>
 </html>
 

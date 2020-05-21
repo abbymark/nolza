@@ -1,6 +1,7 @@
 package co.kr.nolza;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,16 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import model.book.Book_boardDto;
+import model.book.Book_cmtDto;
 
 @Controller
 public class BookController {
@@ -115,9 +122,10 @@ public class BookController {
 		int count=0;//글 전체
 		int pageBlock=10;//1블럭당 10페이지씩 표시하려고
 		
+		String book_type_eng=book_type;
 		model.addAttribute("book_type",book_type);//글 종류 넘기기
 		
-		if(book_type==null) {
+		if(book_type==null||book_type.equals("")) {
 			count=sqlSession.selectOne("book_board.selectCount");//총 글 갯수
 		}else if(book_type.equals("free")){
 			book_type="자유게시판";
@@ -154,7 +162,7 @@ public class BookController {
 		map.put("start",startRow-1);
 		map.put("cnt",pageSize);
 		List<Book_boardDto> list=null;
-		if(book_type==null) {
+		if(book_type==null||book_type.equals("")) {
 			list=sqlSession.selectList("book_board.selectList", map);
 		}else {
 			map.put("book_type",book_type);
@@ -180,6 +188,7 @@ public class BookController {
 		model.addAttribute("list", list);
 		model.addAttribute("pageNum", pageNum);
 		
+		model.addAttribute("book_type_eng",book_type_eng);
 		return ".main.book.book_list";//뷰 리턴
 	}//list() end
 	
@@ -292,7 +301,7 @@ public class BookController {
 	@RequestMapping(value="book_likeCancel.do", method=RequestMethod.POST)
 	public String deleteLike(Model model, String book_no, String book_likeState, String mem_id) {
 		
-HashMap<String,Object>map =new HashMap<String,Object>();
+		HashMap<String,Object>map =new HashMap<String,Object>();
 		
 		map.put("mem_id", mem_id);
 		map.put("book_no", new Integer(book_no));
@@ -315,8 +324,57 @@ HashMap<String,Object>map =new HashMap<String,Object>();
 	
 	
 	//댓글 기능=========================================================================================================================
+	
+	//댓글 입력 기능
 	@RequestMapping(value="book_cmt_insert.do", method=RequestMethod.POST)
-	public String bookCmtInsert(Model model, String book_no, String mem_id, String cmt_content) {
+	@ResponseBody
+	public String bookCmtInsert(Model model, Book_cmtDto book_cmtDto, HttpServletRequest request) {
+		
+		int maxNum=0;
+		if(sqlSession.selectOne("book_board.cmtMaxNumber") !=null) {
+			maxNum=sqlSession.selectOne("book_board.cmtMaxNumber");
+		}
+		
+		if(maxNum != 0) {//최대글번호가 0이 아니면
+			maxNum=maxNum+1;
+		}else {//최대 글번호가 0이면, 처음 글쓰기
+			maxNum=1;
+		}
+		
+		String ip=request.getRemoteAddr();//ip구하기
+		book_cmtDto.setCmt_ip(ip);
+		
+		if(book_cmtDto.getCmt_no() != 0) {//답글이면
+			//답글 끼워넣을 위치 확보
+			sqlSession.update("book_board.cmtReStep", book_cmtDto);//답글 위치 확보
+			
+			book_cmtDto.setCmt_step(book_cmtDto.getCmt_step()+1);//글 순서
+			book_cmtDto.setCmt_indent(book_cmtDto.getCmt_indent()+1);//글 순서
+		}else {//원글 이면
+			book_cmtDto.setCmt_group(maxNum);//글 그룹번호, 즉 현재 글번호를 group에 넣어준다
+			book_cmtDto.setCmt_step(0);
+			book_cmtDto.setCmt_indent(0);
+		}
+		
+		sqlSession.insert("book_board.insertCmt", book_cmtDto);
+		
+		return "success";
+	}
+	
+	//댓글 리스트
+	@RequestMapping(value="book_cmt_list.do", method=RequestMethod.POST, produces = "application/text; charset=utf8")
+	public ResponseEntity bookCmtList(String book_no) {
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		
+//		HashMap<String, Integer>map = new HashMap<String, Integer>();
+//		map.put("start", startRow-1);
+//		map.put("cnt", pageSize);
+		
+		List<Book_cmtDto> list=sqlSession.selectList("book_board.cmtList",new Integer(book_no));
+		
+		JSONArray json = new JSONArray(list);
+		return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
 		
 	}
 }

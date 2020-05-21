@@ -82,17 +82,17 @@
 				<c:if test="${count>0 }">
 					<%-- 이전페이지 --%>
 					<c:if test="${startPage > 10}">
-						<a href="book_list.do?pageNum=${startPage-10}">[이전]</a>
+						<a href="book_list.do?pageNum=${startPage-10}&book_type=${book_type_eng }">[이전]</a>
 					</c:if>
 					
 					<%-- 페이지처리 --%>
 					<c:forEach var="i" begin="${startPage }" end="${endPage }">
-						<a href="book_list.do?pageNum=${i }">[${i }]</a>
+						<a href="book_list.do?pageNum=${i }&book_type=${book_type_eng }">[${i }]</a>
 					</c:forEach>
 					
 					<%-- 다음페이지 --%>
 					<c:if test="${endPage < pageCount}">
-						<a href="book_list.do?pageNum=${startPage+10}">[다음]</a>
+						<a href="book_list.do?pageNum=${startPage+10}&book_type=${book_type_eng }">[다음]</a>
 					</c:if>
 				</c:if>
 			</td>
