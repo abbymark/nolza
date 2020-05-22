@@ -1,3 +1,5 @@
+drop table book_board;
+
 create table book_board(
 book_no int not null primary key auto_increment,
 mem_id varchar(30) not null,
@@ -17,12 +19,17 @@ book_type varchar(20) not null
 );
 
 
+drop table book_likes;
+
 create table book_likes(
 book_likeno int not null primary key auto_increment,
 mem_id varchar(30) not null,
 book_no int not null,
 book_likestate smallint not null
 );
+
+
+drop table member;
 
 create table member(
 mem_id varchar(50) not null,
@@ -35,6 +42,9 @@ mem_article_cnt int default 0,
 mem_reply_cnt int default 0,
 mem_login_cnt int default 0
 );
+
+
+drop table book_cmt;
 
 create table book_cmt(
 cmt_no int not null primary key auto_increment,

@@ -146,8 +146,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--댓글 기능 ===================================================================================== -->
 	<!-- 최대 댓글 번호 얻기 -->
-	<select id="cmtMaxNumber" resultType="int">
-		select max(cmt_no) from book_cmt
+	<select id="cmtMaxNumber" parameterType="int" resultType="int">
+		select count(cmt_no) 
+		from book_cmt 
+		where book_no=#{book_no}
 	</select>
 	
 	<!-- 대댓글 끼워넣을 위치 확보 -->
@@ -164,11 +166,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 리스트 -->
-	<select id="cmtList" parameterType="int" resultType="model.book.Book_cmtDto">
+	<select id="cmtList" parameterType="map" resultType="model.book.Book_cmtDto">
 		select * from book_cmt 
 		where book_no=#{book_no}
 		order by cmt_group desc, cmt_step asc
-		<!-- limit #{start},#{cnt} -->
+		limit #{start},#{cnt}
 	</select>
 	
 </mapper>

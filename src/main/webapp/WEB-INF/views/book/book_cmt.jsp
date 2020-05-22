@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body onload="getCommentList('${book_dto.book_no}')">
+<body onload="getCommentList('${book_dto.book_no}',1)">
 댓글 달리는 공간
 
 <table>
@@ -24,22 +24,13 @@
 	<tbody id="commentList">
 		
 	</tbody>
-	<tr>
+	<tr align="center">
 		<td>
-			<%-- 이전페이지 --%>
-			<c:if test="${startPage > 10}">
-				<a href="book_list.do?pageNum=${startPage-10}&book_type=${book_type_eng }">[이전]</a>
-			</c:if>
+			<table>
+				<tr id="paging">
 			
-			<%-- 페이지처리 --%>
-			<c:forEach var="i" begin="${startPage }" end="${endPage }">
-				<a href="book_list.do?pageNum=${i }&book_type=${book_type_eng }">[${i }]</a>
-			</c:forEach>
-			
-			<%-- 다음페이지 --%>
-			<c:if test="${endPage < pageCount}">
-				<a href="book_list.do?pageNum=${startPage+10}&book_type=${book_type_eng }">[다음]</a>
-			</c:if>		
+				</tr>
+			</table>
 		</td>
 	</tr>
 </table>
@@ -55,7 +46,7 @@ function insertComment(book_no, mem_id, mem_nick){
 		data:"book_no="+book_no+"&mem_id="+ mem_id+"&mem_nick="+ mem_nick+"&cmt_content="+$("#cmt_content").val(),
 		success:function(data){
 			if(data=="success"){
-				getCommentList(book_no);
+				getCommentList(book_no,1);
 				$("#cmt_content").val("");
 			}
 		}
@@ -68,23 +59,56 @@ $(function(){
 }) */
 
 //댓글 리스트 불러오기
-function getCommentList(book_no){
+function getCommentList(book_no,page){
+	//alert(book_no)
+	//alert(page)
 	$.ajax({
 		type:"POST",
 		url:"book_cmt_list.do",
-		data:"book_no="+book_no,
+		data:"book_no="+book_no+"&page="+page,
 		dataType : "JSON",
 		success:function(data){
+			cmtCnt=getCmtCnt(book_no);
+			//console.log(cmtCnt);
 			var html="";
+			var paging="";
 			
-			if(data.length > 0){
-				for(i=0; i<data.length; i++){
-					var cmt_content = data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+			if(cmtCnt > 0 && page==1){
+				for(i=0; i<cmtCnt%10; i++){
+					console.log(data)
+					console.log(data[i]);
+					//var cmt_content = data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />');
 					html +="<tr>";
 					html +="<td>"+data[i].mem_nick+"</td>";
-					html +="<td>"+cmt_content+"</td>";					
+					html +="<td>"+data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />')+"</td>";					
 					html +="</tr>";
+					//console.log(data[i].mem_nick)
 				}	
+				
+				paging +="<td>";
+				for(i=0; i< cmtCnt/10; i++){
+					paging += "<button id="+(i+1)+"  onclick='getCommentList(\"${book_dto.book_no}\", "+(i+1)+")'>"+(i+1)+"</button>&nbsp;";
+				}
+				paging +="</td>"
+				
+			}else if(cmtCnt > 0 && page!=1){
+				for(i=0; i<10; i++){
+					//console.log(data)
+					console.log(data[i]);
+					//var cmt_content = data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+					html +="<tr>";
+					html +="<td>"+data[i].mem_nick+"</td>";
+					html +="<td>"+data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />')+"</td>";					
+					html +="</tr>";
+					//console.log(data[i].mem_nick)
+				}	
+				
+				paging +="<td>";
+				for(i=0; i< cmtCnt/10; i++){
+					paging += "<button id="+(i+1)+"  onclick='getCommentList(\"${book_dto.book_no}\", "+(i+1)+")'>"+(i+1)+"</button>&nbsp;";
+				}
+				paging +="</td>"
+				
 			}else{
 				html +="<tr>";
 				html +="<td>등록된 댓글이 없습니다.</td>";
@@ -92,9 +116,26 @@ function getCommentList(book_no){
 			}
 			
 			$("#commentList").html(html);
-			
+			$("#paging").html(paging);
 		}
 	})
+}
+
+//댓글 갯수 구해오기
+
+function getCmtCnt(book_no){
+	var cmtCnt;
+	$.ajax({
+		type:"POST",
+		url:"book_cmt_cnt.do",
+		async:false,
+		data:"book_no="+book_no,
+		success:function(data){
+			
+			cmtCnt= parseInt(data);
+		}
+	})
+	return cmtCnt
 }
 </script>
 

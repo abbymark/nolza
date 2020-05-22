@@ -1,6 +1,7 @@
 package co.kr.nolza;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -363,19 +364,53 @@ public class BookController {
 	
 	//댓글 리스트
 	@RequestMapping(value="book_cmt_list.do", method=RequestMethod.POST, produces = "application/text; charset=utf8")
-	public ResponseEntity bookCmtList(String book_no) {
+	public ResponseEntity bookCmtList(String book_no, String page) {
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
-//		HashMap<String, Integer>map = new HashMap<String, Integer>();
-//		map.put("start", startRow-1);
-//		map.put("cnt", pageSize);
 		
-		List<Book_cmtDto> list=sqlSession.selectList("book_board.cmtList",new Integer(book_no));
+		
+		int pageSize=10;
+		int currentPage=Integer.parseInt(page);
+		
+		int startRow=(currentPage-1)*pageSize+1;
+		int endRow=currentPage*pageSize;
+		
+		if(!page.equals("1")) {
+			int maxNum=0;
+			if(sqlSession.selectOne("book_board.cmtMaxNumber", new Integer(book_no)) !=null) {
+				maxNum=sqlSession.selectOne("book_board.cmtMaxNumber",new Integer(book_no));
+			}
+			startRow=maxNum%10+10*(Integer.parseInt(page)-2);
+			System.out.println(startRow);
+		}
+		System.out.println(page);
+		System.out.println(startRow);
+		
+		HashMap<String, Integer>map = new HashMap<String, Integer>();
+		map.put("start", startRow-1);
+		if(!page.equals("1")) {
+			map.put("start", startRow);
+		}
+		map.put("cnt", pageSize);
+		map.put("book_no", new Integer(book_no));
+		
+		List<Book_cmtDto> list=sqlSession.selectList("book_board.cmtList",map);
 		
 		JSONArray json = new JSONArray(list);
 		return new ResponseEntity(json.toString(), responseHeaders, HttpStatus.CREATED);
 		
+	}
+	
+	//댓글 갯수
+	@RequestMapping(value="book_cmt_cnt.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String bookCmtCnt(String book_no) {
+		int maxNum=0;
+		if(sqlSession.selectOne("book_board.cmtMaxNumber", new Integer(book_no)) !=null) {
+			maxNum=sqlSession.selectOne("book_board.cmtMaxNumber",new Integer(book_no));
+		}
+		return Integer.toString(maxNum);
 	}
 }
 
