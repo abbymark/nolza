@@ -52,7 +52,11 @@
 										<img src="resources/imgs/level.gif" width="${5*book_dto.book_indent }" height="16">
 									</c:if>
 									
-									<a href="book_content.do?book_no=${book_dto.book_no }&pageNum=${pageNum}">${book_dto.book_title }</a>
+									<a href="book_content.do?book_no=${book_dto.book_no }&pageNum=${pageNum}">${book_dto.book_title } 
+									<c:if test="${book_dto.book_cmt_cnt !=0}">
+									[${book_dto.book_cmt_cnt }]
+									</c:if>
+									</a>
 									<c:if test="${book_dto.book_readcount>=20 }">
 										<img src="resources/imgs/hot.gif" border="0">
 									</c:if>

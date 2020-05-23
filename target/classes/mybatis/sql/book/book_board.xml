@@ -173,4 +173,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		limit #{start},#{cnt}
 	</select>
 	
+	<!-- 댓글 아이디 조회 -->
+	<select id="cmtIdSearch" parameterType="map" resultType="String">
+		select mem_id
+		from book_cmt
+		where book_no=#{book_no} and cmt_no=#{cmt_no}
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<select id="deleteCmt" parameterType="map">
+		delete from book_cmt
+		where book_no=#{book_no} and cmt_no=#{cmt_no}
+	</select>
+	
+	<!-- 게시글 댓글수 수정 -->
+	<update id="updateBoardCmtCnt" parameterType="map">
+		update book_board
+		set book_cmt_cnt =book_cmt_cnt+#{countState}
+		where book_no=#{book_no}
+	</update>
 </mapper>

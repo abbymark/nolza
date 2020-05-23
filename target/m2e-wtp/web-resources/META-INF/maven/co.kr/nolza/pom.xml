@@ -156,12 +156,29 @@
 			<version>2.2.2</version>
 		</dependency>    
 		
+		<!-- 따로 추가 한것들 -->
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 		    <groupId>org.json</groupId>
 		    <artifactId>json</artifactId>
 		    <version>20180130</version>
 		</dependency>  
+		
+		<!-- https://mvnrepository.com/artifact/org.rosuda.REngine/REngine -->
+		<dependency>
+		    <groupId>org.rosuda.REngine</groupId>
+		    <artifactId>REngine</artifactId>
+		    <version>2.1.0</version>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.rosuda.REngine/Rserve -->
+		<dependency>
+		    <groupId>org.rosuda.REngine</groupId>
+		    <artifactId>Rserve</artifactId>
+		    <version>1.8.1</version>
+		</dependency>
+		
 	</dependencies>
     <build>
         <plugins>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,20 +75,43 @@ function getCommentList(book_no,page){
 			var paging="";
 			
 			if(cmtCnt > 0 && page==1){
-				for(i=0; i<cmtCnt%10; i++){
-					console.log(data)
-					console.log(data[i]);
-					//var cmt_content = data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />');
-					html +="<tr>";
-					html +="<td>"+data[i].mem_nick+"</td>";
-					html +="<td>"+data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />')+"</td>";					
-					html +="</tr>";
-					//console.log(data[i].mem_nick)
-				}	
+				if(cmtCnt%10!=0){
+					for(i=0; i<cmtCnt%10; i++){
+						//console.log(data)
+						//console.log(data[i]);
+						//var cmt_content = data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+						//id="\""+data[i].mem_id+"\""
+						html +="<tr>";
+						html +="<td>"+data[i].mem_nick+"</td>";
+						html +="<td>"+data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />')+"</td>";	
+						html +="<td>"+data[i].cmt_date+"</td>";
+						html +="<td><button onclick='deleteComment(\"${book_dto.book_no}\","+data[i].cmt_no+",\"${sessionScope.mem_id}\","+page+")')>x</button></td>";
+						//html +="<td>${sessionScope.mem_id}&nbsp;"+data[i].mem_id+""+id+"</td>";
+						//html +="<c:set var='id' value='"+data[i].mem_id+"' />"
+						//html +='<c:if test="${sessionScope.mem_id eq id}">'
+						//html +='</c:if>'
+						html +="</tr>";
+						//console.log(data[i].mem_nick)
+					}
+				}else{
+					for(i=0; i<10; i++){
+						//console.log(data)
+						//console.log(data[i]);
+						//var cmt_content = data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />');
+						html +="<tr>";
+						html +="<td>"+data[i].mem_nick+"</td>";
+						html +="<td>"+data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />')+"</td>";
+						html +="<td>"+data[i].cmt_date+"</td>";
+						html +="<td><button onclick='deleteComment(\"${book_dto.book_no}\","+data[i].cmt_no+",\"${sessionScope.mem_id}\","+page+")')>x</button></td>";
+						html +="</tr>";
+						//console.log(data[i].mem_nick)
+					}
+				}
+				
 				
 				paging +="<td>";
 				for(i=0; i< cmtCnt/10; i++){
-					paging += "<button id="+(i+1)+"  onclick='getCommentList(\"${book_dto.book_no}\", "+(i+1)+")'>"+(i+1)+"</button>&nbsp;";
+					paging += "<button onclick='getCommentList(\"${book_dto.book_no}\", "+(i+1)+")'>"+(i+1)+"</button>&nbsp;";
 				}
 				paging +="</td>"
 				
@@ -98,14 +122,16 @@ function getCommentList(book_no,page){
 					//var cmt_content = data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />');
 					html +="<tr>";
 					html +="<td>"+data[i].mem_nick+"</td>";
-					html +="<td>"+data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />')+"</td>";					
+					html +="<td>"+data[i].cmt_content.replace(/(?:\r\n|\r|\n)/g, '<br />')+"</td>";
+					html +="<td>"+data[i].cmt_date+"</td>";
+					html +="<td><button onclick='deleteComment(\"${book_dto.book_no}\","+data[i].cmt_no+",\"${sessionScope.mem_id}\","+page+")')>x</button></td>";
 					html +="</tr>";
 					//console.log(data[i].mem_nick)
 				}	
 				
 				paging +="<td>";
 				for(i=0; i< cmtCnt/10; i++){
-					paging += "<button id="+(i+1)+"  onclick='getCommentList(\"${book_dto.book_no}\", "+(i+1)+")'>"+(i+1)+"</button>&nbsp;";
+					paging += "<button onclick='getCommentList(\"${book_dto.book_no}\", "+(i+1)+")'>"+(i+1)+"</button>&nbsp;";
 				}
 				paging +="</td>"
 				
@@ -122,7 +148,6 @@ function getCommentList(book_no,page){
 }
 
 //댓글 갯수 구해오기
-
 function getCmtCnt(book_no){
 	var cmtCnt;
 	$.ajax({
@@ -137,6 +162,26 @@ function getCmtCnt(book_no){
 	})
 	return cmtCnt
 }
+
+
+//댓글 삭제
+function deleteComment(book_no,cmt_no,mem_id,page){
+	$.ajax({
+		type:"POST",
+		url:"book_cmt_delete.do",
+		async:false,
+		data:"book_no="+book_no+"&cmt_no="+cmt_no+"&mem_id="+mem_id,
+		success:function(data){
+			if(data=="success"){
+				alert("댓글이 삭제되었습니다.");
+			}else{
+				alert("작성자가 아닙니다.");
+			}
+		}
+	})
+	getCommentList(book_no,page);
+}
+
 </script>
 
 </body>

@@ -333,7 +333,7 @@ public class BookController {
 		
 		int maxNum=0;
 		if(sqlSession.selectOne("book_board.cmtMaxNumber") !=null) {
-			maxNum=sqlSession.selectOne("book_board.cmtMaxNumber");
+			maxNum=sqlSession.selectOne("book_board.cmtMaxNumber", book_cmtDto.getBook_no());
 		}
 		
 		if(maxNum != 0) {//최대글번호가 0이 아니면
@@ -344,7 +344,8 @@ public class BookController {
 		
 		String ip=request.getRemoteAddr();//ip구하기
 		book_cmtDto.setCmt_ip(ip);
-		
+		System.out.println("cmtno"+book_cmtDto.getCmt_no());
+		System.out.println("maxNum"+maxNum);
 		if(book_cmtDto.getCmt_no() != 0) {//답글이면
 			//답글 끼워넣을 위치 확보
 			sqlSession.update("book_board.cmtReStep", book_cmtDto);//답글 위치 확보
@@ -352,12 +353,18 @@ public class BookController {
 			book_cmtDto.setCmt_step(book_cmtDto.getCmt_step()+1);//글 순서
 			book_cmtDto.setCmt_indent(book_cmtDto.getCmt_indent()+1);//글 순서
 		}else {//원글 이면
+			System.out.println(1212);
 			book_cmtDto.setCmt_group(maxNum);//글 그룹번호, 즉 현재 글번호를 group에 넣어준다
 			book_cmtDto.setCmt_step(0);
 			book_cmtDto.setCmt_indent(0);
 		}
 		
 		sqlSession.insert("book_board.insertCmt", book_cmtDto);
+		
+		HashMap<String,Integer>map=new HashMap<String,Integer>();
+		map.put("book_no",book_cmtDto.getBook_no());
+		map.put("countState",1);
+		sqlSession.update("book_board.updateBoardCmtCnt", map);
 		
 		return "success";
 	}
@@ -369,7 +376,7 @@ public class BookController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		
 		
-		
+		int maxNum=0;
 		int pageSize=10;
 		int currentPage=Integer.parseInt(page);
 		
@@ -377,7 +384,7 @@ public class BookController {
 		int endRow=currentPage*pageSize;
 		
 		if(!page.equals("1")) {
-			int maxNum=0;
+			
 			if(sqlSession.selectOne("book_board.cmtMaxNumber", new Integer(book_no)) !=null) {
 				maxNum=sqlSession.selectOne("book_board.cmtMaxNumber",new Integer(book_no));
 			}
@@ -387,6 +394,10 @@ public class BookController {
 		System.out.println(page);
 		System.out.println(startRow);
 		
+		if(!page.equals("1")&&maxNum%10==0) {
+			startRow=(Integer.parseInt(page)-1)*10;
+		}
+		System.out.println(startRow);
 		HashMap<String, Integer>map = new HashMap<String, Integer>();
 		map.put("start", startRow-1);
 		if(!page.equals("1")) {
@@ -411,6 +422,36 @@ public class BookController {
 			maxNum=sqlSession.selectOne("book_board.cmtMaxNumber",new Integer(book_no));
 		}
 		return Integer.toString(maxNum);
+	}
+	
+	//댓글 삭제
+	@RequestMapping(value="book_cmt_delete.do", method=RequestMethod.POST)
+	@ResponseBody
+	public String bookCmtDelete(String book_no, String cmt_no, String mem_id) {
+		String result="";
+		
+		System.out.println(1111);
+		System.out.println(book_no);
+		System.out.println(cmt_no);
+		
+		HashMap<String, Integer> map=new HashMap<String,Integer>();
+		map.put("book_no",Integer.parseInt(book_no));
+		map.put("cmt_no",Integer.parseInt(cmt_no));
+		
+		System.out.println(2222);
+		result=sqlSession.selectOne("book_board.cmtIdSearch",map);
+		if(result.equals(mem_id)) {
+			sqlSession.delete("deleteCmt", map);
+			HashMap<String,Integer>map2=new HashMap<String,Integer>();
+			map2.put("book_no",Integer.parseInt(book_no));
+			map2.put("countState",-1);
+			
+			sqlSession.update("book_board.updateBoardCmtCnt", map2);
+			
+			result="success";
+		}
+		
+		return result;
 	}
 }
 

@@ -24,6 +24,7 @@ header.jsp<br>
 	<a href="/nolza/book_list.do?book_type=recommendFiction" style="text-decoration: none;">소설 추천</a>&nbsp;&nbsp;
 	<a href="/nolza/book_list.do?book_type=readingGroup" style="text-decoration: none;">독서 모임</a>&nbsp;&nbsp;
 	<a href="/nolza/book_list.do?book_type=debate" style="text-decoration: none;">토론</a>&nbsp;&nbsp;
+	<a href="/nolza/book_info.do" style="text-decoration: none;">책정보</a>
 	<a href="/nolza/mem_insertForm.do" style="text-decoration: none;">회원가입</a>
 </body>
 </html>

@@ -18,6 +18,7 @@ public class Book_boardDto {
 	private int book_like_cnt;
 	private int book_dislike_cnt;
 	private String book_type;
+	private int book_cmt_cnt;
 	
 	public Book_boardDto() {}
 
@@ -141,6 +142,13 @@ public class Book_boardDto {
 		this.book_type = book_type;
 	}
 
-	
+	public int getBook_cmt_cnt() {
+		return book_cmt_cnt;
+	}
+
+	public void setBook_cmt_cnt(int book_cmt_cnt) {
+		this.book_cmt_cnt = book_cmt_cnt;
+	}
+
 	
 }
