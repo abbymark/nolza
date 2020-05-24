@@ -1,6 +1,8 @@
 package co.kr.nolza;
 
 
+import java.io.IOException;
+
 import javax.servlet.ServletRequest;
 
 import org.rosuda.REngine.Rserve.RConnection;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BookInfoController {
 	
 	@RequestMapping("book_info.do")
-	public String infoPage(ServletRequest request) throws Exception {
+	public String infoPage(ServletRequest request) {
 		System.out.println(request.getServletContext().getRealPath("/"));
 		System.out.println(request.getRealPath("/"));
 		Runtime rt = Runtime.getRuntime();
@@ -25,24 +27,42 @@ public class BookInfoController {
 		Process p;
 		
 		//Rserve 시작
-		p = rt.exec(exeFile);
+		try {
+			//p = rt.exec(exeFile);
 		
 		//R접속
+		System.out.println(111);
 		RConnection conn=new RConnection();
+		System.out.println(222);
+		//conn.eval("source('C:/__sts/sts_work/nolza/book_scraper.R')");
+		System.out.println(333);
+		//conn.eval("bookScraper()");
 		
-		conn.eval("source('C:/__sts/sts_work/nolza/book_scraper.R')");
-		
+		conn.eval("source('C:/ourStudy/Rpro1/pro1/rData/MyScript.R')");
+		System.out.println(555);
 		int x = 100;
 		int y = 900;
 		int sum = conn.eval("mySum("+x+","+y+")").asInteger();
-		
 		System.out.println("R스크립트 실행결과="+sum);
 		
+		System.out.println(444);
 		
 		
 		
-		//Rserve 종료
-		rt.exec("taskkill /F /IM Rserve.exe");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			//Rserve 종료
+			try {
+				rt.exec("taskkill /F /IM Rserve.exe");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		
 		return ".main.book.book_info";
 	}
