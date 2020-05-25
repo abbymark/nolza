@@ -18,8 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 글쓰기, 답글쓰기 -->
 	<insert id="insertBoard" parameterType="model.book.Book_boardDto">
-		insert into book_board(mem_id, mem_nick, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type)
-		values(#{mem_id}, #{mem_nick}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indent}, #{book_content}, #{book_ip}, #{book_type})
+		insert into book_board(mem_id, mem_nick, book_title, book_date, book_group, book_step, book_indent, book_content, book_ip, book_type, book_location, book_rating)
+		values(#{mem_id}, #{mem_nick}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indent}, #{book_content}, #{book_ip}, #{book_type}, #{book_location}, #{book_rating})
 	</insert>
 	
 	<!-- 글 갯수 -->

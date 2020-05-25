@@ -6,9 +6,44 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script>
+function openDaumPostcode(){
+	//alert("A");
+	new daum.Postcode({
+		oncomplete:function(data){
+			//document.getElementById('zipcode').value=data.zonecode;
+			document.getElementById('book_location').value=data.address;
+		}
+	}).open();
+}
+
+var typeCheckVal=0;
+function typeCheck(){
+	if($('#book_type').val()=='독서 모임'){
+        $('#location').show();
+        typeCheckVal=1;
+  	}else{
+  		$('#location').hide();
+  		typeCheckVal=0;
+  	}
+	
+	if($('#book_type').val()=='비소설 추천'||$('#book_type').val()=='소설 추천'){
+        $('#rating').show();
+        typeCheckVal=1;
+  	}else{
+  		$('#rating').hide();
+  		typeCheckVal=0;
+  	}
+}
+</script>
+<link rel="stylesheet" href="resources/imgs/star.css">
+
 </head>
-<body>
+<body onload="typeCheck()">
 	<center><h2></h2></center>
+		<input type="hidden" name="book_type" value="${book_type }">
 	<form method="post" name="book_writeForm" action="book_writePro.do">
 		<input type="hidden" name="pageNum" value="${pageNum }">
 		<input type="hidden" name="book_no" value="${book_no }">
@@ -64,7 +99,7 @@
 					</c:when>
 				</c:choose>
 				<td>
-					<select name="book_type" id="book_type">
+					<select name="book_type" id="book_type" onchange="typeCheck()">
 						<option value="${book_type }">${book_type }</option>
 						<option value="자유게시판">자유게시판</option>
 						<option value="비소설 추천">비소설 추천</option>
@@ -75,12 +110,49 @@
 				</td>
 			</tr>
 			
+			
+			<tbody id=rating style="display:none;">
+				<tr>
+					<td colspan="2">
+						<span class="starRating">
+						  <input id="rating5" type="radio" name="book_rating" value="5">
+						  <label for="rating5">5</label>
+						  <input id="rating4" type="radio" name="book_rating" value="4">
+						  <label for="rating4">4</label>
+						  <input id="rating3" type="radio" name="book_rating" value="3">
+						  <label for="rating3">3</label>
+						  <input id="rating2" type="radio" name="book_rating" value="2">
+						  <label for="rating2">2</label>
+						  <input id="rating1" type="radio" name="book_rating" value="1">
+						  <label for="rating1">1</label>
+						</span>
+					</td>
+				</tr>
+			</tbody>
+			
+			
+			
 			<tr>
 				<td>글내용</td>
 				<td>
 					<textarea name="book_content" rows="10" cols="60"></textarea>
 				</td>
 			</tr>
+			
+			
+			<tbody id=location style="display:none;">
+				<tr>
+					<td>위치</td>
+					<td>
+						<input type="text" name="book_location" id="book_location">
+						<input type="button" value="주소찾기" onclick="openDaumPostcode()">
+					</td>
+				</tr>
+			</tbody>
+			
+			
+			
+			
 			
 			<tr>
 				<td colspan="2">

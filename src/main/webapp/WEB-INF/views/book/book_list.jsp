@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 	<center><b>전체 글 갯수:${count }</b></center>
@@ -26,6 +27,12 @@
 							<td>글번호</td>
 							<td>글 종류</td>
 							<td>글제목</td>
+							<c:if test="${book_type_eng =='recommendNonFiction' || book_type_eng =='recommendFiction'}">
+								<td>평점</td>
+							</c:if>
+							<c:if test="${book_type_eng =='readingGroup'}">
+								<td>장소</td>
+							</c:if>
 							<td>작성자</td>
 							<td>작성일</td>
 							<td>조회</td>
@@ -61,6 +68,36 @@
 										<img src="resources/imgs/hot.gif" border="0">
 									</c:if>
 								</td>
+								
+								<c:if test="${book_type_eng =='recommendNonFiction' || book_type_eng =='recommendFiction'}">
+								<td>
+									<c:choose>
+										<c:when test="${book_dto.book_rating == 1}">
+											<img src="resources/imgs/star-on.svg">
+										</c:when>
+										<c:when test="${book_dto.book_rating == 2}">
+											<img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg">
+										</c:when>
+										<c:when test="${book_dto.book_rating == 3}">
+											<img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg">
+										</c:when>
+										<c:when test="${book_dto.book_rating == 4}">
+											<img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg">
+										</c:when>
+										
+										<c:when test="${book_dto.book_rating == 5}">
+											<img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg"><img src="resources/imgs/star-on.svg">
+										</c:when>
+									</c:choose>
+									
+								</td>
+								</c:if>
+								
+								<c:if test="${book_type_eng =='readingGroup'}">
+									<td>
+										${book_dto.book_location }
+									</td>
+								</c:if>
 								
 								<td>
 									${book_dto.mem_nick }

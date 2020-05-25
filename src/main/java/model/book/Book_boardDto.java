@@ -19,6 +19,8 @@ public class Book_boardDto {
 	private int book_dislike_cnt;
 	private String book_type;
 	private int book_cmt_cnt;
+	private String book_location;
+	private int book_rating;
 	
 	public Book_boardDto() {}
 
@@ -150,5 +152,22 @@ public class Book_boardDto {
 		this.book_cmt_cnt = book_cmt_cnt;
 	}
 
+	public String getBook_location() {
+		return book_location;
+	}
+
+	public void setBook_location(String book_location) {
+		this.book_location = book_location;
+	}
+
+	public int getBook_rating() {
+		return book_rating;
+	}
+
+	public void setBook_rating(int book_rating) {
+		this.book_rating = book_rating;
+	}
+	
+	
 	
 }

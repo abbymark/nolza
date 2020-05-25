@@ -1,0 +1,48 @@
+C:\MySQL\bin>mysql -u root -h localhost  -p
+Enter password: *****
+
+
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| boarddb            |
+| ch20               |
+| mydb1              |
+| mydb3              |
+| mysql              |
+| performance_schema |
+| spring             |
+| test               |
++--------------------+
+
+
+
+mysql> use mysql;
+
+mysql> select user,host from user where user='root';
++------+-----------+
+| user | host      |
++------+-----------+
+| root | localhost |
++------+-----------+
+
+
+
+
+mysql> update user set host='%' where user='root';
+
+mysql>exit
+
+
+
+C:\MySQL\bin>mysqladmin -u root -p reload
+Enter password: *****
+
+
+C:\MySQL\bin>mysql -u root -h 192.168.56.81 -p
+Enter password: *****
+
+

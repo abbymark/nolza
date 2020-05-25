@@ -26,6 +26,13 @@ cmd 에서 실행시
 set names euckr 해야 한글 안깨짐
 
 
+이걸로 해야 한다 위에써는 임시적임!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+위에 썻던거 다시 돌리고
+euckr 로 mysql 작업후 에 root-context.xml에 
+<property name="url" value="jdbc:mysql://localhost:3306/nolza?useUnicode=yes&amp;characterEncoding=utf8&amp;"/>
+
+
+
 drop table book_board;
 
 create table book_board(
@@ -44,7 +51,9 @@ book_like int default 0,
 book_like_cnt int default 0,
 book_dislike_cnt int default 0,
 book_type varchar(20) not null,
-book_cmt_cnt int default 0
+book_cmt_cnt int default 0,
+book_location varchar(100) default 0,
+book_rating int default 0
 );
 
 

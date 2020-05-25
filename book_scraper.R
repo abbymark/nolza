@@ -1,12 +1,12 @@
 bookScraper = function(){
   
   library(Rserve)
+#  Rserve()
+#  Rserve(FALSE,port=6311,args='--RS-encoding utf8 --no-save --slave --encoding utf8  --internet2')
   
-  Rserve(FALSE,port=6311,args='--RS-encoding utf8 --no-save --slave --encoding utf8  --internet2')
+#  Rserve(args="--RS-encoding utf8")
   
-  Rserve(args="--RS- encoding utf8")
-  
-  Rserve(FALSE,port=6311,args='--RS-encoding utf8 --no-save --slave --encoding utf8')
+#  Rserve(FALSE,port=6311,args='--RS-encoding utf8 --#-save --slave --encoding utf8')
   
   library(rvest)
   
@@ -50,7 +50,7 @@ bookScraper = function(){
   
   result$랭크<-NULL
   
-  png("C:\\__sts\\sts_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nolza\\resources\\imgs\\test.png", height=50*nrow(result), width=220*ncol(result))
+  png("C:\\__sts\\sts_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nolza\\resources\\imgs\\test.png", height=30*nrow(result), width=250*ncol(result))
   grid.table(result)
   dev.off()
   
