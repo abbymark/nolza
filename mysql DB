@@ -96,3 +96,13 @@ cmt_group int not null,
 cmt_step smallint not null,
 cmt_indent smallint not null
 );
+
+
+
+drop table book_imgs;
+
+create table book_imgs(
+img_no int not null primary key auto_increment,
+book_no int not null,
+img_title varchar(500) not null
+);

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="ctxpath" value="<%=request.getContextPath()%>"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -163,6 +164,18 @@ function likeCancel(book_likeState){
 			<td>글제목</td>
 			<td colspan="3" id="book_title">${book_dto.book_title }</td>
 		</tr>
+		
+		<tr>
+			<td>이미지</td>
+			<td colspan="3">
+				<c:forEach var="imgs" items="${book_imgs }">
+					<div>
+						<img src="${ctxpath }/resources/book_imgs/${imgs}" style="max-width:500px; max-height:500px" id="image">
+					</div>
+				</c:forEach>
+			</td>
+		</tr>
+		
 		<c:if test="${book_dto.book_type =='비소설 추천' || book_dto.book_type =='소설 추천'}">
 			<tr>
 			<td>평점</td>

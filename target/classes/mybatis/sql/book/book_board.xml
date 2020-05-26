@@ -22,6 +22,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{mem_id}, #{mem_nick}, #{book_title}, NOW(), #{book_group}, #{book_step}, #{book_indent}, #{book_content}, #{book_ip}, #{book_type}, #{book_location}, #{book_rating})
 	</insert>
 	
+	<!-- 이미지 저장 -->
+	<insert id="insertImgs" parameterType="map">
+		insert into book_imgs(book_no, img_title)
+		values(#{book_no}, #{img_title})
+	</insert>
+	
+	<!-- 이미지 보기 -->
+	<select id="selectImgs" parameterType="int" resultType="String">
+		select img_title
+		from book_imgs
+		where book_no=#{book_no}
+	</select>
+	
 	<!-- 글 갯수 -->
 	<select id="selectCount" resultType="int">
 		select count(*) from book_board

@@ -1,10 +1,13 @@
 package co.kr.nolza;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,9 +24,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.oreilly.servlet.MultipartRequest;
 
 import model.book.Book_boardDto;
 import model.book.Book_cmtDto;
@@ -56,9 +63,9 @@ public class BookController {
 	//Db에 글쓰기
 	@RequestMapping(value="/book_writePro.do",method=RequestMethod.POST)
 	public String writePro(@ModelAttribute("book_boardDto") Book_boardDto book_boardDto, HttpServletRequest request,
-			RedirectAttributes redirectAttr)
+			RedirectAttributes redirectAttr, @RequestParam("img_title")MultipartFile multi[])
 		throws NamingException, IOException{
-		
+
 		int maxNum=0;//변수
 		
 		if(sqlSession.selectOne("book_board.maxNumber") != null) {
@@ -87,6 +94,55 @@ public class BookController {
 			book_boardDto.setBook_indent(new Integer(0));
 		}
 		sqlSession.insert("book_board.insertBoard",book_boardDto);
+		
+		
+		//이미지 저장====================================================
+		for(MultipartFile multi2:multi) {
+			//파일명
+			String originalFile = multi2.getOriginalFilename();
+			
+			//랜덤생성
+			UUID uuid=UUID.randomUUID();
+			String random=uuid.toString();
+			
+			//날짜
+			String fileName = "";
+			
+			Calendar calendar = Calendar.getInstance();
+			fileName += calendar.get(Calendar.YEAR);
+			fileName += calendar.get(Calendar.MONTH);
+			fileName += calendar.get(Calendar.DATE);
+			fileName += calendar.get(Calendar.HOUR);
+			fileName += calendar.get(Calendar.MINUTE);
+			fileName += calendar.get(Calendar.SECOND);
+			fileName += calendar.get(Calendar.MILLISECOND);
+			fileName += random;
+			
+			//최종 파일명
+			fileName +=originalFile;
+			
+			
+			//파일 확장자 추출
+			//String originalFileExtension = originalFile.substring(originalFile.lastIndexOf("."));
+			
+			System.out.println(book_boardDto.getBook_title());
+			String realPath=request.getServletContext().getRealPath("/");
+			String savePath=realPath+"/resources/book_imgs/"+fileName;
+			System.out.println(multi);
+			
+			//저장 위치
+			multi2.transferTo(new File(savePath));
+			System.out.println(213123);
+			
+			
+			HashMap<String,Object> map=new HashMap<String,Object>();
+			map.put("book_no", maxNum);
+			System.out.println(maxNum);
+			map.put("img_title", fileName);
+			sqlSession.insert("book_board.insertImgs", map);
+		}
+		//이미지 끝==========================================================
+		
 		
 		String type="";
 		if(book_boardDto.getBook_type().equals("자유게시판")){
@@ -206,6 +262,13 @@ public class BookController {
 		
 		String book_content=book_dto.getBook_content();
 		//book_content=book_content.replaceAll("\n", "<br>");
+		
+		//이미지 불러오기
+		List<String> imgs=sqlSession.selectList("book_board.selectImgs", book_no1);
+		model.addAttribute("book_imgs",imgs);
+		for(String img:imgs) {
+			System.out.println(img);
+		}
 		
 		String mem_id=(String)session.getAttribute("mem_id");
 		HashMap<String,Object> map=new HashMap<String,Object>();
@@ -344,8 +407,8 @@ public class BookController {
 		
 		String ip=request.getRemoteAddr();//ip구하기
 		book_cmtDto.setCmt_ip(ip);
-		System.out.println("cmtno"+book_cmtDto.getCmt_no());
-		System.out.println("maxNum"+maxNum);
+		//System.out.println("cmtno"+book_cmtDto.getCmt_no());
+		//System.out.println("maxNum"+maxNum);
 		if(book_cmtDto.getCmt_no() != 0) {//답글이면
 			//답글 끼워넣을 위치 확보
 			sqlSession.update("book_board.cmtReStep", book_cmtDto);//답글 위치 확보
@@ -391,13 +454,13 @@ public class BookController {
 			startRow=maxNum%10+10*(Integer.parseInt(page)-2);
 			System.out.println(startRow);
 		}
-		System.out.println(page);
-		System.out.println(startRow);
+		//System.out.println(page);
+		//System.out.println(startRow);
 		
 		if(!page.equals("1")&&maxNum%10==0) {
 			startRow=(Integer.parseInt(page)-1)*10;
 		}
-		System.out.println(startRow);
+		//System.out.println(startRow);
 		HashMap<String, Integer>map = new HashMap<String, Integer>();
 		map.put("start", startRow-1);
 		if(!page.equals("1")) {
@@ -430,15 +493,15 @@ public class BookController {
 	public String bookCmtDelete(String book_no, String cmt_no, String mem_id) {
 		String result="";
 		
-		System.out.println(1111);
-		System.out.println(book_no);
-		System.out.println(cmt_no);
+		//System.out.println(1111);
+		//System.out.println(book_no);
+		//System.out.println(cmt_no);
 		
 		HashMap<String, Integer> map=new HashMap<String,Integer>();
 		map.put("book_no",Integer.parseInt(book_no));
 		map.put("cmt_no",Integer.parseInt(cmt_no));
 		
-		System.out.println(2222);
+		//System.out.println(2222);
 		result=sqlSession.selectOne("book_board.cmtIdSearch",map);
 		if(result.equals(mem_id)) {
 			sqlSession.delete("deleteCmt", map);

@@ -44,7 +44,7 @@ function typeCheck(){
 <body onload="typeCheck()">
 	<center><h2></h2></center>
 		<input type="hidden" name="book_type" value="${book_type }">
-	<form method="post" name="book_writeForm" action="book_writePro.do">
+	<form method="post" name="book_writeForm" action="book_writePro.do" encType="multipart/form-data">
 		<input type="hidden" name="pageNum" value="${pageNum }">
 		<input type="hidden" name="book_no" value="${book_no }">
 		<input type="hidden" name="book_group" value="${book_group }">
@@ -151,7 +151,25 @@ function typeCheck(){
 			</tbody>
 			
 			
-
+			
+			<tr>
+				<td>이미지</td>
+				<td>
+					<table>
+						<tr>
+							<td>
+								<input type="file" name="img_title">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="file" name="img_title">
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			
 			
 			
 			
