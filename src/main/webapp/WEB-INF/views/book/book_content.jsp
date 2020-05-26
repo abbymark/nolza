@@ -22,6 +22,7 @@ function likeCheck(book_likeState){
 	$.ajax({
 		type:'POST',
 		url:'book_likeCheck.do',
+		async:false,
 		data:"book_no="+$("#book_no").val()+"&book_likeState="+book_likeState+"&mem_id="+ $("#reader_id").val(),
 		dataType:'JSON',
 		success:function(data){
@@ -40,6 +41,8 @@ function likeCheck(book_likeState){
 		$("#ifDislike").show();
 		$("#afterCancel").hide()
 	}
+	
+	drawChart()
 }//likeCheck() end
 
 //좋아요 싫어요 취소 버튼 기능
@@ -48,6 +51,7 @@ function likeCancel(book_likeState){
 	$.ajax({
 		type:'POST',
 		url:'book_likeCancel.do',
+		async:false,
 		data:"book_no="+$("#book_no").val()+"&book_likeState="+book_likeState+"&mem_id="+ $("#reader_id").val(),
 		/* data:{
 			book_no:$("book_no").val(),
@@ -69,6 +73,8 @@ function likeCancel(book_likeState){
 		
 		$("#afterCancel").show()
 	}
+	
+	drawChart()
 }
 
 </script>
@@ -92,20 +98,26 @@ function likeCancel(book_likeState){
 
         // Create the data table.
         var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
+        data.addColumn('string', '찬반');
+        data.addColumn('number', '투표수');
         data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
+          ['찬성', parseInt($("#likeCnt").text())],
+          ['반대', parseInt($("#dislikeCnt").text())],
+          
         ]);
 
         // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
+        var options = {'title':'투표 결과',
                        'width':400,
-                       'height':300};
+                       'height':300,
+                       titleTextStyle: {
+                           //color: <string>,    // any HTML string color ('red', '#cc00cc')
+                           //fontName: <string>, // i.e. 'Times New Roman'
+                           fontSize: 20, // 12, 18 whatever you want (don't specify px)
+                           bold: true,    // true or false
+                           italic: false   // true of false
+                       	}
+        			  };
 
         // Instantiate and draw our chart, passing in some options.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
@@ -224,7 +236,7 @@ function likeCancel(book_likeState){
 			</td>
 		</tr>
 		
-		
+		<%--독서 모임일때에 지도 표시=============================================================================== --%>
 		<c:if test="${book_dto.book_type =='독서 모임' && book_dto.book_location != '0'}">
 			<tr>
 				<td>위치</td>
