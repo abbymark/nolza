@@ -37,6 +37,29 @@ function typeCheck(){
   		typeCheckVal=0;
   	}
 }
+
+
+//이미지 추가
+function insertImg(){
+	var html='';
+	html +="<tr>"
+	html +="<td>"
+	html +="<input type='file' name='img_title'>"
+	html +="</td>"
+	html +="<td>"
+	html +="<input type='button' value='X' onClick='deleteImg(this)'>"
+	html +="</td>"
+	html +="</tr>"
+	
+	$("#images").append(html);
+		
+}
+
+//이미지 삭제
+function deleteImg(id){
+	
+	$(id).closest("tr").remove();
+}
 </script>
 <link rel="stylesheet" href="resources/imgs/star.css">
 
@@ -155,21 +178,18 @@ function typeCheck(){
 			<tr>
 				<td>이미지</td>
 				<td>
-					<table>
-						<tr>
-							<td>
-								<input type="file" name="img_title">
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<input type="file" name="img_title">
-							</td>
-						</tr>
+					<input type="button" onClick="insertImg()" value="이미지 추가">
+				</td>
+			</tr>
+			<tr>
+				<td>이미지 파일</td>
+				<td>
+					
+					<table id="images">
+
 					</table>
 				</td>
 			</tr>
-			
 			
 			
 			

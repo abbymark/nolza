@@ -63,7 +63,7 @@ public class BookController {
 	//Db에 글쓰기
 	@RequestMapping(value="/book_writePro.do",method=RequestMethod.POST)
 	public String writePro(@ModelAttribute("book_boardDto") Book_boardDto book_boardDto, HttpServletRequest request,
-			RedirectAttributes redirectAttr, @RequestParam("img_title")MultipartFile multi[])
+			RedirectAttributes redirectAttr, @RequestParam(value="img_title", required=false)MultipartFile multi[])
 		throws NamingException, IOException{
 
 		int maxNum=0;//변수
@@ -72,7 +72,6 @@ public class BookController {
 			
 			maxNum=sqlSession.selectOne("book_board.maxNumber");
 		}
-		
 		if(maxNum != 0) {//최대글번호가 0이 아니면
 			maxNum=maxNum+1;
 		}else {//최대 글번호가 0이면, 처음 글쓰기
@@ -95,51 +94,51 @@ public class BookController {
 		}
 		sqlSession.insert("book_board.insertBoard",book_boardDto);
 		
-		
 		//이미지 저장====================================================
-		for(MultipartFile multi2:multi) {
-			//파일명
-			String originalFile = multi2.getOriginalFilename();
-			
-			//랜덤생성
-			UUID uuid=UUID.randomUUID();
-			String random=uuid.toString();
-			
-			//날짜
-			String fileName = "";
-			
-			Calendar calendar = Calendar.getInstance();
-			fileName += calendar.get(Calendar.YEAR);
-			fileName += calendar.get(Calendar.MONTH);
-			fileName += calendar.get(Calendar.DATE);
-			fileName += calendar.get(Calendar.HOUR);
-			fileName += calendar.get(Calendar.MINUTE);
-			fileName += calendar.get(Calendar.SECOND);
-			fileName += calendar.get(Calendar.MILLISECOND);
-			fileName += random;
-			
-			//최종 파일명
-			fileName +=originalFile;
-			
-			
-			//파일 확장자 추출
-			//String originalFileExtension = originalFile.substring(originalFile.lastIndexOf("."));
-			
-			System.out.println(book_boardDto.getBook_title());
-			String realPath=request.getServletContext().getRealPath("/");
-			String savePath=realPath+"/resources/book_imgs/"+fileName;
-			System.out.println(multi);
-			
-			//저장 위치
-			multi2.transferTo(new File(savePath));
-			System.out.println(213123);
-			
-			
-			HashMap<String,Object> map=new HashMap<String,Object>();
-			map.put("book_no", maxNum);
-			System.out.println(maxNum);
-			map.put("img_title", fileName);
-			sqlSession.insert("book_board.insertImgs", map);
+		if(multi!=null) {
+			for(MultipartFile multi2:multi) {
+				//파일명
+				String originalFile = multi2.getOriginalFilename();
+				
+				//랜덤생성
+				UUID uuid=UUID.randomUUID();
+				String random=uuid.toString();
+				
+				//날짜
+				String fileName = "";
+				
+				Calendar calendar = Calendar.getInstance();
+				fileName += calendar.get(Calendar.YEAR);
+				fileName += calendar.get(Calendar.MONTH);
+				fileName += calendar.get(Calendar.DATE);
+				fileName += calendar.get(Calendar.HOUR);
+				fileName += calendar.get(Calendar.MINUTE);
+				fileName += calendar.get(Calendar.SECOND);
+				fileName += calendar.get(Calendar.MILLISECOND);
+				fileName += random;
+				
+				//최종 파일명
+				fileName +=originalFile;
+				
+				
+				//파일 확장자 추출
+				//String originalFileExtension = originalFile.substring(originalFile.lastIndexOf("."));
+				
+				System.out.println(book_boardDto.getBook_title());
+				String realPath=request.getServletContext().getRealPath("/");
+				String savePath=realPath+"/resources/book_imgs/"+fileName;
+	
+				
+				//저장 위치
+				multi2.transferTo(new File(savePath));
+	
+				maxNum=sqlSession.selectOne("book_board.maxNumber");
+				HashMap<String,Object> map=new HashMap<String,Object>();
+				map.put("book_no", maxNum);
+				System.out.println(maxNum);
+				map.put("img_title", fileName);
+				sqlSession.insert("book_board.insertImgs", map);
+			}
 		}
 		//이미지 끝==========================================================
 		
@@ -249,6 +248,118 @@ public class BookController {
 		return ".main.book.book_list";//뷰 리턴
 	}//list() end
 	
+	//검색 리스트
+	@RequestMapping("book_search.do")
+	public String searchList(String searchType, String searchValue, String book_type, String pageNum, Model model){
+		
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		
+		int pageSize = 10;//한페이지에 10개
+		int currentPage=Integer.parseInt(pageNum);//현재 페이지
+		
+		int startRow=(currentPage-1)*pageSize+1;//한 페이지의 시작 행
+		int endRow=currentPage*pageSize;//한 페이지의 마지막 행
+		
+		int count=0;//글 전체
+		int pageBlock=10;//1블럭당 10페이지씩 표시하려고
+		
+		String book_type_eng=book_type;
+		model.addAttribute("book_type",book_type);//글 종류 넘기기
+		
+		HashMap <String, String> map1=new HashMap<String,String>();
+		map1.put("searchType", searchType);
+		map1.put("searchValue", searchValue);
+		System.out.println(searchType);
+		System.out.println(searchValue);
+		if(book_type==null||book_type.equals("")) {
+			count=sqlSession.selectOne("book_board.searchCount",map1);//총 글 갯수
+		}else if(book_type.equals("free")){
+			book_type="자유게시판";
+			map1.put("book_type", book_type);
+			count=sqlSession.selectOne("book_board.searchCountCategory", map1);
+		}else if(book_type.equals("recommendNonFiction")){
+			book_type="비소설 추천";
+			map1.put("book_type", book_type);
+			count=sqlSession.selectOne("book_board.searchCountCategory", map1);
+		}else if(book_type.equals("recommendFiction")){
+			book_type="소설 추천";
+			map1.put("book_type", book_type);
+			count=sqlSession.selectOne("book_board.searchCountCategory", map1);
+		}else if(book_type.equals("readingGroup")){
+			book_type="독서 모임";
+			map1.put("book_type", book_type);
+			count=sqlSession.selectOne("book_board.searchCountCategory", map1);
+		}else if(book_type.equals("debate")){
+			book_type="토론";
+			map1.put("book_type", book_type);
+			count=sqlSession.selectOne("book_board.searchCountCategory", map1);
+		}
+		
+		int number=count-(currentPage-1)*pageSize;//글번호
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);//총 페이지 객수
+		
+		int result = currentPage/10;// 2/10=10   12/10=1   22/10=2
+		int startPage=result*10+1;
+		//						0*10+1=1페이지  1*10+1=11페이지 2*10+1=21페이지
+		int endPage=startPage+pageBlock-1;
+		//						1+10-10 페이지   1+20-1=20페이지    1+30-1=30 페이지
+		
+		if(endPage>pageCount) {//에러 방지
+			endPage=pageCount;
+		}
+			
+		//*****************************************************
+		HashMap<String, Object> map =new HashMap<String,Object>();
+		map.put("start",startRow-1);
+		map.put("cnt",pageSize);
+		map.put("searchType", searchType);
+		map.put("searchValue", searchValue);
+    	System.out.println(searchType);
+		System.out.println(searchValue);
+		System.out.println(startRow-1);
+		System.out.println(pageSize);
+		System.out.println(book_type);
+		List<Book_boardDto> list=null;
+		
+		if(book_type==null||book_type.equals("")) {
+			list=sqlSession.selectList("book_board.searchList", map);
+			System.out.println("전체 검색");
+		}else {
+			map.put("book_type",book_type);
+			list=sqlSession.selectList("book_board.searchListCategory", map);
+			System.out.println("카테고리 검색");
+		}
+		//System.out.println(list.get(1).getBook_title());
+		
+		
+		//*****************************************************
+		
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("searchValue", searchValue);
+		
+		model.addAttribute("currentPage", currentPage);
+		model.addAttribute("startRow", startRow);
+		model.addAttribute("endRow", endRow);
+		
+		model.addAttribute("pageBlock", pageBlock);
+		model.addAttribute("count", count);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("pageCount", pageCount);
+		
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
+		
+		model.addAttribute("number", number);
+		model.addAttribute("list", list);
+		model.addAttribute("pageNum", pageNum);
+		
+		model.addAttribute("book_type_eng",book_type_eng);
+		
+			
+		return ".main.book.book_list";
+	}
 	
 	//글내용보기
 	@RequestMapping("book_content.do")
@@ -317,7 +428,7 @@ public class BookController {
 	
 	//글삭제
 	@RequestMapping("book_delete.do")
-	public String delete(Model model, String book_no, String pageNum, String mem_id, HttpSession session) {
+	public String delete(Model model, String book_no, String pageNum, String mem_id, HttpSession session, HttpServletRequest request) {
 		System.out.println(mem_id);
 		System.out.println(session.getAttribute("mem_id"));
 		String mem_id2=(String)session.getAttribute("mem_id");
@@ -325,11 +436,35 @@ public class BookController {
 			return "redirect:book_list.do";
 		}
 		
-		
-		
+				
 		System.out.println(111);
 		int book_no1=Integer.parseInt(book_no);
+		
+		//이미지 삭제========================
+		List imgs=sqlSession.selectList("book_board.selectImgs", book_no1);
+		for(Object img:imgs) {
+			String imgTitle=(String)img;
+			
+			String filePath=request.getServletContext().getRealPath("/")+"/resources/book_imgs/"+imgTitle;;
+			
+			File deleteFile=new File(filePath);
+			
+			if(deleteFile.exists()) {
+				deleteFile.delete();
+				System.out.println("이미지 삭제 완료");
+			}else {
+				System.out.println("이미지 삭제 실패");
+			}
+		}
+		
+		
+		
+		sqlSession.delete("book_board.deleteImgs", book_no1);
+		//이미지 삭제 끝===============================
+		
 		sqlSession.delete("book_board.deleteBoard", book_no1);
+		
+		
 		
 		return "redirect:book_list.do";
 	}// delete() end

@@ -35,6 +35,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where book_no=#{book_no}
 	</select>
 	
+	<!-- 이미지 삭제 -->
+	<delete id="deleteImgs" parameterType="int">
+		delete from book_imgs
+		where book_no=#{book_no}
+	</delete>
+	
 	<!-- 글 갯수 -->
 	<select id="selectCount" resultType="int">
 		select count(*) from book_board
@@ -58,6 +64,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where book_type=#{book_type} 
 		order by book_group desc, book_step asc
 		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 전체 리스트 검색 -->
+	<select id="searchList" parameterType="map" resultType="model.book.Book_boardDto">
+		select * from book_board 
+		where ${searchType} like CONCAT('%',#{searchValue},'%')
+		order by book_group desc, book_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 각 카테고리 글 리스트  검색-->
+	<select id="searchListCategory" parameterType="java.util.HashMap" resultType="model.book.Book_boardDto">
+		select * from book_board 
+		where book_type=#{book_type} and ${searchType} like CONCAT('%',#{searchValue},'%')
+		order by book_group desc, book_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 전체 검색 글 갯수 -->
+	<select id="searchCount" parameterType="map" resultType="int">
+		select count(*) from book_board
+		where ${searchType} like CONCAT('%',#{searchValue},'%')
+	</select>
+	
+	<!-- 각 카테고리 검색 글 갯수 -->
+	<select id="searchCountCategory" parameterType="map" resultType="int">
+		select count(*) from book_board
+		where book_type=#{book_type} and ${searchType} like CONCAT('%',#{searchValue},'%')
 	</select>
 	
 	<!-- 조횟수 -->

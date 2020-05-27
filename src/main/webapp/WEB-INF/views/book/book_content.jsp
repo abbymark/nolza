@@ -172,6 +172,7 @@ function likeCancel(book_likeState){
 					<div>
 						<img src="${ctxpath }/resources/book_imgs/${imgs}" style="max-width:500px; max-height:500px" id="image">
 					</div>
+					
 				</c:forEach>
 			</td>
 		</tr>
@@ -308,6 +309,7 @@ function likeCancel(book_likeState){
 				</td>
 			</tr>
 		</c:if>
+			
 		
 		
 		<tr>

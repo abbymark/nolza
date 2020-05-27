@@ -120,7 +120,21 @@
 		
 		<tr>
 			<td>
-				<c:if test="${count>0 }">
+				<form method="post" action="book_search.do" align="center">
+					<select name="searchType">
+						<option value="mem_nick">작성자</option>
+						<option value="book_title">글 제목</option>		
+					</select>
+					<input type="text" name="searchValue">
+					<input type="submit" value="검색">
+					<input type="hidden" name="book_type" value="${book_type_eng}">
+				</form>
+			</td>
+		</tr>
+		
+		<tr>
+			<td>
+				<c:if test="${count>0 && searchType==null}">
 					<%-- 이전페이지 --%>
 					<c:if test="${startPage > 10}">
 						<a href="book_list.do?pageNum=${startPage-10}&book_type=${book_type_eng }">[이전]</a>
@@ -134,6 +148,24 @@
 					<%-- 다음페이지 --%>
 					<c:if test="${endPage < pageCount}">
 						<a href="book_list.do?pageNum=${startPage+10}&book_type=${book_type_eng }">[다음]</a>
+					</c:if>
+				</c:if>
+				
+				
+				<c:if test="${count>0 && searchType!=null}">
+					<%-- 이전페이지 --%>
+					<c:if test="${startPage > 10}">
+						<a href="book_search.do?pageNum=${startPage-10}&book_type=${book_type_eng }&searchType=${searchType}&searchValue=${searchValue}">[이전]</a>
+					</c:if>
+					
+					<%-- 페이지처리 --%>
+					<c:forEach var="i" begin="${startPage }" end="${endPage }">
+						<a href="book_search.do?pageNum=${i }&book_type=${book_type_eng }&searchType=${searchType}&searchValue=${searchValue}">[${i }]</a>
+					</c:forEach>
+					
+					<%-- 다음페이지 --%>
+					<c:if test="${endPage < pageCount}">
+						<a href="book_search.do?pageNum=${startPage+10}&book_type=${book_type_eng }&searchType=${searchType}&searchValue=${searchValue}">[다음]</a>
 					</c:if>
 				</c:if>
 			</td>
