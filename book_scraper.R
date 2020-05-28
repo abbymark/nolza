@@ -9,7 +9,7 @@ bookScraper = function(){
 #  Rserve(FALSE,port=6311,args='--RS-encoding utf8 --#-save --slave --encoding utf8')
   
   library(rvest)
-  
+  library(gridExtra)
   
   
   result <-c("랭크",1,2,3,4,5,6,7,8,9,10)
@@ -31,28 +31,47 @@ bookScraper = function(){
     
     
     bookTitles <- c(bookTitles,sites[page])
-    bookTitles <- c(bookTitles,data)
+    bookTitles <- data.frame(c(bookTitles,data))
     
-    result <- data.frame(result,bookTitles, stringsAsFactors = F)
+    
+    names(bookTitles) <- NULL
+    names(bookTitles) <- as.data.frame(bookTitles[1,])
+    bookTitles <- bookTitles[-1,]
+    
+    #print(bookTitles)
+    
+    tableName <- paste(page,".png",sep='')
+    
+    path <-paste("C:\\__sts\\sts_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nolza\\resources\\imgs\\",tableName,sep='')
+    
+    png(path, height=230, width=500)
+    grid.table(bookTitles)
+    dev.off()
+    
+    
+    
+    #전체 테이블 만들때 사용
+    #result <- data.frame(result,bookTitles, stringsAsFactors = F)
   }
   
 
-  print(result)
+  #print(result)
   
+  #전체 테이블 만들때 사용
   
-  library(gridExtra)
-  names(result) <- NULL
+  #library(gridExtra)
+  #names(result) <- NULL
   
-  names(result) <- as.data.frame(result[1,])
-  result <- result[-1,]
+  #names(result) <- as.data.frame(result[1,])
+  #result <- result[-1,]
   
-  rownames(result) <- NULL
+  #rownames(result) <- NULL
   
-  result$랭크<-NULL
+  #result$랭크<-NULL
   
-  png("C:\\__sts\\sts_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nolza\\resources\\imgs\\test.png", height=30*nrow(result), width=250*ncol(result))
-  grid.table(result)
-  dev.off()
+  #png("C:\\__sts\\sts_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nolza\\resources\\imgs\\test.png", height=30*nrow(result), width=250*ncol(result))
+  #grid.table(result)
+  #dev.off()
   
 }
 

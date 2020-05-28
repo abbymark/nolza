@@ -125,6 +125,10 @@ function likeCancel(book_likeState){
         chart.draw(data, options);
       }
     </script>
+    
+    
+    
+
   </head>
 
 </head>
@@ -165,17 +169,33 @@ function likeCancel(book_likeState){
 			<td colspan="3" id="book_title">${book_dto.book_title }</td>
 		</tr>
 		
-		<tr>
-			<td>이미지</td>
-			<td colspan="3">
-				<c:forEach var="imgs" items="${book_imgs }">
-					<div>
-						<img src="${ctxpath }/resources/book_imgs/${imgs}" style="max-width:500px; max-height:500px" id="image">
+		<c:if test="${book_imgs != null && book_imgs !='[]'}">
+			<tr>
+				<td>이미지</td>
+				
+				
+				
+				<td colspan="3">
+					<div class="slideshow-container">
+						<c:forEach var="imgs" items="${book_imgs }">
+							<div class="mySlides fade" align="center">
+								<img src="${ctxpath }/resources/book_imgs/${imgs}" style="max-width:500px; max-height:500px" id="image">
+							</div>
+						</c:forEach>
+					  	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+					  	<a class="next" onclick="plusSlides(1)">&#10095;</a>
 					</div>
-					
-				</c:forEach>
-			</td>
-		</tr>
+					<!-- The dots/circles -->
+					<div style="text-align:center">
+						<c:set var="imgCnt" value="1"/>
+						<c:forEach var="imgs" items="${book_imgs }">
+					  		<span class="dot" onclick="currentSlide(${imgCnt})"></span>
+					  		<c:set var="imgCnt" value="${imgCnt + 1}"/>
+					  	</c:forEach>
+					</div>
+				</td>
+			</tr>
+		</c:if>
 		
 		<c:if test="${book_dto.book_type =='비소설 추천' || book_dto.book_type =='소설 추천'}">
 			<tr>
@@ -304,7 +324,7 @@ function likeCancel(book_likeState){
 		
 		<c:if test="${book_dto.book_type =='토론'}">
 			<tr>
-				<td id="chart_div" colspan="4">
+				<td id="chart_div" colspan="4" align="center">
 				
 				</td>
 			</tr>
@@ -327,6 +347,43 @@ function likeCancel(book_likeState){
 	<%--댓글기능 --%>
 	댓글
 	<%@ include file="book_cmt.jsp" %>
+	
+	
+	
+	
+	
+	<%--이미지 슬라이더 --%>
+    <link rel="stylesheet" href="resources/imgs/img_slider.css">
+	<script>
+	var slideIndex = 1;
+	showSlides(slideIndex);
+
+	// Next/previous controls
+	function plusSlides(n) {
+	  showSlides(slideIndex += n);
+	}
+
+	// Thumbnail image controls
+	function currentSlide(n) {
+	  showSlides(slideIndex = n);
+	}
+
+	function showSlides(n) {
+	  var i;
+	  var slides = document.getElementsByClassName("mySlides");
+	  var dots = document.getElementsByClassName("dot");
+	  if (n > slides.length) {slideIndex = 1}
+	  if (n < 1) {slideIndex = slides.length}
+	  for (i = 0; i < slides.length; i++) {
+	      slides[i].style.display = "none";
+	  }
+	  for (i = 0; i < dots.length; i++) {
+	      dots[i].className = dots[i].className.replace(" active", "");
+	  }
+	  slides[slideIndex-1].style.display = "block";
+	  dots[slideIndex-1].className += " active";
+	}
+	</script>
 </body>
 </html>
 
