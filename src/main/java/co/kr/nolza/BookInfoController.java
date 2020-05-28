@@ -57,8 +57,8 @@ public class BookInfoController {
 		
 		System.out.println(555);
 		System.out.println(444);
-		
-		
+		System.out.println(new SavePath().path());
+		System.out.println(new SavePath().path());
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
