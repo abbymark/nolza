@@ -11,16 +11,16 @@
 댓글 달리는 공간
 
 <table>
-	
-	<tr>
-		<td>
-			<textArea id="cmt_content" name="cmt_content" placeholder="댓글을 입력하세요"></textArea>
-		</td>
-		<td>
-			<input type="button" onClick="insertComment('${book_dto.book_no}', '${mem_id }', '${mem_nick }')" value="등록">
-		</td>
-	</tr>
-	
+	<c:if test="${mem_id!=null }">
+		<tr>
+			<td>
+				<textArea id="cmt_content" name="cmt_content" placeholder="댓글을 입력하세요"></textArea>
+			</td>
+			<td>
+				<input type="button" onClick="insertComment('${book_dto.book_no}', '${mem_id }', '${mem_nick }')" value="등록">
+			</td>
+		</tr>
+	</c:if>
 
 	<tbody id="commentList">
 		

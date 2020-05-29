@@ -334,10 +334,14 @@ function likeCancel(book_likeState){
 		
 		<tr>
 			<td colspan="4" align="center">
-				<input type="button" value="글수정" onclick="location.href='book_updateForm.do?book_no=${book_dto.book_no}&pageNum=${pageNum}'">
-				<input type="button" value="글삭제" onclick="document.location.href='book_delete.do?book_no=${book_dto.book_no}&pageNum=${pageNum}&mem_id=${book_dto.mem_id }'">
-				<input type="button" value="글쓰기" onclick="document.location.href='book_writeForm.do?book_type=${book_dto.book_type }'">
-				<input type="button" value="답글쓰기" onclick="document.location.href='book_writeForm.do?book_no=${book_dto.book_no}&book_group=${book_dto.book_group}&book_step=${book_dto.book_step }&book_indent=${book_dto.book_indent }&book_type=${book_dto.book_type }'">
+				<c:if test="${mem_id!=null }">
+					<c:if test="${mem_id==book_dto.mem_id ||mem_grade=='admin'}">
+						<input type="button" value="글수정" onclick="location.href='book_updateForm.do?book_no=${book_dto.book_no}&pageNum=${pageNum}'">
+						<input type="button" value="글삭제" onclick="document.location.href='book_delete.do?book_no=${book_dto.book_no}&pageNum=${pageNum}&mem_id=${book_dto.mem_id }'">
+					</c:if>
+					<input type="button" value="글쓰기" onclick="document.location.href='book_writeForm.do?book_type=${book_dto.book_type }'">
+					<input type="button" value="답글쓰기" onclick="document.location.href='book_writeForm.do?book_no=${book_dto.book_no}&book_group=${book_dto.book_group}&book_step=${book_dto.book_step }&book_indent=${book_dto.book_indent }&book_type=${book_dto.book_type }'">
+				</c:if>
 				<input type="button" value="글목록" onclick="location.href='book_list.do?pageNum=${pageNum}'">
 			</td>
 		</tr>
@@ -345,7 +349,7 @@ function likeCancel(book_likeState){
 	</form>
 	
 	<%--댓글기능 --%>
-	댓글
+	
 	<%@ include file="book_cmt.jsp" %>
 	
 	

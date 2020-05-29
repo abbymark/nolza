@@ -10,10 +10,10 @@ import org.rosuda.REngine.Rserve.RConnection;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
-public class BookInfoController {
+//@Controller
+public class No_USE_BookInfoController {
 	
-	@RequestMapping("book_info.do")
+//	@RequestMapping("book_info.do")
 	public String infoPage(ServletRequest request) {
 		System.out.println(request.getServletContext().getRealPath("/"));
 		System.out.println(request.getRealPath("/"));
@@ -57,8 +57,6 @@ public class BookInfoController {
 		
 		System.out.println(555);
 		System.out.println(444);
-		System.out.println(new SavePath().path());
-		System.out.println(new SavePath().path());
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -13,12 +13,13 @@
 	<center><b>전체 글 갯수:${count }</b></center>
 	
 	<table border="1">
-		<tr>
-			<td align="right" colspan="2">
-				<a href="book_writeForm.do?book_type=${book_type }">글쓰기</a>
-			</td>
-		</tr>
-		
+		<c:if test="${mem_id!=null }">
+			<tr>
+				<td align="right" colspan="2">
+					<a href="book_writeForm.do?book_type=${book_type }">글쓰기</a>
+				</td>
+			</tr>
+		</c:if>
 		<tr>
 			<td>
 				<c:if test="${count>0 }">

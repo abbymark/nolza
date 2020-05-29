@@ -24,4 +24,45 @@
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory"/>
 	</bean>
+	
+	
+	
+	<!-- 책정보 자동 업데이트 스케줄러============================================================= -->
+	
+	<!-- <bean name="wordCloudJob" class="org.springframework.scheduling.quartz.JobDetailBean"> Quartz 1.8.x버전-->
+	<bean name="BookInfoSchedule" class="org.springframework.scheduling.quartz.JobDetailFactoryBean"><!-- Quartz 2.x 버전 -->
+		<property name="jobClass">
+			<value>co.kr.nolza.BookInfoSchedule</value>
+		</property>
+		<property name="durability" value="true"></property>
+	</bean>
+	
+	
+	<!-- <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"> Quartz 1.8.x 버전-->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"><!-- Quartz 2.x 버전 -->
+		<property name="jobDetail">
+			<ref bean="BookInfoSchedule"/>
+			
+		</property>
+		<property name="cronExpression">
+			<!-- 매  5분마다 실행 --> 
+			<!-- <value>0 0/5 * * * ?</value> -->
+			<!-- 매 30초마다 실행 -->
+			<value>0/30 * * * * ?</value>
+			<!-- 매일 오후 3시 20분마다 실행  -->
+			<!-- <value>0 20 15 * * ?</value> -->
+			
+		</property>
+	</bean>
+	
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="cronTrigger"/>
+			</list>
+		</property>
+	</bean>
+	<!-- 책정보 자동 업데이트 스케줄러 끝============================================================= -->
+	
+	
 </beans>

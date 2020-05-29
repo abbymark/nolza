@@ -651,6 +651,12 @@ public class BookController {
 		
 		return result;
 	}
+	
+	@RequestMapping("book_info.do")
+	public String infoPage() {
+		
+		return ".main.book.book_info";
+	}
 }
 
 
