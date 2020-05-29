@@ -32,7 +32,7 @@ public class BookInfoSchedule extends QuartzJobBean{
 			p = rt.exec(exeFile);
 		
 		//R접속
-		System.out.println(11111);
+		System.out.println(1111);
 		RConnection conn=new RConnection();
 		System.out.println(222);
 		conn.eval("source('C:/__sts/sts_work/nolza/book_scraper.R', encoding=\"utf-8\")");
