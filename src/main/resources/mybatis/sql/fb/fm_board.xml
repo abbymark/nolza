@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fm_board">
+
+	<!-- 최대 글번호 얻기 -->
+	<select id="maxNumber" resultType="Integer">
+		select max(fm_no) from fm_board
+	</select>
+
+	<!-- 답글 끼워넣기 위치확보 -->
+	<update id="reStep" parameterType="model.fb.FM_boardDTO">
+		update fm_board
+		set fm_step=fm_step+1
+		where fm_group=#{fm_group} and fm_step>#{fm_step}
+	</update>
+
+	<!-- 글쓰기, 답글쓰기 -->
+	<insert id="insertBoard" parameterType="model.fb.FM_boardDTO">
+		insert into fm_board(mem_id,mem_nick,fm_date,fm_ip,fm_img,fm_type,fm_category,fm_time,fm_place,fm_teamhome,fm_teamaway,fm_winner,fm_location,fm_score,fm_mdate,fm_detail,fm_group,fm_step,fm_indent)
+		values(#{mem_id},#{mem_nick},NOW(),#{fm_ip},#{fm_img},#{fm_type},#{fm_category},#{fm_time},#{fm_place},#{fm_teamhome},#{fm_teamaway},#{fm_winner},#{fm_location},#{fm_score},#{fm_mdate},#{fm_detail},#{fm_group},#{fm_step},#{fm_indent})
+	</insert>
+
+	<!-- 글 갯수 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from fm_board
+	</select>
+
+	<!-- 유형별 글 갯수 -->
+	<select id="selectCountType" resultType="int">
+		select count(*) from fm_board
+		where fm_type=#{fm_type}
+	</select>
+
+	<!-- 카테고리별 글 갯수 -->
+	<select id="selectCountCategory" resultType="int">
+		select count(*) from fm_board
+		where fm_category=#{fm_category}
+	</select>
+
+	<!-- 리스트 -->
+	<select id="selectList" parameterType="java.util.HashMap" resultType="model.fb.FM_boardDTO">
+		select * from fm_board
+		order by fm_group desc, fm_step asc
+		limit #{start},#{cnt}
+	</select>
+
+	<!-- 유형별 리스트 -->
+	<select id="selectListType" parameterType="java.util.HashMap" resultType="model.fb.FM_boardDTO">
+		select * from fm_board
+		where fm_type=#{fm_type}
+		order by fm_group desc, fm_step asc
+		limit #{start},#{cnt}
+	</select>
+
+	<!-- 카테고리별 리스트 -->
+	<select id="selectListCategory" parameterType="java.util.HashMap" resultType="model.fb.FM_boardDTO">
+		select * from fm_board
+		where fm_category=#{fm_category}
+		order by fm_group desc, fm_step asc
+		limit #{start},#{cnt}
+	</select>
+
+	<!-- 조회수 -->
+	<update id="readCount" parameterType="int">
+		update fm_board set fm_readcount=fm_readcount+1
+		where fm_no=#{fm_no}
+	</update>
+
+	<!-- 글내용보기, 글수정 -->
+	<select id="contentBoard" parameterType="int" resultType="model.fb.FM_boardDTO">
+		select * from fm_board
+		where fm_no=#{fm_no}
+	</select>
+
+	<!-- DB글수정 -->
+	<update id="updateBoard" parameterType="model.fb.FM_boardDTO">
+		update fm_board
+		set fm_place=#{fm_place},
+		fm_mdate=#{fm_mdate},
+		fm_location=#{fm_location},
+		fm_teamhome=#{fm_teamhome},
+		fm_teamaway=#{fm_teamaway},
+		fm_winner=#{fm_winner},
+		fm_category=#{fm_category},
+		fm_type=#{fm_type},
+		fm_img=#{fm_img},
+		fm_detail=#{fm_detail},
+		fm_score=#{fm_score}
+		where fm_no=#{fm_no}
+	</update>
+
+	<!-- 글삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete from fm_board where fm_no=#{fm_no}
+	</delete>
+	
+<!--댓글 ////////////////////////////////////////////////////-->
+	
+	<!-- 최대 댓글번호 얻기 -->
+	<select id="cmtMaxNumber" parameterType="int" resultType="int">
+		select count(cmt_no)
+		from fm_cmt
+		where fm_no=#{fm_no}
+	</select>
+
+	<!-- 대댓글 끼워넣을 위치 확보 -->
+	<update id="cmtReStep" parameterType="model.fb.FM_cmtDTO">
+		update fm_cmt
+		set cmt_step=cmt_step+1
+		where cmt_group=#{cmt_group} and cmt_step>#{cmt_step}
+	</update>
+
+	<!-- 댓글쓰기-->
+	<insert id="insertCmt" parameterType="model.fb.FM_cmtDTO">
+		insert into fm_cmt(fm_no,mem_id,mem_nick,cmt_content,cmt_date,cmt_ip, cmt_group, cmt_step, cmt_indent)
+		values(#{fm_no},#{mem_id},#{mem_nick},#{cmt_content},NOW(),#{cmt_ip}, #{cmt_group}, #{cmt_step}, #{cmt_indent})
+	</insert>
+	
+	<!-- 리스트-->
+	<select id="cmtList" parameterType="map" resultType="model.fb.FM_cmtDTO">
+		select * from fm_cmt
+		where fm_no=#{fm_no}
+		order by cmt_group desc, cmt_step asc
+		limit #{start},#{cnt}		
+	</select>
+	
+
+	<!-- 댓글아이디 조회 -->
+	<select id="cmtIdSearch" parameterType="map" resultType="String">
+		select mem_id
+		from fm_cmt
+		where fm_no=#{fm_no} and cmt_no=#{cmt_no}
+	</select>
+
+	<!-- 댓글삭제 -->
+	<delete id="deleteCmt" parameterType="map">
+		delete from fm_cmt 
+		where fm_no=#{fm_no} and cmt_no=#{cmt_no}
+	</delete>
+
+	<!-- 게시글 댓글 갯수 수정 -->
+	<update id="updateBoardCmtCnt" parameterType="map">
+		update fm_board
+		set fm_cmt_cnt=fm_cmt_cnt+#{countState}
+		where fm_no=#{fm_no}
+	</update>
+
+
+ <!--검색 ////////////////////////////////////////////////////-->
+
+	<!-- 전체 리스트 검색 -->
+	<select id="searchList" parameterType="map" resultType="model.fb.FM_boardDTO">
+			select * from fm_board
+			where ${searchType} like CONCAT ('%',#{searchValue},'%')
+			order by fm_group desc, fm_step asc
+	</select>
+
+	<!-- 카테고리별 글 리스트 검색 -->
+	<select id="searchListCategory" parameterType="java.util.HashMap" resultType="model.fb.FM_boardDTO"> 
+			select * from fm_board
+			where fm_category=#{fm_category} and ${searchType} like CONCAT('%',#{searchValue},'%')
+			order by fm_group desc, fm_step asc
+			limit #{start},#{cnt}
+	</select>
+
+	<!-- 전체 검색 글 갯수 -->
+	<select id="searchCount" parameterType="map" resultType="int">
+			select count(*) from fm_board
+			where ${searchType} like CONCAT('%',#{searchValue},'%')
+	</select>
+
+	<!-- 카테고리별 검색 글 갯수 -->
+	<select id="searchCountCategory" parameterType="map" resultType="int">
+			select count(*) from fm_board
+			where fm_category=#{fm_category} and ${searchType} like CONCAT('%',#{searchValue},'%')
+	</select>
+
+
+</mapper>

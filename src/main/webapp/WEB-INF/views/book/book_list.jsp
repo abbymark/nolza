@@ -10,9 +10,30 @@
 
 </head>
 <body>
-	<center><b>전체 글 갯수:${count }</b></center>
+	<c:choose>
+		<c:when test="${book_type_eng==null }">
+			<h1>전체게시판</h1>
+		</c:when>
+		<c:when test="${book_type_eng =='free'}">
+			<h1>자유게시판</h1>
+		</c:when>
+		<c:when test="${book_type_eng =='recommendNonFiction'}">
+			<h1>비소설 추천</h1>
+		</c:when>
+		<c:when test="${book_type_eng =='recommendFiction'}">
+			<h1>소설 추천</h1>
+		</c:when>
+		<c:when test="${book_type_eng =='readingGroup'}">
+			<h1>독서 모임</h1>
+		</c:when>
+		<c:when test="${book_type_eng =='debate'}">
+			<h1>토론</h1>
+		</c:when>
+	</c:choose>
 	
-	<table border="1">
+	<center><b>전체 글 갯수:${count }</b></center>
+	<div class="container list" style="text-align:center;">
+	<table class="table">
 		<c:if test="${mem_id!=null }">
 			<tr>
 				<td align="right" colspan="2">
@@ -23,7 +44,7 @@
 		<tr>
 			<td>
 				<c:if test="${count>0 }">
-					<table border="1">
+					<table align="center">
 						<tr>
 							<td>글번호</td>
 							<td>글 종류</td>
@@ -172,6 +193,7 @@
 			</td>
 		</td>
 	</table>
+	</div>
 </body>
 </html>
 

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="matzip">
+  
+  	<!-- 리스트 -->
+	<select id="mat_selectList" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
+		select * from matzip
+		order by ggroup desc, step asc
+		limit #{start}, #{cnt}
+	</select>
+	
+	<!-- 리스트 글 검색 -->
+	<select id="mat_serchList" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
+		select * from matzip
+		where #{keyField} like "%#{keyWord}%" 
+		order by ggroup desc, step asc
+	</select>
+  	
+    <!-- 최대 글 번호 얻기 -->
+	<select id="mat_maxNumber" resultType="Integer">
+		select max(no) from matzip	
+	</select>
+	
+	<!-- 답글 끼워 넣기 위치 확보 -->
+	<update id="mat_reStep" parameterType="model.matzip.MatzipDto">
+		update matzip
+		set step=step+1
+		where ggroup=#{ggroup} and step>#{step}
+	</update>
+	
+	<!-- 글쓰기, 답글 쓰기 -->
+	<insert id="mat_insertBoard" parameterType="model.matzip.MatzipDto">
+		insert into matzip(id,nick,title,content,passwd,date,ggroup,step, indent, ip)
+		values(#{id},#{nick},#{title},#{content},#{passwd},NOW(),#{ggroup},#{step},#{indent},#{ip})
+	</insert>
+	
+	<!-- 글 개수 -->
+	<select id="mat_selectCount" resultType="int">
+		select count(*) from matzip
+	</select>
+	
+	<!-- 조회수 -->
+	<update id="mat_readCount" parameterType="int">
+		update matzip
+		set readcount=readcount+1 where no=#{no}
+	</update>
+	
+	<!-- 글내용 보기, 글 수정 -->
+	<select id="mat_contentBoard" parameterType="int" resultType="model.matzip.MatzipDto">
+		select * from matzip
+		where no=#{no}
+	</select>
+	
+	<!-- DB글 수정 -->
+	<update id="mat_updateBoard" parameterType="model.matzip.MatzipDto" >
+		update matzip
+		set id=#{id}, title=#{title}, content=#{content}
+        where no=#{no}
+	</update>
+	
+	<!-- 글삭제 -->
+	<delete id="mat_deleteBoard" parameterType="int">
+		delete from matzip where no=#{no}
+	</delete>
+	
+	
+	<!-- =================================== 빵집 ==============================  -->
+  	<!-- 리스트 -->
+	<select id="selectOne" resultType="model.matzip.BreadDto">
+		select * from bread 
+	</select>
+  	
+  	<!-- 글내용 보기 -->
+	<select id="contentBread" parameterType="String" resultType="model.matzip.BreadDto">
+		select * from bread
+		where bread_name=#{bread_name}
+	</select>
+	
+	
+
+  <!-- =================================== 리뷰 ==============================  -->
+  	<!-- 글 요약 -->
+	<select id="summaryReview" parameterType="String" resultType="java.util.HashMap">
+		select cast( avg(rev_score) as unsigned ) as avg_score
+		     , sum(rev_like) as sum_like 
+		  from review
+		 where bread_name= #{bread_name}
+	</select>
+  	
+	<!-- 내용 꺼냄 -->
+  	<select id="contentReview" parameterType="String" resultType="java.util.HashMap">
+		select rev_content
+		     , rev_date
+		     , rev_no 
+		  from review
+	 	 where bread_name = #{bread_name}
+	</select>	
+	
+	<!-- 별점, 리뷰 등록 mem_id 
+	<update id="updateReview" parameterType="model.matzip.ReviewDto">
+		update review
+		   set rev_score   = #{rev_score}
+		     , rev_star    = #{rev_star}
+		     , rev_content = #{rev_content}
+		 where mem_id      = #{mem_id}
+	</update>
+	
+	mem_id로 내용들을 찾아서 업데이트 해준다
+	-->
+	
+	
+	
+
+	<!-- ================================ 관리자 ================================== -->
+  	<!-- 리뷰 내용 삭제  -->
+  	<delete id="deleteReview" parameterType="int">
+  		delete from review
+  		 where rev_no = #{rev_no}
+  	</delete>
+  
+  	<!-- 리뷰 상세내용 수정  -->
+	<update id="updateReview" parameterType="model.matzip.BreadDto" >
+  		update bread
+  	  	   set bread_menu = #{bread_menu}
+  	  	     , bread_loc  = #{bread_loc}
+  	  	     , bread_tel  = #{bread_tel}
+  	     where bread_name = #{bread_name}
+  	</update>
+  	
+  	<!-- 관리자 삭제 -->
+  	<delete id="">
+  		delete from member
+  		 where mem_id=${mem_id}
+  	</delete>
+  	
+  	
+</mapper>

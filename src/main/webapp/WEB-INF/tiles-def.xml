@@ -4,17 +4,23 @@
    "http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
    
 <tiles-definitions>
-   <definition name=".main.layout" template="/WEB-INF/views/layout.jsp">
-      <put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
-      <put-attribute name="side" value="/WEB-INF/views/side.jsp"/>
-      <put-attribute name="content" value="/WEB-INF/views/board/list.jsp"/>
-      <put-attribute name="footer" value="/WEB-INF/views/footer.jsp"/>
+   <definition name=".main.cam_layout" template="/WEB-INF/views/cam_layout.jsp">
+      <put-attribute name="cam_header" value="/WEB-INF/views/cam_header.jsp"/>
+      <put-attribute name="cam_side" value="/WEB-INF/views/cam_side.jsp"/>
+      <put-attribute name="cam_content" value="/WEB-INF/views/cam_main.jsp"/>
+      <put-attribute name="cam_footer" value="/WEB-INF/views/cam_footer.jsp"/>
    </definition>
+   
 
-   <definition name=".main.*.*" extends=".main.layout">
-      <put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"/>
+   <definition name=".main.*.*" extends=".main.cam_layout">
+      <put-attribute name="cam_content" value="/WEB-INF/views/{1}/{2}.jsp"/>
    </definition>
-   <definition name=".main.*.*.*" extends=".main.layout">
-      <put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+   
+   <definition name=".main.*.*.*" extends=".main.cam_layout">
+      <put-attribute name="cam_content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
+   </definition>
+   
+   <definition name=".main.*.*.*.*" extends=".main.cam_layout">
+      <put-attribute name="cam_content" value="/WEB-INF/views/{1}/{2}/{3}/{4}.jsp"/>
    </definition>
 </tiles-definitions>

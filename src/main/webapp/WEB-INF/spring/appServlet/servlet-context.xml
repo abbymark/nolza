@@ -15,7 +15,7 @@
 	<!-- 멀티파트 리졸버 -->
 	<beans:bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
          <!-- 최대업로드 가능한 바이트크기 -->
-         <beans:property name="maxUploadSize" value="52428800" />
+         <beans:property name="maxUploadSize" value="10485760" />
          
          <!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
          <!-- property name="maxInMemorySize" value="52428800" / -->
@@ -47,6 +47,19 @@
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order" value="2"/>
 	</beans:bean>
+	
+	
+	<!-- 업로드 패스 설정 --> 
+	<beans:bean class="java.lang.String" id="uploadPath">
+	 <beans:constructor-arg value="C:\_sts\sts_work\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\nolza\resources" />
+	</beans:bean>
+	
+	<!-- 일반 파일 업로드 경로 -->
+	<resources mapping="/resources/**" location="/resources/imgUpload/" />
+	
+
+<context:component-scan base-package="co.kr.utils" />
+	
 	
 	<context:component-scan base-package="co.kr.nolza" />
 	

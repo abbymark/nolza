@@ -127,7 +127,7 @@ function likeCancel(book_likeState){
     </script>
     
     
-    
+
 
   </head>
 
@@ -178,7 +178,7 @@ function likeCancel(book_likeState){
 				<td colspan="3">
 					<div class="slideshow-container">
 						<c:forEach var="imgs" items="${book_imgs }">
-							<div class="mySlides fade" align="center">
+							<div class="mySlides faded" align="center">
 								<img src="${ctxpath }/resources/book_imgs/${imgs}" style="max-width:500px; max-height:500px" id="image">
 							</div>
 						</c:forEach>

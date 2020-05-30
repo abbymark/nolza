@@ -7,6 +7,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <mappers>
     	<mapper resource="/mybatis/sql/book/book_board.xml"/>
         <mapper resource="/mybatis/sql/member.xml"/>
+        <mapper resource="/campboard/sql/camboard.xml"/>
+        <mapper resource="/campboard/sql/camjaboard.xml"/>
+        <mapper resource="/mybatis/sql/matzip.xml"/>
+         
+        <mapper resource="/mybatis/sql/fb/fb_board.xml"/>
+        
+        <mapper resource="/mybatis/sql/fb/fm_board.xml"/>
         <!-- 
         
         <mapper resource="/memboard/sql/board.xml"/>

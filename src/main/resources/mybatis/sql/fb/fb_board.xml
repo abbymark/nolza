@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="fb_board">
+
+	<!-- 최대 글번호 얻기 -->
+	<select id="maxNumber" resultType="Integer">
+		select max(fb_no) from fb_board
+	</select>
+
+	<!-- 답글 끼워넣기 위치확보 -->
+	<update id="reStep" parameterType="model.fb.FB_boardDTO">
+		update fb_board
+		set fb_step=fb_step+1
+		where fb_group=#{fb_group} and fb_step>#{fb_step}
+	</update>
+
+	<!-- 글쓰기, 답글쓰기 -->
+	<insert id="insertBoard" parameterType="model.fb.FB_boardDTO">
+		insert into fb_board(mem_id,mem_nick,fb_title,fb_content,fb_img,fb_date,fb_ip,fb_type,fb_category,fb_group,fb_step,fb_indent)
+		values(#{mem_id},#{mem_nick},#{fb_title},#{fb_content},#{fb_img},NOW(),#{fb_ip},#{fb_type},#{fb_category},
+		#{fb_group},#{fb_step},#{fb_indent})
+	</insert>
+	
+	<!-- 글 갯수 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from fb_board
+	</select>
+
+	<!-- 유형별 글 갯수 -->
+	<select id="selectCountType" resultType="int">
+		select count(*) from fb_board
+		where fb_type=#{fb_type}
+	</select>
+
+	<!-- 카테고리별 글 갯수 -->
+	<select id="selectCountCategory" resultType="int">
+		select count(*) from fb_board
+		where fb_category=#{fb_category}
+	</select>
+	
+	<!-- 리스트 -->
+	<select id="selectList" parameterType="java.util.HashMap" resultType="model.fb.FB_boardDTO">
+		select * from fb_board
+		order by fb_group desc, fb_step asc
+		limit #{start},#{cnt}
+	</select>
+
+	<!-- 유형별 리스트 -->
+	<select id="selectListType" parameterType="java.util.HashMap" resultType="model.fb.FB_boardDTO">
+		select * from fb_board
+		where fb_type=#{fb_type}
+		order by fb_group desc, fb_step asc
+		limit #{start},#{cnt}
+	</select>
+
+	<!-- 카테고리별 리스트 -->
+	<select id="selectListCategory" parameterType="java.util.HashMap" resultType="model.fb.FB_boardDTO">
+		select * from fb_board
+		where fb_category=#{fb_category}
+		order by fb_group desc, fb_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 조회수 -->
+	<update id="readCount" parameterType="int">
+		update fb_board set fb_readcount=fb_readcount+1
+		where fb_no=#{fb_no}
+	</update>
+	
+	<!-- 글내용보기, 글수정 -->
+	<select id="contentBoard" parameterType="int" resultType="model.fb.FB_boardDTO">
+		select * from fb_board
+		where fb_no=#{fb_no}
+	</select>
+	
+	<!-- DB글수정 -->
+	<update id="updateBoard" parameterType="model.fb.FB_boardDTO">
+		update fb_board
+		set fb_title=#{fb_title},
+		fb_content=#{fb_content}
+		where fb_no=#{fb_no}
+	</update>
+
+	<!-- 글삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete from fb_board where fb_no=#{fb_no}
+	</delete>
+	
+	
+<!--댓글 ////////////////////////////////////////////////////-->
+	
+	<!-- 최대 댓글번호 얻기 -->
+	<select id="cmtMaxNumber" parameterType="int" resultType="int">
+		select count(cmt_no)
+		from fb_cmt
+		where fb_no=#{fb_no}
+	</select>
+
+	<!-- 대댓글 끼워넣을 위치 확보 -->
+	<update id="cmtReStep" parameterType="model.fb.FB_cmtDTO">
+		update fb_cmt
+		set cmt_step=cmt_step+1
+		where cmt_group=#{cmt_group} and cmt_step>#{cmt_step}
+	</update>
+
+	<!-- 댓글쓰기-->
+	<insert id="insertCmt" parameterType="model.fb.FB_cmtDTO">
+		insert into fb_cmt(fb_no,mem_id,mem_nick,cmt_content,cmt_date,cmt_ip, cmt_group, cmt_step, cmt_indent)
+		values(#{fb_no},#{mem_id},#{mem_nick},#{cmt_content},NOW(),#{cmt_ip}, #{cmt_group}, #{cmt_step}, #{cmt_indent})
+	</insert>
+	
+	<!-- 리스트-->
+	<select id="cmtList" parameterType="map" resultType="model.fb.FB_cmtDTO">
+		select * from fb_cmt
+		where fb_no=#{fb_no}
+		order by cmt_group desc, cmt_step asc
+		limit #{start},#{cnt}		
+	</select>
+	
+
+	<!-- 댓글아이디 조회 -->
+	<select id="cmtIdSearch" parameterType="map" resultType="String">
+		select mem_id
+		from fb_cmt
+		where fb_no=#{fb_no} and cmt_no=#{cmt_no}
+	</select>
+
+	<!-- 댓글삭제 -->
+	<delete id="deleteCmt" parameterType="map">
+		delete from fb_cmt 
+		where fb_no=#{fb_no} and cmt_no=#{cmt_no}
+	</delete>
+
+	<!-- 게시글 댓글 갯수 수정 -->
+	<update id="updateBoardCmtCnt" parameterType="map">
+		update fb_board
+		set fb_cmt_cnt=fb_cmt_cnt+#{countState}
+		where fb_no=#{fb_no}
+	</update>
+	
+	
+
+<!--검색 ////////////////////////////////////////////////////-->
+
+
+	<!-- 전체 리스트 검색 -->
+	<select id="searchList" parameterType="map" resultType="model.fb.FB_boardDTO">
+			select * from fb_board
+			where ${searchType} like CONCAT ('%',#{searchValue},'%')
+			order by fb_group desc, fb_step asc
+	</select>
+
+	<!-- 카테고리별 글 리스트 검색 -->
+	<select id="searchListCategory" parameterType="java.util.HashMap" resultType="model.fb.FB_boardDTO"> 
+			select * from fb_board
+			where fb_category=#{fb_category} and ${searchType} like CONCAT('%',#{searchValue},'%')
+			order by fb_group desc, fb_step asc
+			limit #{start},#{cnt}
+	</select>
+
+	<!-- 전체 검색 글 갯수 -->
+	<select id="searchCount" parameterType="map" resultType="int">
+			select count(*) from fb_board
+			where ${searchType} like CONCAT('%',#{searchValue},'%')
+	</select>
+
+	<!-- 카테고리별 검색 글 갯수 -->
+	<select id="searchCountCategory" parameterType="map" resultType="int">
+			select count(*) from fb_board
+			where fb_category=#{fb_category} and ${searchType} like CONCAT('%',#{searchValue},'%')
+	</select>
+
+</mapper>
