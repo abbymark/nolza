@@ -134,8 +134,9 @@ function likeCancel(book_likeState){
 </head>
 <body>
 	<center><h2>글 내용 보기</h2></center>
+	<div class="container" style="text-align:center;">
 	<form>
-	<table border="1">
+	<table border="1" class="table">
 		
 		<tr>
 			
@@ -182,7 +183,7 @@ function likeCancel(book_likeState){
 								<img src="${ctxpath }/resources/book_imgs/${imgs}" style="max-width:500px; max-height:500px" id="image">
 							</div>
 						</c:forEach>
-					  	<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+					  	<a class="prev" style="left:0;" onclick="plusSlides(-1)">&#10094;</a>
 					  	<a class="next" onclick="plusSlides(1)">&#10095;</a>
 					</div>
 					<!-- The dots/circles -->
@@ -226,8 +227,8 @@ function likeCancel(book_likeState){
 		<tr>
 			<td>글내용</td>
 			<td colspan="3">
-				<textArea rows="10" cols="60" readonly>${book_content }</textArea>
-				<table border="1">
+				<textArea rows="10" cols="60" readonly style="width:100%">${book_content }</textArea>
+				<table  align="center">
 					<tr>
 						<td>
 							<span id="likeCnt">${book_dto.book_like_cnt }</span>
@@ -274,7 +275,7 @@ function likeCancel(book_likeState){
 		<c:if test="${book_dto.book_type =='독서 모임' && book_dto.book_location != '0'}">
 			<tr>
 				<td>위치</td>
-				<td id="book_location">${book_dto.book_location }</td>
+				<td id="book_location" colspan="3">${book_dto.book_location }</td>
 			</tr>
 			<tr>
 				<td colspan="4">
@@ -346,13 +347,14 @@ function likeCancel(book_likeState){
 			</td>
 		</tr>
 	</table>
+	
 	</form>
 	
 	<%--댓글기능 --%>
 	
 	<%@ include file="book_cmt.jsp" %>
-	
-	
+
+	</div>
 	
 	
 	

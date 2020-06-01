@@ -34,7 +34,7 @@
 	<center><b>전체 글 갯수:${count }</b></center>
 	<div class="container list" style="text-align:center;">
 	<table class="table">
-		<c:if test="${mem_id!=null }">
+		<c:if test="${mem_id!=null && book_type!=null}">
 			<tr>
 				<td align="right" colspan="2">
 					<a href="book_writeForm.do?book_type=${book_type }">글쓰기</a>
@@ -44,7 +44,7 @@
 		<tr>
 			<td>
 				<c:if test="${count>0 }">
-					<table align="center">
+					<table align="center" width="100%">
 						<tr>
 							<td>글번호</td>
 							<td>글 종류</td>
@@ -59,7 +59,9 @@
 							<td>작성일</td>
 							<td>조회</td>
 							<td>추천</td>
-							<td>ip</td>
+							<c:if test="${mem_grade=='admin' }">
+								<td>ip</td>
+							</c:if>
 						</tr>
 						
 						<c:forEach var="book_dto" items="${list }">
@@ -132,7 +134,9 @@
 								
 								<td>${book_dto.book_readcount }</td>
 								<td>${book_dto.book_like }</td>
-								<td>${book_dto.book_ip }</td>
+								<c:if test="${mem_grade='admin' }">
+									<td>${book_dto.book_ip }</td>
+								</c:if>
 							</tr>
 						</c:forEach>
 					</table>

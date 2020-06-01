@@ -1,0 +1,156 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
+.list {
+	overflow: auto;
+}
+
+.list.match {
+	padding: 20px 20px 20px 0;
+
+}
+
+.listCol2.tac {
+	text-align: center;
+}
+
+.txt2 {
+	font-size: 14px;
+}
+
+.txt3 {
+	font-size: 16px;
+}
+
+.txt2.w700, .txt3.w700, .txt5.w700, .txt4.w700, .txt6.w700 {
+	font-weight: 700;
+}
+
+.listCol3 {
+	width: 25%;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.list .matchTitle {
+	overflow: auto;
+}
+
+.list .matchTitle p {
+	word-break: keep-all;
+	display: inline;
+}
+
+.tag.match {
+	margin: 5px 0;
+	overflow: auto;
+}
+.tag.match p {
+	float: left;
+	font-size: 11px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.tag.match .tagList {
+	margin-right: 5px;
+}
+
+.tagList.male:before {
+    content: '';
+    background-color: #3534A5;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 4px;
+}
+
+.tagList.female:before {
+    content: '';
+    background-color: #FF304B;
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    border-radius: 10px;
+    margin-right: 4px;
+}
+
+.tag.match .level {
+	margin-right: 5px;
+}
+.tag.match .level.every:before, .more:before {
+    content: '·';
+    color: #999;
+    margin-right: 5px;
+}
+.tag.match .level.every:after, .more:after {
+    content: '';
+    margin-right: 5px;
+}
+
+
+#matchDate{
+    padding: 1px;
+    border-radius: 20px;
+    text-align: center;
+		background:yellow;
+		width: 80px;
+}
+
+.matchReply {
+    padding: 1px;
+    border-radius: 20px;
+    text-align: center;
+		background:silver;
+		width: 30px;
+}
+
+.listCol2.tac {
+	text-align: center;
+}
+
+.listCol1 {
+	width: 10%;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.listCol15 {
+	width: 15%;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+}
+.listCol2 {
+	width: 20%;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+}
+.listCol3 {
+	width: 25%;
+    text-align: left;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.matchStatus {
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+	background: #24b821;
+	color: white;
+}
+
+
+li{	
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+	list-style:none
+}
+	

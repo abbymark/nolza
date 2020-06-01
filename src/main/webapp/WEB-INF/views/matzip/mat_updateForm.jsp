@@ -7,24 +7,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title>updateForm.jsp</title>
-	<style type="text/css">
-		body {background-color:#ffffcc;}
-		table{margin:auto; line-height:25px; width:70%;}
 	
-	</style>
 	
 	<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 	
-	<script type="text/javascript">
-		function check(){
-			if($('id').val()==''){
-				alert("이름을 입력하시오");
-				$('id').focus();
-				return false;
-			}
-			return true;
-		}
-	</script>
+	
 
 </head>
 <body>
@@ -33,9 +20,9 @@
 		
 		<table border="1">
 			<tr>
-				<td>이름</td>
+				<td>닉네임</td>
 				<td>
-				<input type="text" name="id" id="id" size="30" value="${dto.id}">
+				<input type="text" name="mem_nick" id="mem_nick" size="30" value="${dto.mem_nick}" readonly=TRUE>
 				<input type="hidden" name="no" id="no" value="${dto.no}">
 				</td>
 			</tr>

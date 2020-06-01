@@ -32,8 +32,8 @@
 	
 	<!-- 글쓰기, 답글 쓰기 -->
 	<insert id="mat_insertBoard" parameterType="model.matzip.MatzipDto">
-		insert into matzip(id,nick,title,content,passwd,date,ggroup,step, indent, ip)
-		values(#{id},#{nick},#{title},#{content},#{passwd},NOW(),#{ggroup},#{step},#{indent},#{ip})
+		insert into matzip(mem_id,mem_nick,title,content,date,ggroup,step, indent, ip)
+		values(#{mem_id},#{mem_nick},#{title},#{content},NOW(),#{ggroup},#{step},#{indent},#{ip})
 	</insert>
 	
 	<!-- 글 개수 -->
@@ -56,7 +56,7 @@
 	<!-- DB글 수정 -->
 	<update id="mat_updateBoard" parameterType="model.matzip.MatzipDto" >
 		update matzip
-		set id=#{id}, title=#{title}, content=#{content}
+		set title=#{title}, content=#{content}
         where no=#{no}
 	</update>
 	
@@ -113,27 +113,7 @@
 	
 	
 
-	<!-- ================================ 관리자 ================================== -->
-  	<!-- 리뷰 내용 삭제  -->
-  	<delete id="deleteReview" parameterType="int">
-  		delete from review
-  		 where rev_no = #{rev_no}
-  	</delete>
-  
-  	<!-- 리뷰 상세내용 수정  -->
-	<update id="updateReview" parameterType="model.matzip.BreadDto" >
-  		update bread
-  	  	   set bread_menu = #{bread_menu}
-  	  	     , bread_loc  = #{bread_loc}
-  	  	     , bread_tel  = #{bread_tel}
-  	     where bread_name = #{bread_name}
-  	</update>
-  	
-  	<!-- 관리자 삭제 -->
-  	<delete id="">
-  		delete from member
-  		 where mem_id=${mem_id}
-  	</delete>
+	
   	
   	
 </mapper>

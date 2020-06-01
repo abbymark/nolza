@@ -10,11 +10,11 @@
 <body onload="getCommentList('${book_dto.book_no}',1)">
 댓글 달리는 공간
 
-<table>
+<table class="table">
 	<c:if test="${mem_id!=null }">
 		<tr>
-			<td>
-				<textArea id="cmt_content" name="cmt_content" placeholder="댓글을 입력하세요"></textArea>
+			<td colspan="3">
+				<textArea id="cmt_content" name="cmt_content" style="width:100%" placeholder="댓글을 입력하세요"></textArea>
 			</td>
 			<td>
 				<input type="button" onClick="insertComment('${book_dto.book_no}', '${mem_id }', '${mem_nick }')" value="등록">
@@ -22,11 +22,11 @@
 		</tr>
 	</c:if>
 
-	<tbody id="commentList">
+	<tbody id="commentList" align="left">
 		
 	</tbody>
 	<tr align="center">
-		<td>
+		<td colspan="4">
 			<table>
 				<tr id="paging">
 			
@@ -67,6 +67,7 @@ function getCommentList(book_no,page){
 		type:"POST",
 		url:"book_cmt_list.do",
 		data:"book_no="+book_no+"&page="+page,
+		async:false,
 		dataType : "JSON",
 		success:function(data){
 			cmtCnt=getCmtCnt(book_no);
@@ -140,7 +141,6 @@ function getCommentList(book_no,page){
 				html +="<td>등록된 댓글이 없습니다.</td>";
 				html +="</tr>";
 			}
-			
 			$("#commentList").html(html);
 			$("#paging").html(paging);
 		}

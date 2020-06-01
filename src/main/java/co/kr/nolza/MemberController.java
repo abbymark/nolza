@@ -96,7 +96,7 @@ public class MemberController {
 		
 		map.put("mem_login_state",1);
 		sqlSession.update("member.updateLoginState",map);
-		return ".main.member.main";
+		return "redirect:/";
 	}
 	//로그아웃
 	@RequestMapping("mem_logout.do")
@@ -108,7 +108,7 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		return ".main.member.main";
+		return "redirect:/";
 	}
 	
 	

@@ -182,7 +182,7 @@ public class BookController {
 		model.addAttribute("book_type",book_type);//글 종류 넘기기
 		
 		if(book_type==null||book_type.equals("")) {
-			count=sqlSession.selectOne("book_board.selectCount");//총 글 갯수
+			count=sqlSession.selectOne("book_board.selectCount");//총 글 갯수			
 		}else if(book_type.equals("free")){
 			book_type="자유게시판";
 			count=sqlSession.selectOne("book_board.selectCountCategory", book_type);
@@ -365,7 +365,8 @@ public class BookController {
 	@RequestMapping("book_content.do")
 	public String content(Model model, String book_no, String pageNum, HttpSession session)
 	throws NamingException, IOException{
-		
+		//System.out.println("이게 왜 실행되냐");
+		System.out.println(book_no);
 		int book_no1=Integer.parseInt(book_no);
 		
 		sqlSession.update("book_board.readCount", book_no1);//조횟수 증가
@@ -628,22 +629,27 @@ public class BookController {
 	public String bookCmtDelete(String book_no, String cmt_no, String mem_id) {
 		String result="";
 		
-		//System.out.println(1111);
-		//System.out.println(book_no);
-		//System.out.println(cmt_no);
+//		System.out.println(book_no);
+//		System.out.println(cmt_no);
+//		System.out.println(mem_id);
 		
 		HashMap<String, Integer> map=new HashMap<String,Integer>();
 		map.put("book_no",Integer.parseInt(book_no));
 		map.put("cmt_no",Integer.parseInt(cmt_no));
 		
-		//System.out.println(2222);
+		//System.out.println(11111);
 		result=sqlSession.selectOne("book_board.cmtIdSearch",map);
+		//System.out.println(22222);
 		if(result.equals(mem_id)) {
-			sqlSession.delete("deleteCmt", map);
+			//System.out.println(33333);
+			sqlSession.delete("book_board.deleteCmt", map);
+			//System.out.println(44444);
 			HashMap<String,Integer>map2=new HashMap<String,Integer>();
+			//System.out.println(55555);
 			map2.put("book_no",Integer.parseInt(book_no));
 			map2.put("countState",-1);
 			
+			//System.out.println(66666);
 			sqlSession.update("book_board.updateBoardCmtCnt", map2);
 			
 			result="success";

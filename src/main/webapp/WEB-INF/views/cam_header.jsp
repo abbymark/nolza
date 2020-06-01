@@ -24,7 +24,7 @@
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-      <nav class="nav-menu d-none d-lg-block">
+      <nav class="nav-menu d-none d-lg-block ">
         <ul>
           <li><a href="/nolza/">Main</a></li>
           <li class="drop-down"><a href="book_list.do">도서</a>
@@ -81,22 +81,24 @@
           
           <li class="drop-down"><a href="">축구</a>
             <ul>
-              <li class="drop-down"><a href="#">1</a>
+              <li class="drop-down"><a href="#">커뮤니티</a>
                 <ul>
-                  <li><a href="#">1-1</a></li>
-                  <li><a href="#">1-2</a></li>
-                  <li><a href="#">1-3</a></li>
+                  <li><a href="/nolza/fb_list.do">전체게시판</a></li>
+                  <li><a href="/nolza/fb_list.do?fb_category=free">자유게시판</a></li>
+                  <li><a href="/nolza/fb_list.do?fb_category=info">정보게시판</a></li>
+                  <li><a href="/nolza/fb_list.do?fb_category=media">축&풋 동영상</a></li>
+                  <li><a href="/nolza/fb_list.do?fb_category=solo">용병신청&구함</a></li>
+                  <li><a href="/nolza/fb_list.do?fb_category=team">팀원신청&구함</a></li>
                 </ul>
               </li>
-              <li class="drop-down"><a href="#">2</a>
-              <ul>
-                  <li><a href="#">2-1</a></li>
-                  <li><a href="#">2-2</a></li>
-                  <li><a href="#">2-3</a></li>
-               </ul></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
-            </ul>
+
+              <li class="drop-down"><a href="#">매치게시판</a>
+                 <ul>
+                  <li><a href="/nolza/fm_list.do?fm_category=match">경기매치</a></li>
+                  <li><a href="/nolza/fm_list.do?fm_category=result">경기결과</a></li>
+                  </ul>
+                </li>
+             </ul>
           </li>
           
           

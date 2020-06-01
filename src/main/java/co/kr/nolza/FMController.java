@@ -85,14 +85,14 @@ public class FMController {
 		}else{
 			maxNum=1;
 		}
-		
-		String imgUploadPath = uploadPath + File.separator + "imgUpload";
+		String realPath=request.getServletContext().getRealPath("/");
+		String imgUploadPath = realPath+"\\resources\\" + File.separator + "imgUpload";
 		String fileName = null;
 		
 		if(file != null) {
 			fileName = UploadFileUtils.fileUpload(imgUploadPath, file.getOriginalFilename(), file.getBytes());
 		}else {
-			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";			
+			fileName = realPath+"\\resources\\" + File.separator + "images" + File.separator + "none.png";			
 		}
 		
 		fm_boardDTO.setFm_img(fileName);

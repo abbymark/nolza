@@ -29,12 +29,16 @@ table {
 
 		<table border="1">
 			<tr>
-				<td colspan="2" align="right"><a href="viewFreeBoard">리스트</a></td>
+				<td colspan="2" align="right"><a href="mat_list">리스트</a></td>
 			</tr>
 
 			<tr>
 				<td>닉네임</td>
-				<td><input type="text" name="nick" size="30"></td>
+				<td>
+					<input type="text" name="mem_nick" size="30" readonly=TRUE value="${mem_nick}">
+					<input type="hidden" name="mem_id" size="30" value="${mem_id}">
+				</td>
+				
 			</tr>
 
 			<tr>
@@ -54,12 +58,7 @@ table {
 				<td>글내용</td>
 				<td><textArea name="content" rows="10" cols="60"></textArea>
 			</tr>
-
-			<tr>
-				<td>암호</td>
-				<td><input type="password" name="passwd" size="10"></td>
-			</tr>
-
+		
 			<tr>
 				<td colspan="2" align="center"><input type="submit" value="글쓰기">
 					<input type="reset" value="다시작성"> <input type="button"

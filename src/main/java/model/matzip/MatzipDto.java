@@ -5,8 +5,10 @@ import java.util.Date;
 public class MatzipDto {
 
 	private int no;
-	private String id;
-	private String nick;
+	private String mem_id;
+	private String mem_nick;
+	private String mem_grade;
+	
 	
 	private String title;
 	private String passwd;
@@ -31,20 +33,25 @@ public class MatzipDto {
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public String getId() {
-		return id;
+	public String getMem_id() {
+		return mem_id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+	public String getMem_nick() {
+		return mem_nick;
+	}
+	public void setMem_nick(String mem_nick) {
+		this.mem_nick = mem_nick;
 	}
 	
-	public String getNick() {
-		return nick;
+	public String getMem_grade() {
+		return mem_grade;
 	}
-	public void setNick(String nick) {
-		this.nick = nick;
+	public void setMem_grade(String mem_grade) {
+		this.mem_grade = mem_grade;
 	}
-	
 	public String getTitle() {
 		return title;
 	}

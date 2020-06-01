@@ -71,7 +71,7 @@ public class Book_cmtDto {
 
 
 	public String getCmt_date() {
-		return cmt_date;
+		return cmt_date.substring(0,cmt_date.length()-2);
 	}
 
 

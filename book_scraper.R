@@ -44,7 +44,7 @@ bookScraper = function(){
     
     path <-paste("C:\\__sts\\sts_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\nolza\\resources\\imgs\\",tableName,sep='')
     
-    png(path, height=230, width=500)
+    png(path, height=230, width=600)
     grid.table(bookTitles)
     dev.off()
     

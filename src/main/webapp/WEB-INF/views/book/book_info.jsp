@@ -7,9 +7,9 @@
 <title>책 정보 페이지</title>
 </head>
 <body>
-책 정보 페이지<br>
-<center><h1>각 서점별 베스트 셀러</h1></center>
-"교보문고","예스24","알라딘","인터파크도서","반디앤루니스","영풍문고","도서11번가"
+<br>
+<center><h1>각 서점별 베스트 셀러</h1></center><br>
+
 
 <table align="center">
 	<tr>
