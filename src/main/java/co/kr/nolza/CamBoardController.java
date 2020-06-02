@@ -16,7 +16,10 @@ import java.io.IOException;
 
 import org.apache.ibatis.session.SqlSession;
 
+import model.book.Book_boardDto;
 import  model.dto.CamBoardDTO;
+import model.dto.CamjaBoardDTO;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -32,19 +35,14 @@ public class CamBoardController {
 	private SqlSession sqlSession;
 	
 	@RequestMapping("cam_writeForm.do")
-	public String cam_writeForm(Model model, String cam_no, String cam_group, String cam_step, String cam_indent, String pageNum) {
-		if(cam_no==null) {//최초 글쓰기
-			cam_no="0";
-			cam_group="1";
-			cam_step="0";
-			cam_indent="0";
+	public String cam_writeForm(Model model, String gdsNo, String cam_group, String cam_step, String cam_indent, String pageNum) {
+		if(gdsNo==null) {//최초 글쓰기
+			gdsNo="0";
+			
 		}// if 
 		model.addAttribute("pageNum", pageNum);
-		model.addAttribute("cam_no", cam_no);
-		model.addAttribute("cam_group", cam_group);
-		model.addAttribute("cam_step", cam_step);
-		model.addAttribute("cam_indent", cam_indent);
-	
+		model.addAttribute("gdsNo", gdsNo);
+			
 		//return "/board/writeForm";// 뷰이름 
 		return ".main.camboard.cam_writeForm";// 뷰이름 
 	}// writeForm end
@@ -63,21 +61,6 @@ public class CamBoardController {
 		}else {//최대 글번호가 0이면 
 			maxNum=1;
 		}
-		
-		String cam_ip=request.getRemoteAddr(); // ip 구하기 
-		camboardDTO.setCam_ip(cam_ip); //dto에 setter 작업 
-		
-		
-		if(camboardDTO.getCam_no() != 0) {//답글이면 
-			//답글끼워넣기 위치 확보
-			sqlSession.update("camboard.cam_Step", camboardDTO);
-			camboardDTO.setCam_step(camboardDTO.getCam_step()+1);//글순서 
-			camboardDTO.setCam_indent(camboardDTO.getCam_indent()+1);//글 깊이 
-		}else {
-			camboardDTO.setCam_group(new Integer(maxNum));// 글 그룹 번호  즉 현재 글번호를 cam_group에 넣어준다. 그냥 글쓰기인경우 
-			camboardDTO.setCam_step(new Integer(0));
-			camboardDTO.setCam_indent(new Integer(0));			
-		}	
 		
 		sqlSession.insert("camboard.insertBoard", camboardDTO);
 		return "redirect:cam_list.do";		
@@ -143,19 +126,18 @@ public class CamBoardController {
 	
 	//글내용 보기 
 	@RequestMapping("cam_content.do")
-	public String cam_content(Model model, String cam_no, String pageNum) 
+	public String cam_content(Model model, String gdsNo, String pageNum) 
 	throws NamingException, IOException
 	{
-		int num1 = Integer.parseInt(cam_no);
-		sqlSession.update("camboard.readCount", num1); //조회수 증가 
-		
+		int num1 = Integer.parseInt(gdsNo);
+				
 		CamBoardDTO dto=sqlSession.selectOne("camboard.contentBoard", num1);
 		String cam_content = dto.getCam_content();
 		//content=content.replaceAll("\n","<br>");
 		
 		model.addAttribute("cam_content", cam_content);
 		model.addAttribute("dto", dto);
-		model.addAttribute("cam_no",cam_no);
+		model.addAttribute("gdsNo", gdsNo);
 		model.addAttribute("pageNum", pageNum);		
 		
 		
@@ -164,41 +146,10 @@ public class CamBoardController {
 	}// content () end
 	
 	
-	
-	 //입력폼
-	@RequestMapping(value="/fileup")
-	public String fileupload() throws Exception{
-		return "/fileup";//fileup.jsp ( 뷰 )
-	}//action--
-
-	
-	//파일 업로드
-		//import org.springframework.web.multipart.MultipartFile;
-		@RequestMapping(value="/action.do",method = RequestMethod.POST)
-		public String action(@RequestParam("upfile") MultipartFile multipartFile,
-				HttpServletRequest request,MultipartHttpServletRequest multi,
-				Model model) throws Exception{
-			
-			    System.out.println(multipartFile.getOriginalFilename());
-			 
-			    System.out.println("name:"+multi.getParameter("name"));
-			    // dto.setName(multi.getParameter("name"))
-			
-			   //import java.io.File;
-			    File f=new File("E:\\imgUp\\"+multipartFile.getOriginalFilename());
-			    multipartFile.transferTo(f);
-			
-			return "/cam_list";
-			
-		}//action--
-
-	
-	
-	
 	//글수정 폼
 	@RequestMapping("cam_updateForm.do")
-	public ModelAndView cam_updateForm(String cam_no, String pageNum) throws NamingException, IOException{
-		int num1 = Integer.parseInt(cam_no);
+	public ModelAndView cam_updateForm(String gdsNo, String pageNum) throws NamingException, IOException{
+		int num1 = Integer.parseInt(gdsNo);
 		CamBoardDTO dto=sqlSession.selectOne("camboard.contentBoard", num1);
 		ModelAndView mv= new ModelAndView();
 		mv.addObject("pageNum", pageNum);
@@ -220,11 +171,109 @@ public class CamBoardController {
 	
 	//글삭제
 	@RequestMapping("cam_delete.do")
-	public String cam_delete(Model model, String cam_no, String pageNum) {
-		int num1= Integer.parseInt(cam_no);
+	public String cam_delete(Model model, String gdsNo, String pageNum) {
+		int num1= Integer.parseInt(gdsNo);
 		sqlSession.delete("camboard.deleteBoard", num1);
 		return "redirect:cam_list.do";
 	}//delete() end
 		
-	
+	//검색 리스트
+		@RequestMapping("campsearch.do")
+		public String searchList(String searchType, String searchValue, String gdsCat, String pageNum, Model model){
+			
+			if(pageNum==null) {
+				pageNum="1";
+			}
+			
+			int pageSize = 10;//한페이지에 10개
+			int currentPage=Integer.parseInt(pageNum);//현재 페이지
+			
+			int startRow=(currentPage-1)*pageSize+1;//한 페이지의 시작 행
+			int endRow=currentPage*pageSize;//한 페이지의 마지막 행
+			
+			int count=0;//글 전체
+			int pageBlock=10;//1블럭당 10페이지씩 표시하려고
+			
+			String gdsCat_search=gdsCat;
+			model.addAttribute("gdsCat",gdsCat);//글 종류 넘기기
+			
+			HashMap <String, String> map1=new HashMap<String,String>();
+			map1.put("searchType", searchType);
+			map1.put("searchValue", searchValue);
+			System.out.println(searchType);
+			System.out.println(searchValue);
+			if(gdsCat==null||gdsCat.equals("")) {
+				count=sqlSession.selectOne("camboard.searchCount",map1);//총 글 갯수
+			}else if(gdsCat.equals("야영장")){
+				gdsCat="야영장";
+				map1.put("gdsCat", gdsCat);
+				count=sqlSession.selectOne("camboard.searchCountCat", map1);
+			}else if(gdsCat.equals("자동차야영장")){
+				gdsCat="자동차야영장";
+				map1.put("gdsCat", gdsCat);
+				count=sqlSession.selectOne("camboard.searchCountCat", map1);
+			
+			}
+			
+			int number=count-(currentPage-1)*pageSize;//글번호
+			int pageCount=count/pageSize+(count%pageSize==0?0:1);//총 페이지 객수
+			
+			int result = currentPage/10;// 2/10=10   12/10=1   22/10=2
+			int startPage=result*10+1;
+			//						0*10+1=1페이지  1*10+1=11페이지 2*10+1=21페이지
+			int endPage=startPage+pageBlock-1;
+			//						1+10-10 페이지   1+20-1=20페이지    1+30-1=30 페이지
+			
+			if(endPage>pageCount) {//에러 방지
+				endPage=pageCount;
+			}
+				
+			//*****************************************************
+			HashMap<String, Object> map =new HashMap<String,Object>();
+			map.put("start",startRow-1);
+			map.put("cnt",pageSize);
+			map.put("searchType", searchType);
+			map.put("searchValue", searchValue);
+	    	System.out.println(searchType);
+			System.out.println(searchValue);
+			System.out.println(startRow-1);
+			System.out.println(pageSize);
+			System.out.println(gdsCat);
+			List<CamBoardDTO> list=null;
+			
+			if(gdsCat==null||gdsCat.equals("")) {
+				list=sqlSession.selectList("camboard.searchList", map);
+				System.out.println("전체 검색");
+			}else {
+				map.put("gdsCat",gdsCat);
+				list=sqlSession.selectList("camboard.searchListCat", map);
+				System.out.println("카테고리 검색");
+			}
+						
+			//*****************************************************
+			
+			model.addAttribute("searchType", searchType);
+			model.addAttribute("searchValue", searchValue);
+			
+			model.addAttribute("currentPage", currentPage);
+			model.addAttribute("startRow", startRow);
+			model.addAttribute("endRow", endRow);
+			
+			model.addAttribute("pageBlock", pageBlock);
+			model.addAttribute("count", count);
+			model.addAttribute("pageSize", pageSize);
+			model.addAttribute("pageCount", pageCount);
+			
+			model.addAttribute("startPage", startPage);
+			model.addAttribute("endPage", endPage);
+			
+			model.addAttribute("number", number);
+			model.addAttribute("list", list);
+			model.addAttribute("pageNum", pageNum);
+			
+			model.addAttribute("gdsCat_search",gdsCat_search);
+			
+				
+			return ".main.camboard.cam_list";
+		}
 }//class end 

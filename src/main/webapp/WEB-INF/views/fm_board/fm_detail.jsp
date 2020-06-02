@@ -8,21 +8,20 @@
 <head>
 <meta charset="UTF-8">
 <title>fm_detail.jsp</title>
-<link rel="stylesheet"
-	href="https://plab-football.s3.amazonaws.com/static/css/styles.css?1589936552">
+<!-- <link rel="stylesheet" href="https://plab-football.s3.amazonaws.com/static/css/styles.css?1589936552"> -->
 
-<style>
-	img {display:block; margin: 0px auto;}
-	
-	#fm_detail{
-		height: 300px;
-		width: 300px;
+<style type="text/css">
+	body{background-color:white;}
+	table{margin:auto;
+	line-height:25px;
+	width:60%;
 	}
 </style>
 
 
 
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
 
 <script type="text/javascript">
 
@@ -49,7 +48,7 @@
 				<div class="stadSec">
 
 					<div class="matchFee">
-							<span>닉네임<span>
+							<p class="txt2 w700">닉네임</p>
 					</div>
 				
 						<div class="titleWrap">
@@ -59,7 +58,7 @@
 					<div class="matchFee">
 
 						<span>Type</span>
-						<p>${fm.fm_type}</p>
+						<p class="txt2 w700">${fm.fm_type}</p>
 					</div>
 
 					<br>
@@ -108,7 +107,7 @@ geocoder.addressSearch('${fm.fm_location}', function(result, status) {
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
         var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">enjoy</div>'
+            content: '<div style="width:150px;text-align:center;padding:6px 0;font-weight: 700;">HERE</div>'
         });
         infowindow.open(map, marker);
 
@@ -123,24 +122,21 @@ geocoder.addressSearch('${fm.fm_location}', function(result, status) {
 						<div class="titleWrap">
 							<h3>진행 방식</h3>
 						</div>
-						<div class="matchFeature">
+						<div id="matchFeature">
 							<ul>
 								
 <!-- 								<li><img
 									src="https://plab-football.s3.amazonaws.com/static/img/ic_6vs6.svg"
 									alt="6vs6 매치"> <span class="txt2">6vs6 매치</span></li>
  -->								
-								<li><img
-									src="https://plab-football.s3.amazonaws.com/static/img/ic_male.svg"
-									alt="남성매치"> <span class="txt2">남성매치</span></li>
+								<li><img src="https://plab-football.s3.amazonaws.com/static/img/ic_male.svg"
+									alt="남성매치" width="500"> <span class="txt2 w700">남성매치</span></li>
 								
-								<li><img
-									src="https://plab-football.s3.amazonaws.com/static/img/ic_every.svg"
-									alt="일반"> <span class="txt2">일반</span></li>
+								<li><img src="https://plab-football.s3.amazonaws.com/static/img/ic_every.svg"
+									alt="일반" width="500"> <span class="txt2 w700">일반</span></li>
 								
-								<li><img
-									src="https://plab-football.s3.amazonaws.com/static/img/ic_turf.svg"
-									alt="풋살화"> <span class="txt2">풋살화</span></li>
+								<li><img src="https://plab-football.s3.amazonaws.com/static/img/ic_turf.svg"
+									alt="풋살화"width="500"> <span class="txt2 w700">풋살화</span></li>
 								
 <!-- 								<li><img
 									src="https://plab-football.s3.amazonaws.com/static/img/ic_minmax.svg"
@@ -171,23 +167,27 @@ geocoder.addressSearch('${fm.fm_location}', function(result, status) {
  							</tr>
  						</table>
  						
- 						<div align="right">
+ 					<div align="right">
+ 					<c:if test="${sessionScope.mem_id==fm.mem_id||sessionScope.mem_grade=='admin' }">				
 							<input type="button" value="글수정" onClick="document.location.href='fm_updateForm.do?fm_no=${fm.fm_no}&pageNum=${pageNum }'">
 							<input type="button" value="글삭제" onClick="document.location.href='fm_delete.do?fm_no=${fm.fm_no}&pageNum=${pageNum }'">
+					</c:if>
 							<%-- <input type="button" value="답글" onClick="document.location.href='fm_writeForm.do?fm_no=${fm.fm_no}&fm_group=${fm.fm_group }&fm_step=${fm.fm_step }&fm_indent=${fm.fm_indent }&fm_category=${fm_category}'"> --%>
-							<input type="button" value="글목록" onClick="document.location.href='fm_list.do'">
+							<input type="button" value="목록" onClick="document.location.href='fm_list.do'">
 						</div>
 
-		<div>
+		<div class="container">
 			<p>댓글
 				<%@ include file="/WEB-INF/views/fm_board/fm_cmt.jsp" %> 			
 			</p>
 		</div>		
 						
-						</div>
-						</div>
-						</div>
-						</div>
-						</div>
+					 </div>
+				 </div>
+				</div>
+			</div>
+		</div>
+								
+						
 </body>
 </html>

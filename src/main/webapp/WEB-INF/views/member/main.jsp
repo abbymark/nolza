@@ -17,7 +17,7 @@
 
 <body>
 <!-- main -->
-<table border="1">
+<table border="1" class="table">
 	<tr>
 		<td>
 			<h3>도서 게시판</h3>
@@ -28,7 +28,7 @@
 	</tr>
 	<tr>
 		<td>
-			<table align="center" width="100%">
+			<table align="center" width="100%" class="table">
 				<tr>
 					<td>글 종류</td>
 					<td>글제목</td>
@@ -91,7 +91,7 @@
 		
 		
 		<td>
-			<table border="1">
+			<table class="table">
 		       <tr>
 		         <td>카테고리</td>
 		         <td>제목</td>

@@ -3,97 +3,165 @@ package model.dto;
 import java.util.*;
 
 public class CamBoardDTO {
-	private int cam_no;
-	private String cam_id;
+	private int gdsNo;
+	private String gdsName;
 	
-	private String cam_title;
+	private String gdsCat;
+	private String gdsNewadd;
+	private String gdsOldadd;
+	private String gdsTel;
 	
-	private Date cam_date;
+	private int gdsNos;
+	private int gdsNop;
 		
-	private int cam_readcount;
-	private int cam_like;
+	private String gdsCon;
+	private String gdsSafe;
+	private String gdsEtc;
+	private String gdsUtime;
+	private String gdsPrice;
 	
-	private String cam_content;
-	private String cam_ip;
-	private String cam_type;
-			
-	private int cam_group; 
-	private int cam_step;
-	private int cam_indent;
-	public int getCam_no() {
-		return cam_no;
+	private String gdsImg;
+	private String gdsTimg;
+	private String Cam_content;
+	private Date gdsDate ;
+
+	public int getGdsNo() {
+		return gdsNo;
 	}
-	public void setCam_no(int cam_no) {
-		this.cam_no = cam_no;
+
+	public void setGdsNo(int gdsNo) {
+		this.gdsNo = gdsNo;
 	}
-	public String getCam_id() {
-		return cam_id;
+
+	public String getGdsName() {
+		return gdsName;
 	}
-	public void setCam_id(String cam_id) {
-		this.cam_id = cam_id;
+
+	public void setGdsName(String gdsName) {
+		this.gdsName = gdsName;
 	}
-	
-	public String getCam_title() {
-		return cam_title;
+
+	public String getGdsCat() {
+		return gdsCat;
 	}
-	public void setCam_title(String cam_title) {
-		this.cam_title = cam_title;
+
+	public void setGdsCat(String gdsCat) {
+		this.gdsCat = gdsCat;
 	}
-	public Date getCam_date() {
-		return cam_date;
+
+	public String getGdsNewadd() {
+		return gdsNewadd;
 	}
-	public void setCam_date(Date cam_date) {
-		this.cam_date = cam_date;
+
+	public void setGdsNewadd(String gdsNewadd) {
+		this.gdsNewadd = gdsNewadd;
 	}
-	public int getCam_readcount() {
-		return cam_readcount;
+
+	public String getGdsOldadd() {
+		return gdsOldadd;
 	}
-	public void setCam_readcount(int cam_readcount) {
-		this.cam_readcount = cam_readcount;
+
+	public void setGdsOldadd(String gdsOldadd) {
+		this.gdsOldadd = gdsOldadd;
 	}
-	public int getCam_like() {
-		return cam_like;
+
+	public String getGdsTel() {
+		return gdsTel;
 	}
-	public void setCam_like(int cam_like) {
-		this.cam_like = cam_like;
+
+	public void setGdsTel(String gdsTel) {
+		this.gdsTel = gdsTel;
 	}
+
+	public int getGdsNos() {
+		return gdsNos;
+	}
+
+	public void setGdsNos(int gdsNos) {
+		this.gdsNos = gdsNos;
+	}
+
+	public int getGdsNop() {
+		return gdsNop;
+	}
+
+	public void setGdsNop(int gdsNop) {
+		this.gdsNop = gdsNop;
+	}
+
+	public String getGdsCon() {
+		return gdsCon;
+	}
+
+	public void setGdsCon(String gdsCon) {
+		this.gdsCon = gdsCon;
+	}
+
+	public String getGdsSafe() {
+		return gdsSafe;
+	}
+
+	public void setGdsSafe(String gdsSafe) {
+		this.gdsSafe = gdsSafe;
+	}
+
+	public String getGdsEtc() {
+		return gdsEtc;
+	}
+
+	public void setGdsEtc(String gdsEtc) {
+		this.gdsEtc = gdsEtc;
+	}
+
+	public String getGdsUtime() {
+		return gdsUtime;
+	}
+
+	public void setGdsUtime(String gdsUtime) {
+		this.gdsUtime = gdsUtime;
+	}
+
+	public String getGdsPrice() {
+		return gdsPrice;
+	}
+
+	public void setGdsPrice(String gdsPrice) {
+		this.gdsPrice = gdsPrice;
+	}
+
+	public String getGdsImg() {
+		return gdsImg;
+	}
+
+	public void setGdsImg(String gdsImg) {
+		this.gdsImg = gdsImg;
+	}
+
+	public String getGdsTimg() {
+		return gdsTimg;
+	}
+
+	public void setGdsTimg(String gdsTimg) {
+		this.gdsTimg = gdsTimg;
+	}
+
+	public Date getGdsDate() {
+		return gdsDate;
+	}
+
+	public void setGdsDate(Date gdsDate) {
+		this.gdsDate = gdsDate;
+	}
+
 	public String getCam_content() {
-		return cam_content;
+		return Cam_content;
 	}
+
 	public void setCam_content(String cam_content) {
-		this.cam_content = cam_content;
+		Cam_content = cam_content;
 	}
-	public String getCam_ip() {
-		return cam_ip;
-	}
-	public void setCam_ip(String cam_ip) {
-		this.cam_ip = cam_ip;
-	}
-	public String getCam_type() {
-		return cam_type;
-	}
-	public void setCam_type(String cam_type) {
-		this.cam_type = cam_type;
-	}
-	public int getCam_group() {
-		return cam_group;
-	}
-	public void setCam_group(int cam_group) {
-		this.cam_group = cam_group;
-	}
-	public int getCam_step() {
-		return cam_step;
-	}
-	public void setCam_step(int cam_step) {
-		this.cam_step = cam_step;
-	}
-	public int getCam_indent() {
-		return cam_indent;
-	}
-	public void setCam_indent(int cam_indent) {
-		this.cam_indent = cam_indent;
-	}
-	
+
+		
 	
 	
 }

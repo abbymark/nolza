@@ -29,32 +29,22 @@
           <li><a href="/nolza/">Main</a></li>
           <li class="drop-down"><a href="book_list.do">도서</a>
             <ul>              
-              <li><a href="book_list.do?">전체게시판</a></li>
-              <li><a href="book_list.do?book_type=free">자유게시판</a></li>
-              <li><a href="book_list.do?book_type=recommendNonFiction">비소설추천</a></li>
-              <li><a href="book_list.do?book_type=recommendFiction">소설추천</a></li>
-              <li><a href="book_list.do?book_type=readingGroup">독서 모임</a></li>
-              <li><a href="book_list.do?book_type=debate">토론</a></li>
-              <li><a href="book_info.do">책정보</a></li>
+              <li><a style="cursor:pointer;" onclick="location.href='book_list.do'">전체게시판</a></li>
+              <li><a style="cursor:pointer;" onclick="location.href='book_list.do?book_type=free'">자유게시판</a></li>
+              <li><a style="cursor:pointer;" onclick="location.href='book_list.do?book_type=recommendNonFiction'">비소설추천</a></li>
+              <li><a style="cursor:pointer;" onclick="location.href='book_list.do?book_type=recommendFiction'">소설추천</a></li>
+              <li><a style="cursor:pointer;" onclick="location.href='book_list.do?book_type=readingGroup'">독서 모임</a></li>
+              <li><a style="cursor:pointer;" onclick="location.href='book_list.do?book_type=debate'">토론</a></li>
+              <li><a style="cursor:pointer;" onclick="location.href='book_info.do'">책정보</a></li>
             </ul>
           </li>
           
-          <li class="drop-down"><a href="">맛집</a>
+           <li class="drop-down">
+             <a href="map_main">맛집</a>
             <ul>
-              <li class="drop-down"><a href="#">1</a>
-                <ul>
-                  <li><a href="#">1-1</a></li>
-                  <li><a href="#">1-2</a></li>
-                  <li><a href="#">1-3</a></li>
-                </ul>
-              </li>
-              <li class="drop-down"><a href="#">2</a>
-              <ul>
-                  <li><a href="#">2-1</a></li>
-                  <li><a href="#">2-2</a></li>
-                  <li><a href="#">2-3</a></li>
-               </ul></li>
-              <li><a href="#">3</a></li>
+              <li><a href="#">전체게시판</a></li>
+              <li><a href="mat_list">자유게시판</a></li>
+              <li><a href="map_main">빵지 순례도</a></li>
               <li><a href="#">4</a></li>
             </ul>
           </li>
@@ -83,37 +73,36 @@
             <ul>
               <li class="drop-down"><a href="#">커뮤니티</a>
                 <ul>
-                  <li><a href="/nolza/fb_list.do">전체게시판</a></li>
-                  <li><a href="/nolza/fb_list.do?fb_category=free">자유게시판</a></li>
-                  <li><a href="/nolza/fb_list.do?fb_category=info">정보게시판</a></li>
-                  <li><a href="/nolza/fb_list.do?fb_category=media">축&풋 동영상</a></li>
-                  <li><a href="/nolza/fb_list.do?fb_category=solo">용병신청&구함</a></li>
-                  <li><a href="/nolza/fb_list.do?fb_category=team">팀원신청&구함</a></li>
+                  <li><a onClick="location.href='fb_list.do'">전체게시판</a></li>
+                  <li><a onClick="location.href='fb_list.do?fb_category=free'">자유게시판</a></li>
+                  <li><a onClick="location.href='fb_list.do?fb_category=info'">정보게시판</a></li>
+                  <li><a onClick="location.href='fb_list.do?fb_category=media'">축&풋 동영상</a></li>
+                  <li><a onClick="location.href='fb_list.do?fb_category=solo'">용병신청&구함</a></li>
+                  <li><a onClick="location.href='fb_list.do?fb_category=team'">팀원신청&구함</a></li>
                 </ul>
               </li>
 
               <li class="drop-down"><a href="#">매치게시판</a>
-                 <ul>
-                  <li><a href="/nolza/fm_list.do?fm_category=match">경기매치</a></li>
-                  <li><a href="/nolza/fm_list.do?fm_category=result">경기결과</a></li>
-                  </ul>
-                </li>
-             </ul>
+              	<ul>
+                  <li><a onClick="location.href='fm_list.do?fm_category=match'">경기매치</a></li>
+                  <li><a onClick="location.href='fm_list.do?fm_category=result'">경기결과</a></li>
+               	</ul>
+         		 </li>
+          	</ul>
           </li>
           
           
           <li class="drop-down"><a href="/nolza/">캠핑</a>
             <ul>
               <li><a href="cam_list.do">캠핑장 검색</a></li>
-              <li class="drop-down"><a href="#">2</a>
-	              <ul>
-	                  <li><a href="#">2-1</a></li>
-	                  <li><a href="#">2-2</a></li>
-	                  <li><a href="#">2-3</a></li>
-	               </ul>
-               </li>
+              <!-- <li class="drop-down"><a href="#">2</a>
+                 <ul>
+                     <li><a href="#">2-1</a></li>
+                     <li><a href="#">2-2</a></li>
+                     <li><a href="#">2-3</a></li>
+                  </ul> 
+               </li>-->
               <li><a href="camja_list.do">자유게시판</a></li>
-              <li><a href="#">다른게시판</a></li>
             </ul>
           </li>
           

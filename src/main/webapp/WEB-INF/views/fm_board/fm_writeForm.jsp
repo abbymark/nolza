@@ -8,13 +8,63 @@
 	<meta charset="UTF-8">
 	<title>writeForm.jsp</title>
 	
-	<style type="text/css">
+<style type="text/css">
 		table{margin:auto;
 					line-height:25px;
 		}
-	</style>
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+h2.heading {
+  font-size: 18px;
+  text-divansform: uppercase;
+  font-weight: 300;
+  text-align: left;
+  color: #506982;
+  border-bottom: 1px solid #506982;
+  padding-bottom: 3px;
+  margin-bottom: 20px;
+}
+
+.controls {
+  text-align: left;
+  position:relative;
+}
+
+.controls input[type="text"],
+.controls input[type="email"],
+.controls input[type="number"],
+.controls input[type="date"],
+.controls input[type="password"],
+.controls textarea,
+.controls button,
+.controls select {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #c6c6c6;
+  width: 250px;
+  margin-bottom: 18px;
+  color: #888;
+  font-family: 'Lato', 'sans-serif';
+  font-size: 16px;
+  font-weight: 300;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-divansition: all 0.3s;
+  -o-divansition: all 0.3s;
+  -webkit-divansition: all 0.3s;
+  divansition: all 0.3s;
+}
+
+</style>
 	
+
+<%-- 	<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>--%>	
 	<script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+	
 	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 	
 <script type="text/javascript">
@@ -75,28 +125,27 @@ function writeSave() {
 		<input type="hidden" name="fm_group" value="${fm_group}">
 		<input type="hidden" name="fm_step" value="${fm_step}">
 		<input type="hidden" name="fm_indent" value="${fm_indent}">
-	
-	<table border="1">
+	<table class="form-group">
 
-		<tr>
+		<tr class="controls">
 			<td colspan="2" align="right">
 				<a href="fm_list.do">리스트</a>
 			</td>
 		</tr>
 
-		<tr>
-			<td>아이디</td>
+		<tr class="controls">
+			<td width="80px"><label for="name">아이디</label></td>
 			<td><input type="hidden" name="mem_id" size="30" value="${mem_id}">${mem_id}</td>
 		</tr>
 
-		<tr>
-			<td>닉네임</td>
+		<tr class="controls">
+			<td><label for="name">닉네임</label></td>
 			<td><input type="hidden" name="mem_nick" size="30" value="${mem_nick}">${mem_nick}</td>
 		</tr>
 
 		
-		<tr>
-			<td>시간</td>
+		<tr class="controls">
+			<td><label for="name">시간</label></td>
 			<td>
 			<select name="fm_time" id="fm_time">
 				<option value="${fm_time }">${fm_time }</option>
@@ -112,8 +161,8 @@ function writeSave() {
 			</td>
 		</tr>
 		
-		<tr>
-			<td>장소</td>
+		<tr class="controls">
+			<td><label for="name">장소</label></td>
 			<td>
 			<c:if test="${fm_no==0 }">
 				<input type="text" name="fm_place" id="fm_place" size="30" placeholder="ex)부천 스타필드 풋살파크">
@@ -125,24 +174,24 @@ function writeSave() {
 			</td>
 		</tr>
 
-		<tr>
-			<td>위치</td>
+		<tr class="controls">
+			<td><label for="name">위치</label></td>
 			<td>
 				<input type="text" name="fm_location" id="fm_location">
 				<input type="button" value="주소찾기" onclick="openDaumPostcode()">
 			</td>
 		</tr>
 
-		<tr>
-			<td>매치팀</td>
+		<tr class="controls">
+			<td><label for="name">매치팀</label></td>
 			<td>
 			<input type="text" name="fm_teamhome" id="fm_teamhome" size="15" placeholder="HOME">&nbsp;VS
 			<input type="text" name="fm_teamaway" id="fm_teamaway" size="15" placeholder="AWAY">			
 			</td>
 		</tr>
 
-		<tr>
-			<td>카테고리</td>
+		<tr class="controls">
+			<td><label for="name">카테고리</label></td>
 			<c:set var="fm_category" value="${fm_category }"/>
 			<c:choose>
 				<c:when test="${fm_category eq 'match'}">
@@ -155,7 +204,7 @@ function writeSave() {
 			</c:choose>
 			
 			
-			<td>
+			<td class="controls">
 			<select name="fm_category" id="fm_category">
 				<option value="${fm_category }">${fm_category }</option>
 				<option value="경기매치">경기매치</option>
@@ -166,8 +215,8 @@ function writeSave() {
 			
 		</tr>
 		
-		<tr>
-			<td>축구/풋살</td>
+		<tr class="controls">
+			<td><label for="name">축구/풋살</label></td>
 			<td>
 			<select name="fm_type" id="fm_type">
 				<option value="${fm_type }">${fm_type }</option>
@@ -177,8 +226,8 @@ function writeSave() {
 			</td>
 		</tr>
  
-		<tr>
-			<td>이미지</td>
+		<tr class="controls">
+			<td><label for="name">이미지</label></td>
 			<td>
 				<table>
 					<tr>
@@ -190,26 +239,28 @@ function writeSave() {
 			</td>
 		</tr>
 			
- 		<tr>
-			<td>상세정보</td>
+ 		<tr class="controls">
+			<td><label for="name">상세정보</label></td>
 			<td>
 			<textarea name="fm_detail" rows="10" cols="60">${fm.fm_detail}</textarea>
 			</td>
 		</tr>
 
 
-		<tr>
-			<td>승리팀</td>
+		<tr class="controls">
+			<td><label for="name">승리팀</label></td>
 			<td>
+			<label for="name">
 			<input type="text" name="fm_winner" size="10">
 			스코어
 			<input type="text" name="fm_score" size="10" placeholder="score">
+			</label>
 			</td>
 		</tr>
 		
 		
 				
-		<tr>
+		<tr class="controls">
 			<td colspan="2" align="center">
 				<input type="submit" value="글쓰기">
 				<input type="reset" value="다시작성">
@@ -218,6 +269,7 @@ function writeSave() {
 		</tr>
 		
 	</table>
+
 	
 	</form>
 </body>

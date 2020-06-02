@@ -17,27 +17,61 @@
 			
 			a{text-decoration:none; color:#6c6c6c;}
 			a:hover{color:#f2216b;}
-		</style>
+
+
+
+  @media ( max-width: 720px ){
+   #no{
+  display: none;	
+   }
+  #category{
+  display: none;	
+  }
+	#title{
+	display: none;
+	}
+	#mem_nick{
+  display: none;	
+	}
+	#date{
+  display: none;	
+	}
+	#readcount{
+  display:10%;	
+	}
+	#ip{
+	display: none;
+	}
+	#content{
+	display: none;
+	}
+}
+  
+</style>   
 		
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
 
 
 </head>
 <body>
 	<center><h2>글 내용 보기</h2></center>
-	<table border="1">
+
+<div class="container">
+	<table  class="table">
 		<tr height="30">
-			<td align="center" width="125">글번호</td>
-			<td align="center" width="125">${fb.fb_no}</td>
+			<td id="no" align="center" width="125">글번호</td>
+			<td id="no" align="center" width="125">${fb.fb_no}</td>
 			
-			<td align="center" width="125">조회수</td>
+			<td id="readcount" align="center" width="125">조회수</td>
 			<td align="center" width="125">${fb.fb_readcount}</td>
 		</tr>
 
 		<tr height="30">
-			<td align="center" width="125">글쓴이</td>
+			<td id="mem_nick" align="center" width="125">글쓴이</td>
 			<td align="center" width="125">${fb.mem_id}</td>
 			
-			<td align="center" width="125">작성일</td>
+			<td id="date" align="center" width="125">작성일</td>
 			<td align="center" width="125">
 				<fmt:formatDate value="${fb.fb_date }" pattern="yyyy-MM-dd hh:mm"/>
 			</td>
@@ -45,29 +79,34 @@
 	
 		
 		<tr height="30">
-			<td align="center" width="125">글제목</td>
+			<td id="title" align="center" width="125">글제목</td>
 			<td align="center" width="375" colspan="3">${fb.fb_title }</td>
 		</tr>
 
 		<tr height="30">
-			<td align="center" width="125">글내용</td>
+			<td id="content" align="center" width="125">글내용</td>
 			<td align="center" width="375" colspan="3">${fb_content }
 				<!-- <textarea rows="10" cols="60" readOnly></textarea> -->
 			</td>
 		</tr>
 	
 		<tr height="30">
-			<td colspan="4" align="center">
+			<td colspan="4" align="right">
+		<c:if test="${sessionScope.mem_id==fb.mem_id||sessionScope.mem_grade=='admin' }">	
 			<input type="button" value="글수정" onClick="document.location.href='fb_updateForm.do?fb_no=${fb.fb_no}&pageNum=${pageNum }'">
 			<input type="button" value="글삭제" onClick="document.location.href='fb_delete.do?fb_no=${fb.fb_no}&pageNum=${pageNum }'">
-			<input type="button" value="답글쓰기" onClick="document.location.href='fb_writeForm.do?fb_no=${fb.fb_no}&fb_group=${fb.fb_group }&fb_step=${fb.fb_step }&fb_indent=${fb.fb_indent }&fb_category=${fb_category}'">
-			<input type="button" value="글목록" onClick="document.location.href='fb_list.do?pageNum=${pageNum }'">
+		</c:if>
+		<c:if test="${sessionScope.mem_id!=null}">				
+			<input type="button" value="답글" onClick="document.location.href='fb_writeForm.do?fb_no=${fb.fb_no}&fb_group=${fb.fb_group }&fb_step=${fb.fb_step }&fb_indent=${fb.fb_indent }&fb_category=${fb_category}'">
+		</c:if>
+			<input type="button" value="목록" onClick="document.location.href='fb_list.do?pageNum=${pageNum }'">
 			</td>
 		</tr>
 		
 	
 	
 	</table>
+</div>
 
 		<div>
 			<p>

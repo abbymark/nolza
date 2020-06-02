@@ -11,22 +11,68 @@
    <meta charset="UTF-8">
    <title>Insert title here</title>
    
+<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
    
-   <style type="text/css">
-	   body{background-color:white;}
-	   a{text-decoration:none; color:blue;}
-	   a:hover{color:red;}
-	   
-	   table{margin:auto; line-height:25px;}
-   </style>
+  
+<style type="text/css">
+  @media ( max-width: 720px ){
+   #no{
+   display: none;
+   }
+  #category{
+  display: none;	
+  }
+	#title{
+	display: 90%;
+	}
+	#mem_nick{
+	display: 10%;
+	}
+	#date{
+	display: none;	
+	}
+	#readcount{
+	display: none;
+	}
+	#ip{
+	display: none;
+	}
+	
+}
+  
+</style>   
    
 </head>
 <body>
-   <center><b>전체 글 갯수 :${count}</b></center>
+	
+     <c:if test="${fb_category=='free'}">
+ 			<center><h2>자유게시판</h2></center>    	
+		 </c:if>
+
+     <c:if test="${fb_category=='info'}">
+ 			<center><h2>정보게시판</h2></center>    	
+		 </c:if>
+
+     <c:if test="${fb_category=='media'}">
+ 			<center><h2>축&풋 동영상</h2></center>    	
+		 </c:if>
+
+     <c:if test="${fb_category=='solo'}">
+ 			<center><h2>용병신청&구함</h2></center>    	
+		 </c:if>
+
+     <c:if test="${fb_category=='team'}">
+ 			<center><h2>팀원신청&구함</h2></center>    	
+		 </c:if>
+ 
+ 
+  <div class="container">
+
    
-   <table>
-     <c:if test="${fb_category!=null}">
+   <table class="table">
+     <c:if test="${fb_category!=null||sessionScope.mem_grade=='admin'}">
      <tr>
+		 <td align="left"><b>전체/ ${count}게시물</b></td>
       <td align="right" colspan="2">
         <a href="fb_writeForm.do?fb_category=${fb_category}">글쓰기</a>
       </td>
@@ -39,28 +85,31 @@
      </c:if>
      
      <c:if test="${count>0 }">
-      <table border="1">
+      <table class="table">
        <tr>
-         <td>글번호</td>
-         <td>카테고리</td>
-         <td>제목</td>
-         <td>아이디</td>
-         <td>닉네임</td>
-         <td>작성일</td>
-         <td>조회</td>
-         <td>ip</td>
+         <td id="no" width="5%">No</td>
+         <td id="category" width="15%">카테고리</td>
+         <td id="title" width="40%">제목</td>
+         <!-- <td id="mem_id" width="5%">아이디</td> -->
+         <td id="mem_nick" width="10%">작성자</td>
+         <td id="date" width="15%">작성일</td>
+         <td id="readcount" width="10%">조회</td>
+         
+       <c:if test="${sessionScope.mem_grade=='admin'}">  
+         <td id="ip" width="10%">ip</td>
+       </c:if>
         </tr>
         
         <c:forEach var="fb" items="${list}">
            <tr>
-             <td>
+             <td id="no">
                <c:out value="${number}"/>
                <c:set var="number" value="${number-1}"/>
              </td>
              
-             <td>${fb.fb_category}</td>
+             <td id="category">${fb.fb_category}</td>
              
-             <td>
+             <td id="title">
              <c:if test="${fb.fb_indent>0}">
                <img src="resources/imgs/level.gif" width="${5*fb.fb_indent}" height="16">
                <img src="resources/imgs/re.gif">
@@ -79,16 +128,20 @@
              &nbsp;&nbsp;(&nbsp;${fb.fb_cmt_cnt}&nbsp;)
              </td>
              
-             <td>${fb.mem_id}</td>
-             <td>${fb.mem_nick}</td>
+             <%-- <td>${fb.mem_id}</td> --%>
+             <td id="mem_nick"><em>${fb.mem_nick}</em></td>
              
              
-             <td>
+             <td id="date">
                <fmt:formatDate value="${fb.fb_date}" pattern="yyyy-MM-dd HH:mm"/>
              </td>
              
-             <td> ${fb.fb_readcount}</td>
-             <td> ${fb.fb_ip}</td>
+             <td id="readcount"> ${fb.fb_readcount}</td>
+             
+             <c:if test="${sessionScope.mem_grade=='admin'}">
+             	<td id="ip"> ${fb.fb_ip}</td>
+             </c:if>
+             
            </tr>
            
         </c:forEach>
@@ -159,5 +212,6 @@
      
      
    </table>
+   </div>
 </body>
 </html>

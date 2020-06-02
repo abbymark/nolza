@@ -14,30 +14,83 @@
 
    <!-- <link rel="stylesheet" href="https://plab-football.s3.amazonaws.com/static/css/styles.css?1589871263"> -->
    <!-- <link rel="stylesheet" href="resources/css/flab.css"> -->
-		<link rel="stylesheet" href="resources/assets/css/flab2.css">
+				<link rel="stylesheet" href="resources/assets/css/flab2.css">
+
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
 
    <style type="text/css">
-	   body{background-color:white;}
-	   a{text-decoration:none; color:blue;}
-	   a:hover{color:red;}
-	   
-	   table{margin:auto; line-height:25px;}
-	   
-	   #iframe1{width:90vw;height:60vh;}
-	   
-	   
+	   	   
 	 	img {display:block; margin: 0px auto; width:50%;}
 	   
-   </style>
+  
+		#matchDate{
+    padding:0px;
+    border-radius: 60px;
+    text-align: center;
+		background:yellow;
+		width: 80px;
+}  
+
+		#matchReply {
+    padding: 0px;
+    border-radius: 80px;
+		background:silver;		
+    text-align: center;
+		width: 30px;
+}
+
+		.matchStatus {
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+		background: #5FD080;
+		color: white;
+}
+
+
+  @media ( max-width: 720px ){
+   #time{
+   display: 10%;
+   }
+	#place{
+	display: 30%;
+	}
+	#mem_nick{
+	display: none;
+	}
+	#team{
+	display: 30%;	
+	}
+	#ball{
+	display: 20%;
+	}
+	
+}
+  
+</style>   
+   
+
    
    
 </head>
 <body>
 
+     <c:if test="${fm_category=='match'}">
+ 			<center><h2>경기매치</h2></center>    	
+		 </c:if>
+
+     <c:if test="${fm_category=='result'}">
+ 			<center><h2>경기결과</h2></center>    	
+		 </c:if>
+
+
+
+
 <c:if test="${fm_category=='match'||fm_category=='result'||fm_category==null}">   
-   <center><b>전체 글 갯수 :${count}</b></center>
+   <div align="left"><b>전체/ ${count}게시물</b></div>
    
-     <c:if test="${fm_category!=null}">
+     <c:if test="${fm_category!=null||sessionScope.mem_grade=='admin'}">
       <div align="right">
         <a href="fm_writeForm.do?fm_category=${fm_category}">글쓰기</a>
       </div>
@@ -47,14 +100,15 @@
 
             <li class="list match">
                 
-                  <div class="listCol2 tac">
+                  <div class="listCol2 tac" id="time">
                     <p class="txt2">${dto.fm_mdate}</p>
-                    <p class="txt3 w700">${dto.fm_time}</p>
+                    <p class="txt3 w700" >${dto.fm_time}</p>
                   </div>
-                  <div class="listCol3">
+                  
+                  <div class="listCol3" id="place">
                                       
                     <div class="matchTitle">
-                      <p class="txt3">${dto.fm_place} </p>
+                      <p class="txt3" >${dto.fm_place} </p>
                     </div>
                     
                     <div class="tag match">
@@ -63,15 +117,15 @@
                     </div>
                   </div>
  
-                   <div class="listCol3">
+                   <div class="listCol3" id="team">
                    
-                     <div class="matchDate">
-                      <p class="txt3 w700">${dto.fm_teamhome}&nbsp;VS&nbsp;${dto.fm_teamaway}
-                    </div>
+                     	<div class="matchDate" >
+                      	<p class="txt3 w700">${dto.fm_teamhome}&nbsp;VS&nbsp;${dto.fm_teamaway}
+                    	</div>
                    
                       <c:if test="${fm_category=='result'||fm_category==null}">                                  
 		                    <div id="matchDate">
-    		                  <p class="txt2 w700">결과 ${dto.fm_score}</p>
+    		                  <p class="txt2 w700" >결과 ${dto.fm_score}</p>
         		            </div>
                       </c:if>
                    
@@ -79,7 +133,7 @@
                   
                   
                   <div class="listCol1">
-                    <div class="matchReply">
+                    <div id="matchReply">
                       <p class="txt2 w700">                	
 												${dto.fm_cmt_cnt}
                     	</p>
@@ -95,10 +149,9 @@
                   </div>
 
 
-                  <div class="listCol1">
-                    <div class="matchStatus ">
-                      <p class="txt2"> 
-                      	
+                  <div class="listCol1" id="ball">
+                    <div class="matchStatus "> 
+                      <p class="txt2" > 
  					             <a href="fm_detail.do?fm_no=${dto.fm_no}&pageNum=${pageNum}&fm_category=${fm_category}"><img src="resources/imgs/sball.png"></a>
                     	</p>
                     </div>

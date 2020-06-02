@@ -6,52 +6,79 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 최대 글번호 얻기  -->
 
 <select id="maxNumber" resultType="Integer">
-	select max(cam_no) from cam_board
+	select max(cam_no) from goods
 </select>
 
-<!--  답글 끼워넣기 위치 확보  -->
-<update id="cam_Step" parameterType="model.dto.CamBoardDTO">
-	update cam_board
-	set cam_step=cam_step+1
-	where cam_group=#{cam_group} and cam_step>#{cam_step}
-</update>
 
-<!--  글쓰기, 답글쓰기  -->
+<!--  상품등록  -->
 <insert id="insertBoard" parameterType="model.dto.CamBoardDTO">
-	insert into cam_board(cam_id, mem_nick, cam_title, cam_date, cam_group, cam_step, cam_indent, cam_content, cam_ip)
-	values(#{cam_id}, #{mem_nick}, #{cam_title},NOW(),#{cam_group},#{cam_step},#{cam_indent},#{cam_content},#{cam_ip})
+	insert into goods(gdsName, gdsCat, gdsNewadd, gdsOldadd, gdsTel, gdsNos, gdsNop, gdsCon, gdsSafe, gdsEtc, gdsUtime, gdsPrice, gdsImg, gdsTimg, gdsDate)
+	values(#{gdsName}, #{gdsCat}, #{gdsNewadd},#{gdsOldadd},#{gdsTel},#{gdsNos},#{gdsNop},#{gdsCon},#{gdsSafe},#{gdsEtc},#{gdsUtime},#{gdsPrice},#{gdsImg},#{gdsTimg},NOW())
 </insert>
 
 <!--  글 갯수 -->
 <select id="selectCount" resultType="int">
-	select count(*) from cam_board
+	select count(*) from goods
 </select>
 
 <!--  리스트 -->
 <select id="selectList" parameterType="java.util.HashMap" resultType="model.dto.CamBoardDTO">
-	select * from cam_board
-	order by cam_group desc, cam_step asc limit #{start},#{cnt}
+	select * from goods
+	order by gdsNo desc limit #{start},#{cnt}
 </select>
 
-<!--  조회수  -->
-<update id="readCount" parameterType="int">
-	update cam_board set cam_readcount =cam_readcount+1 where cam_no=#{cam_no}
-</update>
 
 <!-- 글내용보기, 글 수정  -->
 <select id="contentBoard" parameterType="int" resultType="model.dto.CamBoardDTO">
-select * from cam_board where cam_no=#{cam_no}
+select * from goods where gdsNo=#{gdsNo}
 </select>
 
-<!--  db 글 수정  -->
+<!--  db 상품 수정  -->
 <update id="updateBoard" parameterType="model.dto.CamBoardDTO">
- update cam_board set cam_id=#{cam_id}, cam_title=#{cam_title}, cam_content=#{cam_content} where cam_no=#{cam_no}
+ update goods set gdsName=#{gdsName}, gdsCat=#{gdsCat}, gdsNewadd=#{gdsNewadd}, gdsOldadd=#{gdsOldadd},gdsTel=#{gdsTel},gdsNos=#{gdsNos}, gdsNop=#{gdsNop}, gdsCon==#{gdsCon},
+ gdsSafe=#{gdsSafe}, gdsEtc=#{gdsEtc}, gdsUtime=#{gdsUtime}, gdsPrice=#{gdsPrice}, gdsImg=#{gdsImg}, gdsTimg=#{gdsTimg} where gdsNo=#{gdsNo}
 </update>
 
 <!--  글 삭제   -->
 <delete id="deleteBoard" parameterType="int">
- delete from cam_board where cam_no=#{cam_no}
+ delete from goods where gdsNo=#{gdsNo}
 </delete>
 
+
+<!-- 각 카테고리 글 리스트 -->
+	<select id="selectListCat" parameterType="java.util.HashMap" resultType="model.dto.CamBoardDTO">
+		select * from goods 
+		where gdsCat=#{gdsCat} 
+		order by gdsNo desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 전체 리스트 검색 -->
+	<select id="searchList" parameterType="map" resultType="model.dto.CamBoardDTO">
+		select * from goods 
+		where ${searchType} like CONCAT('%',#{searchValue},'%') 
+		order by gdsNo desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 각 카테고리 글 리스트  검색-->
+	<select id="searchListCat" parameterType="java.util.HashMap" resultType="model.dto.CamBoardDTO">
+		select * from goods 
+		where gdsCat=#{gdsCat} and ${searchType} like CONCAT('%',#{searchValue},'%')
+		order by gdsNo desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 전체 검색 글 갯수 -->
+	<select id="searchCount" parameterType="map" resultType="int">
+		select count(*) from goods
+		where ${searchType} like CONCAT('%',#{searchValue},'%')
+	</select>
+	
+	<!-- 각 카테고리 검색 글 갯수 -->
+	<select id="searchCountCat" parameterType="map" resultType="int">
+		select count(*) from goods
+		where gdsCat=#{gdsCat} and ${searchType} like CONCAT('%',#{searchValue},'%')
+	</select>
 
 </mapper>

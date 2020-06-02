@@ -9,107 +9,89 @@
 
   <title>cam_write</title>
  
-  <!-- Favicons -->
-  <link href="assets/img/go.png" rel="icon">
-  <link href="assets/img/go.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
 </head>
 <body>
 
-
-	<center><h2>글쓰기</h2></center>
-	<!-- <form name="frm" action="action.do" method="post" encType="multipart/form-data"> -->
-	<form method="post" name="cam_writeForm" action="action.do" encType="multipart/form-data">
+	<center><h2>캠핑장 등록</h2></center>
+	<form method="post" name="cam_writeForm" action="cam_writePro.do?pageNum=${pageNum}" encType="multipart/form-data">
 		<input type="hidden" name="pageNum" value="${pageNum}">
-		<input type="hidden" name="cam_no" value="${cam_no}">
-		<input type="hidden" name="cam_group" value="${cam_group}">
-		<input type="hidden" name="cam_step" value="${cam_step}">
-		<input type="hidden" name="cam_indent" value="${cam_indent}">
-	<div id="container_box">
-			<h2>상품 등록</h2>
+		<input type="hidden" name="gdsNo" value="${gdsNo}">
+	
+	<table >
+		<tr>
+			<td>캠핑장 이름</td>
+			<td>
+			<input type="text" name="gdsName" id="gdsName" size="30" value="${dto.gdsName}">
+			<input type="hidden" name="gdsNo" value="${dto.gdsNo}">
+			</td>
+		</tr>
+		
+		<tr>
+			<td>캠핑장 카테고리 </td>
+			<td>
+			<select name="gdsCat" id="gdsCat" value="${dto.gdsCat}">
+  				<option value="야영장">야영장</option>
+  				<option value="자동차야영장">자동차야영장</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>캠핑장 도로명주소 </td>
+			<td><input type="text" name="gdsNewadd" id="gdsNewadd" size="30" value="${dto.gdsNewadd}"></td>
+		</tr>
+		<tr>
+			<td>캠핑장 구주소 </td>
+			<td><input type="text" name="gdsOldadd" id="gdsOldadd" size="30" value="${dto.gdsOldadd}"></td>
+		</tr>
+		<tr>
+			<td>캠핑장 전화번호 </td>
+			<td><input type="text" name="gdsTel" id="gdsTel" size="30" value="${dto.gdsTel}"></td>
+		</tr>
+		<tr>
+			<td>캠핑장 사이트수</td>
+			<td><input type="text" name="gdsNos" id="gdsNos" size="30" value="${dto.gdsNos}"></td>
+		</tr>
+		<tr>
+			<td>캠핑장 주차장수</td>
+			<td><input type="text" name="gdsNop" id="gdsNop" size="30" value="${dto.gdsNop}"></td>
+		</tr>
+		<tr>
+			<td>캠핑장 편의시설 </td>
+			<td><textarea name="gdsCon" id="gdsCon" rows="2" cols="60">${dto.gdsCon}</textarea></td>
+		</tr>
+		<tr>
+			<td>캠핑장 안전시설 </td>
+			<td><textarea name="gdsSafe" id="gdsSafe" rows="2" cols="60">${dto.gdsSafe}</textarea></td>
+		</tr>
+		<tr>
+			<td>캠핑장 기타 시설 </td>
+			<td><textarea name="gdsEtc" id="gdsEtc" rows="2" cols="60">${dto.gdsEtc}</textarea></td>
+		</tr>
+		<tr>
+			<td>캠핑장 이용 가능 시간 </td>
+			<td><textarea name="gdsUtime" id="gdsUtime" rows="2" cols="60">${dto.gdsUtime}</textarea></td>
+		</tr>
+		<tr>
+			<td>캠핑장 요금 안내</td>
+			<td><textarea name="gdsPrice" id="gdsPrice" rows="2" cols="60">${dto.gdsPrice}</textarea></td>
+		</tr>
+		
+		<tr class="inputArea">
+			<td><label for="gdsImg">이미지</label></td>
+			<td><input type="file" id="gdsImg" name="file" />
+				<div class="select_img"><img src="" /></div></td>
+		</tr>
+				
+		<tr>
+			<td colspan="2" align="center">
+				<input type="submit" value="캠핑장 등록" id="register_Btn" class="btn btn-primary">
+				<input type="reset" value="다시작성" class="btn btn-primary">
+				<input type="button" value="캠핑장 리스트" onclick="document.location.href='cam_list.do?pageNum=${pageNum}'" class="btn btn-primary">
+			</td>
+		</tr>
+		
+	</table>
 			
-			<form role="form" method="post" autocomplete="off" enctype="multipart/form-data">
-			
-			<div class="inputArea">
-				<label for="gdsNo">캠핑장번호</label>
-				<input type="text" id="gdsNo" name="gdsNo" />
-			</div>
-			
-			<div class="inputArea">
-				<label for="gdsName">캠핑장명</label>
-				<input type="text" id="gdsName" name="gdsName" />
-			</div>
-			
-			
-			<div class="inputArea">
-				<label for="gdsPrice">캠핑장 종류</label>
-				<input type="text" id="gdsCat" name="gdsCat" />
-			</div>
-			
-			<div class="inputArea">
-				<label for="gdsNewadd">도로명 주소</label>
-				<input type="text" id="gdsNewadd" name="gdsNewadd" />
-			</div>
-			
-			<div class="inputArea">
-				<label for="gdsOldadd">구 주소</label>
-				<input type="text" id="gdsOldadd" name="gdsOldadd" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsOldadd">전화번호</label>
-				<input type="text" id="gdsOldadd" name="gdsOldadd" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsOldadd">사이트 수</label>
-				<input type="text" id="gdsOldadd" name="gdsOldadd" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsOldadd">주자가능 대수</label>
-				<input type="text" id="gdsOldadd" name="gdsOldadd" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsOldadd">구 주소</label>
-				<input type="text" id="gdsOldadd" name="gdsOldadd" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsCon">편의시설</label>
-				<input type="text" id="gdsCon" name="gdsCon" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsSafe">안전시설</label>
-				<input type="text" id="gdsSafe" name="gdsSafe" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsEtc">기타 부대시설</label>
-				<input type="text" id="gdsEtc" name="gdsEtc" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsUtime">이용기준시간</label>
-				<input type="text" id="gdsUtime" name="gdsUtime" />
-			</div>
-			<div class="inputArea">
-				<label for="gdsPrice">이용요금</label>
-				<input type="text" id="gdsPrice" name="gdsPrice" />
-			</div>
-			
-			<div class="inputArea">
-				<label for="gdsImg">이미지</label>
-				<input type="file" id="gdsImg" name="file" />
-				<div class="select_img"><img src="" /></div>
 				
 				<script>
 					$("#gdsImg").change(function(){
@@ -125,27 +107,13 @@
 				
 				<%=request.getRealPath("/") %>
 				
-			</div>
 			
-			<div class="inputArea">
-				<button type="submit" id="register_Btn" class="btn btn-primary">등록</button>
-			</div>
 			
 			</form>
 			
 		</div>
 	</form>
-<!-- Vendor JS Files -->
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/jquery.easing/jquery.easing.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/waypoints/jquery.waypoints.min.js"></script>
-  <script src="assets/vendor/counterup/counterup.min.js"></script>
-  <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
+	
 
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>	
 </body>
 </html>

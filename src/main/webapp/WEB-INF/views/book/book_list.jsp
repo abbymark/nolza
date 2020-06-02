@@ -8,6 +8,42 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<style type="text/css">
+  @media ( max-width: 720px ){
+   #no{
+   display: none;
+   }
+  #category{
+  display: none;   
+  }
+   #title{
+   display: 90%;
+   }
+   #mem_nick{
+   display: 10%;
+   }
+   #date{
+   display: none;   
+   }
+   #readcount{
+   display: none;
+   }
+   #ip{
+   display: none;
+   }
+   #rate{
+   display: none;
+   }
+   #location{
+   display: none;
+   }
+   #like{
+   display: none;
+   }
+   
+}
+  
+</style>   
 </head>
 <body>
 	<c:choose>
@@ -46,31 +82,31 @@
 				<c:if test="${count>0 }">
 					<table align="center" width="100%">
 						<tr>
-							<td>글번호</td>
-							<td>글 종류</td>
-							<td>글제목</td>
+							<td id="no">글번호</td>
+							<td id="category">글 종류</td>
+							<td id="title">글제목</td>
 							<c:if test="${book_type_eng =='recommendNonFiction' || book_type_eng =='recommendFiction'}">
-								<td>평점</td>
+								<td id="rate">평점</td>
 							</c:if>
 							<c:if test="${book_type_eng =='readingGroup'}">
-								<td>장소</td>
+								<td id="location">장소</td>
 							</c:if>
-							<td>작성자</td>
-							<td>작성일</td>
-							<td>조회</td>
-							<td>추천</td>
+							<td id="mem_nick">작성자</td>
+							<td id="date">작성일</td>
+							<td id="readcount">조회</td>
+							<td id="like">추천</td>
 							<c:if test="${mem_grade=='admin' }">
-								<td>ip</td>
+								<td id="ip">ip</td>
 							</c:if>
 						</tr>
 						
 						<c:forEach var="book_dto" items="${list }">
 							<tr>
-								<td>
+								<td id="no">
 									<c:out value="${number }"/>
 									<c:set var="number" value="${number-1 }"/>
 								</td>
-								<td>
+								<td id="category">
 									${book_dto.book_type }
 								</td>
 								<td>
@@ -94,7 +130,7 @@
 								</td>
 								
 								<c:if test="${book_type_eng =='recommendNonFiction' || book_type_eng =='recommendFiction'}">
-								<td>
+								<td id="rate">
 									<c:choose>
 										<c:when test="${book_dto.book_rating == 1}">
 											<img src="resources/imgs/star-on.svg">
@@ -118,24 +154,24 @@
 								</c:if>
 								
 								<c:if test="${book_type_eng =='readingGroup'}">
-									<td>
+									<td id="location">
 										${book_dto.book_location }
 									</td>
 								</c:if>
 								
-								<td>
+								<td id="mem_nick">
 									${book_dto.mem_nick }
 								</td>
 								
 								
-								<td>
+								<td id="date">
 									<fmt:formatDate value="${book_dto.book_date }" pattern="yyyy-MM-dd HH:mm:ss"/>
 								</td>
 								
-								<td>${book_dto.book_readcount }</td>
-								<td>${book_dto.book_like }</td>
+								<td id="readcount">${book_dto.book_readcount }</td>
+								<td id="like">${book_dto.book_like }</td>
 								<c:if test="${mem_grade='admin' }">
-									<td>${book_dto.book_ip }</td>
+									<td id="ip">${book_dto.book_ip }</td>
 								</c:if>
 							</tr>
 						</c:forEach>

@@ -8,7 +8,7 @@ public class FB_cmtDTO {
 	private String mem_id;
 	private String mem_nick;
 	private String cmt_content;
-	private Date cmt_date;
+	private String cmt_date;
 	private String cmt_ip;
 	
 	private int cmt_group;
@@ -57,11 +57,11 @@ public class FB_cmtDTO {
 		this.cmt_content = cmt_content;
 	}
 
-	public Date getCmt_date() {
-		return cmt_date;
+	public String getCmt_date() {
+		return cmt_date.substring(0,cmt_date.length()-2);
 	}
 
-	public void setCmt_date(Date cmt_date) {
+	public void setCmt_date(String cmt_date) {
 		this.cmt_date = cmt_date;
 	}
 
