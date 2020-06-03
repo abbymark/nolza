@@ -110,7 +110,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateBoard" parameterType="model.book.Book_boardDto">
 		update book_board set
 		book_title=#{book_title},
-		book_content=#{book_content}
+		book_content=#{book_content},
+		book_type=#{book_type}
 		where book_no=#{book_no}
 	</update>
 	

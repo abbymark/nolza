@@ -14,11 +14,13 @@ table {
 </style>
 
 </head>
+
 <body>
 	<center>
 		<h2>글쓰기</h2>
-	</center>
+	</center><br>
 	
+
 	<form method="post" name="mat_writeForm" action="writePro">
 		<input type="hidden" name="pageNum" value="${pageNum}">
 		<!-- BoardController에 writeForm 메서드  -->
@@ -27,7 +29,9 @@ table {
 		<input type="hidden" name="step" value="${step}"> 
 		<input type="hidden" name="indent" value="${indent}">
 
-		<table border="1">
+
+	<div class="container list" style="text-align:left;">
+		<table border="1" class="table">
 			<tr>
 				<td colspan="2" align="right"><a href="mat_list">리스트</a></td>
 			</tr>
@@ -35,8 +39,8 @@ table {
 			<tr>
 				<td>닉네임</td>
 				<td>
-					<input type="text" name="mem_nick" size="30" readonly=TRUE value="${mem_nick}">
-					<input type="hidden" name="mem_id" size="30" value="${mem_id}">
+					<input type="text" name="mem_nick" size="100" readonly=TRUE value="${mem_nick}">
+					<input type="hidden" name="mem_id" size="100" value="${mem_id}">
 				</td>
 				
 			</tr>
@@ -45,18 +49,18 @@ table {
 				<td>글제목</td>
 				<td>
 					<c:if test="${no==0}">
-						<input type="text" name="title" size="30">
+						<input type="text" name="title" size="100">
 					</c:if> 
 					
 					<c:if test="${no!=0}">
-						<input type="text" name="title" size="30" value="[답변]">
+						<input type="text" name="title" size="100" value="[답변]">
 					</c:if>
 				</td>
 			</tr>
 
 			<tr>
 				<td>글내용</td>
-				<td><textArea name="content" rows="10" cols="60"></textArea>
+				<td><textArea name="content" rows="10" cols="120"></textArea>
 			</tr>
 		
 			<tr>
@@ -68,5 +72,6 @@ table {
 
 		</table>
 	</form>
+	</div>
 </body>
 </html>

@@ -51,21 +51,10 @@
           
           <li class="drop-down"><a href="">음악</a>
             <ul>
-              <li class="drop-down"><a href="#">1</a>
-                <ul>
-                  <li><a href="#">1-1</a></li>
-                  <li><a href="#">1-2</a></li>
-                  <li><a href="#">1-3</a></li>
-                </ul>
-              </li>
-              <li class="drop-down"><a href="#">2</a>
-              <ul>
-                  <li><a href="#">2-1</a></li>
-                  <li><a href="#">2-2</a></li>
-                  <li><a href="#">2-3</a></li>
-               </ul></li>
-              <li><a href="#">3</a></li>
-              <li><a href="#">4</a></li>
+              	<li><a href="/nolza/albumMainList.do">앨범</a></li>
+				<li><a href="/nolza/singerMainList.do">가수</a></li>
+				<li><a href="/nolza/list.do">커뮤니티</a></li>
+				<li><a href="/nolza/nmainList.do">공지사항</a></li>
             </ul>
           </li>
           
@@ -105,18 +94,30 @@
               <li><a href="camja_list.do">자유게시판</a></li>
             </ul>
           </li>
-          
-          <li><a href="mem_insertForm.do">가입하기</a></li>
+         
         </ul>
       </nav><!-- .nav-menu -->
 	
-	<c:if test="${mem_id==null }">
-      <a href="mem_login.do" class="get-started-btn">로그인</a>
-	</c:if>
-	<c:if test="${mem_id!=null }">
-		${mem_id } 님 환영합니다.
-		<a href="mem_logout.do" class="get-started-btn">로그아웃</a>
-	</c:if>
+	   <c:if test="${mem_id==null }">
+         	<a href="mem_insertForm.do" class="get-started-btn">가입하기</a>
+	        <a href="mem_login.do" class="get-started-btn">로그인</a>
+	   </c:if>
+   
+   <c:if test="${mem_id !=null}">
+      
+      <c:if test="${mem_id != 'admin'}" >
+         <a href="mem_editForm.do?mem_id=${mem_id}" class="get-started-btn">마이페이지</a>
+         <a href="mem_logout.do" class="get-started-btn">로그아웃</a>
+      </c:if>
+      
+      <c:if test="${mem_id == 'admin'}" >
+         <a href="admin_list" class="get-started-btn">회원관리 리스트</a>
+         <a href="mem_logout.do" class="get-started-btn">로그아웃</a>
+      </c:if>
+      
+      
+      
+   </c:if>
     </div>
   <!-- End Header -->
   </body>

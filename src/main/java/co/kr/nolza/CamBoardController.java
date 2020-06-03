@@ -1,7 +1,9 @@
 package co.kr.nolza;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.naming.NamingException;
 import java.io.IOException;
 
@@ -49,7 +53,8 @@ public class CamBoardController {
 	
 	//DB 에 글쓰기 
 	@RequestMapping(value="cam_writePro.do", method=RequestMethod.POST)
-	public String cam_writePro(@ModelAttribute("camboardDTO") CamBoardDTO camboardDTO, HttpServletRequest request)
+	public String cam_writePro(@ModelAttribute("camboardDTO") CamBoardDTO camboardDTO, HttpServletRequest request, 
+			RedirectAttributes redirectAttr, @RequestParam(value="img_title", required=false)MultipartFile multi[])
 	throws NamingException, IOException{
 		int maxNum=0;
 		if(sqlSession.selectOne("camboard.maxNumber") != null) {
@@ -61,6 +66,57 @@ public class CamBoardController {
 		}else {//최대 글번호가 0이면 
 			maxNum=1;
 		}
+		
+		
+		sqlSession.insert("camboard.insertBoard",camboardDTO);
+		//이미지 저장====================================================
+				if(multi!=null) {
+					for(MultipartFile multi2:multi) {
+						//파일명
+						String originalFile = multi2.getOriginalFilename();
+						
+						//랜덤생성
+						UUID uuid=UUID.randomUUID();
+						String random=uuid.toString();
+						
+						//날짜
+						String fileName = "";
+						
+						Calendar calendar = Calendar.getInstance();
+						fileName += calendar.get(Calendar.YEAR);
+						fileName += calendar.get(Calendar.MONTH);
+						fileName += calendar.get(Calendar.DATE);
+						fileName += calendar.get(Calendar.HOUR);
+						fileName += calendar.get(Calendar.MINUTE);
+						fileName += calendar.get(Calendar.SECOND);
+						fileName += calendar.get(Calendar.MILLISECOND);
+						fileName += random;
+						
+						//최종 파일명
+						fileName +=originalFile;
+						
+						
+						//파일 확장자 추출
+						//String originalFileExtension = originalFile.substring(originalFile.lastIndexOf("."));
+						
+						System.out.println(camboardDTO.getGdsName());
+					
+						String realPath=request.getServletContext().getRealPath("/");
+						String savePath=realPath+"/resources/imgUpload/"+fileName;
+			
+						
+						//저장 위치
+						multi2.transferTo(new File(savePath));
+			
+						maxNum=sqlSession.selectOne("camboard.maxNumber");
+						HashMap<String,Object> map=new HashMap<String,Object>();
+						map.put("gdsNo", maxNum);
+						System.out.println(maxNum);
+						map.put("img_title", fileName);
+						sqlSession.insert("camboard.insertImgs", map);
+					}
+				}
+				//이미지 끝==========================================================
 		
 		sqlSession.insert("camboard.insertBoard", camboardDTO);
 		return "redirect:cam_list.do";		
@@ -138,7 +194,7 @@ public class CamBoardController {
 		model.addAttribute("cam_content", cam_content);
 		model.addAttribute("dto", dto);
 		model.addAttribute("gdsNo", gdsNo);
-		model.addAttribute("pageNum", pageNum);		
+		model.addAttribute("pageNum", pageNum);	
 		
 		
 		//return "/board/content";

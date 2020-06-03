@@ -170,7 +170,7 @@
 								
 								<td id="readcount">${book_dto.book_readcount }</td>
 								<td id="like">${book_dto.book_like }</td>
-								<c:if test="${mem_grade='admin' }">
+								<c:if test="${mem_grade=='admin' }">
 									<td id="ip">${book_dto.book_ip }</td>
 								</c:if>
 							</tr>

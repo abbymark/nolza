@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.ibatis.session.SqlSession;
 import java.util.HashMap;
@@ -96,7 +96,7 @@ public class MemberController {
 		
 		map.put("mem_login_state",1);
 		sqlSession.update("member.updateLoginState",map);
-		return "redirect:/";
+		return "redirect:.main.member.main";
 	}
 	//로그아웃
 	@RequestMapping("mem_logout.do")
@@ -108,12 +108,12 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		return "redirect:/";
+		return "redirect:.main.member.main";
 	}
 	
 	
 	//회원정보 수정 폼
-	@RequestMapping(value="/mem_editForm.do", method=RequestMethod.POST)
+	@RequestMapping(value="/mem_editForm.do", method=RequestMethod.GET)
 	public String editForm(String mem_id, Model model)
 	throws NamingException, IOException{
 		MemberDto memberDto=sqlSession.selectOne("member.selectOne", mem_id);
@@ -137,6 +137,98 @@ public class MemberController {
 		sqlSession.update("member.deleteMember", mem_id);
 		
 		return ".main.member.main";
+	}
+
+	
+	//=========================================== 관리자========================================
+	//관리리스트
+	@RequestMapping("/admin_list")
+	public String admin_listForm(Model model,String pageNum)
+			throws NamingException,IOException{
+			
+		if(pageNum==null) {
+			pageNum="1";
+		}
+		
+		int pageSize=10;//한 페이지에 10개씩
+		int currentPage=Integer.parseInt(pageNum);//현재 페이지
+		
+		int startRow=(currentPage-1)*pageSize+1;//한 페이지의 시작 행
+		int endRow=currentPage*pageSize;//한 페이지의 마지막 행
+		int count=0;
+		int pageBlock=10;//1블럭당 10페이지씩 표시하려고
+		
+		count=sqlSession.selectOne("member.selectCount");//총 글 갯수 
+		
+		int number=count-(currentPage-1)*pageSize;//글번호 
+		int pageCount=count/pageSize+(count%pageSize==0?0:1);
+		
+		int result = currentPage/10;
+		int startPage=result*10+1;
+		//              0*10+1=1
+		int endPage=startPage + pageBlock - 1;
+		//               1+10-1=10
+		if(endPage>pageCount) {
+			endPage=pageCount;
+		}
+		
+		HashMap<String , Integer> map=new HashMap<String,Integer>();
+		map.put("start",startRow-1); // 0
+		map.put("cnt",pageSize);  // 10
+		
+		List<HashMap<String, String>> t=sqlSession.selectList("member.selectList",map);
+		
+		model.addAttribute("currentPage",currentPage);
+		model.addAttribute("startRow",startRow);
+		model.addAttribute("endRow",endRow);
+		
+		model.addAttribute("pageBlock",pageBlock);
+		model.addAttribute("count",count);
+		model.addAttribute("pageSize",pageSize);
+		model.addAttribute("pageCount",pageCount);
+		
+		model.addAttribute("startPage",startPage);
+		model.addAttribute("endPage",endPage);
+		
+		model.addAttribute("number",number);
+		model.addAttribute("pageNum",pageNum);
+		model.addAttribute("selectList",t);
+		
+		
+		return ".main.admin.admin_list";
+	}
+	
+	//admin_update
+	//관리자 수정 폼
+	@RequestMapping(value="admin_updateForm", method=RequestMethod.GET)
+	public ModelAndView admin_updateForm(Model model,String mem_id) {
+		
+		MemberDto t=(MemberDto)sqlSession.selectOne("member.selectOne",mem_id);
+	
+		model.addAttribute("dto",t);
+		//System.out.println(t);
+		
+		return new ModelAndView(".main.admin.admin_updateForm","memberDto",t);
+	}//updateForm end
+	
+	//DB 글 수정
+	@RequestMapping(value="admin_updatePro", method=RequestMethod.POST)
+	public String admin_updateForm(@ModelAttribute("memberDto") MemberDto memberDto) throws NamingException, IOException {
+		
+		sqlSession.update("member.admin_memberUpdate",memberDto);
+		
+		//System.out.println(3);
+		
+		return "redirect:admin_list"; 
+	}
+
+	//회원 삭제
+	@RequestMapping(value="/admin_deletePro", method=RequestMethod.GET)
+	public String admin_deletePro(String mem_id) throws NamingException, IOException {
+		
+		sqlSession.update("member.deleteMember",mem_id);
+		
+		return "redirect:admin_list"; //뷰이름
 	}
 }
 

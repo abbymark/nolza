@@ -41,6 +41,7 @@
 	padding: 15px;
 } */
 </style>
+<script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 	<table  style="width: 100%; height:933px; border-collapse: collapse; ">

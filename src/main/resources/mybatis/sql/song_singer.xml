@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="singer">
+	
+	<!-- 최대조회수얻기 -->
+	<select id="selectchartList" resultType="Integer">
+		SELECT MAX(ss_readcount) AS max_ss_readcount FROM song_singer;
+	</select>
+	
+	<!-- 최대 글번호 얻기 -->
+	<select id="maxNumber" resultType="Integer">
+		select max(ss_no) from song_singer
+	</select>
+		
+	<!-- 메인리스트 -->
+	<select id="selectsingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectsingerCount" resultType="int">
+		select count(*) from song_singer
+	</select>
+	
+	<!-- 50/60 리스트 -->
+	<select id="selectFivesingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="1950년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectFivesingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="1950년대"
+	</select>
+	
+	<select id="selectSixsingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="1960년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectSixsingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="1960년대"
+	</select>
+	
+	<!-- 70/80 리스트 -->
+	<select id="selectSevensingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="1970년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectSevensingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="1970년대"
+	</select>
+	
+	<select id="selectEightsingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="1980년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectEightsingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="1980년대"
+	</select>
+	
+	<!-- 90/00 리스트 -->
+	<select id="selectNinesingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="1990년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectNinesingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="1990년대"
+	</select>
+	
+	<select id="selectSzerosingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="2000년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectSzerosingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="2000년대"
+	</select>
+	
+	<!-- 10/20 리스트 -->
+	<select id="selectSonesingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="2010년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectSonesingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="2010년대"
+	</select>
+	
+	<select id="selectStwosingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="2020년대"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectStwosingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="2020년대"
+	</select>
+	
+	<!-- ETC 리스트 -->
+	<select id="selectETCsingerList" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_active="기타"
+		order by ss_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectETCsingerCount" resultType="int">
+		select count(*) from song_singer
+		where ss_active="기타"
+	</select>
+		
+	<!-- 글쓰기 -->
+	<insert id="insertsinger" parameterType="model.song.Song_singerDTO">
+		insert into song_singer(mem_id,ss_picture,ss_title,ss_artist,ss_style,ss_active,ss_manage,ss_date,ss_nation,ss_person,ss_content)
+		values 
+		(#{mem_id},#{ss_picture},#{ss_title},#{ss_artist},#{ss_style},#{ss_active},#{ss_manage},#{ss_date},#{ss_nation},#{ss_person},#{ss_content})
+	</insert>
+	
+	<!-- 조횟수 -->
+	<update id="readCount" parameterType="int">
+		update song_singer set ss_readcount=ss_readcount+1
+		where ss_no=#{ss_no}
+	</update>
+
+	<!-- 글내용보기 , 글수정 -->
+	<select id="contentsinger" parameterType="int" resultType="model.song.Song_singerDTO">
+		select * from song_singer
+		where ss_no=#{ss_no}
+	</select>
+
+	<!--DB글수정 -->
+	<update id="updatesinger" parameterType="model.song.Song_singerDTO">
+		update song_singer 
+		set 
+		mem_id=#{mem_id},ss_picture=#{ss_picture},ss_title=#{ss_title},ss_artist=#{ss_artist},ss_style=#{ss_style},
+		ss_active=#{ss_active},ss_manage=#{ss_manage},ss_date=#{ss_date},ss_nation=#{ss_nation},ss_person=#{ss_person},ss_content=#{ss_content}
+		where ss_no=#{ss_no}
+	</update>
+
+	<!--글삭제 -->
+	<delete id="deletesinger" parameterType="int" >
+		delete from song_singer where ss_no=#{ss_no}
+	</delete>
+</mapper>

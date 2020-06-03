@@ -42,4 +42,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set mem_login_state=#{mem_login_state}
 		where mem_id=#{mem_id}
 	</update>
+	
+	<!-- =============================== 관리자 ============================================= -->
+	<!-- 회원 리스트  -->
+	<select id="selectList" resultType="model.member.MemberDto">
+		select * from member order by mem_grade
+	</select>
+	
+	<!-- 글 개수 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from member
+	</select>
+	
+	<!-- 회원 관리 수정 -->
+	<update id="admin_memberUpdate" parameterType="model.member.MemberDto">
+		update member
+	   	   set mem_nick=#{mem_nick}
+		     , mem_pw=#{mem_pw}
+		     , mem_email=#{mem_email}
+	     	 , mem_grade=#{mem_grade}
+ 		 where mem_id=#{mem_id}
+	</update>
+	
+	<!-- 로그인 횟수 증가 -->
+	<update id="admin_mem_login_cnt">
+		update member
+		set mem_login_cnt=mem_login_cnt+1
+	</update>
+	
+	<!--id중복체크 -->
+	<select id="selectOne" parameterType="String" resultType="model.member.MemberDto">
+	  select * from member 
+	          where mem_id=#{mem_id}
+	</select>
 </mapper>

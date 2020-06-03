@@ -11,19 +11,16 @@
    <title>cam_list.jsp</title>  
 </head>
 <body>
-<div class="container list"><b><h4>캠핑장 리스트</h4>전체 글 갯수 :${count}</b><br/>
+<div class="container list"><b><h4><a href="cam_list.do">캠핑장 리스트</a></h4>전체 글 갯수 :${count}</b><br/>
 
-   <table width="70%" align="center" class="table">
-   <c:if test="${mem_id!=null}">
+   <table width="70%" class="table">
      <tr>
-      <td align="right" colspan="2">
+     <c:if test="${mem_id=='admin'}">
+      <td align="right" colspan="3">
         <a href="cam_writeForm.do">캠핑장 등록</a>
       </td>
-     </tr>
-   </c:if>
-     
-     <tr>
-     <td>
+      </c:if>
+     </tr>     
      <c:if test="${count==0 }">
       	저장된 글이 없습니다
      </c:if>
@@ -51,13 +48,10 @@
            </tr>
         </c:forEach>
         </c:if>
-     		</td>
-    	 </tr>
+     		
      	</table>  	
      </div>
-       
-       
-       
+
        <div class="container list">
        <table class="table"> 
         <tr align="center">

@@ -15,10 +15,11 @@
 
 </head>
 <body>
-	<center><h2>글수정</h2></center>
+	<center><h2>글수정</h2></center><br>
 	<form method="post" name="mat_writeForm" action="updatePro?pageNum=${pageNum}" onsubmit="return check()">
 		
-		<table border="1">
+		<div div class="container list">
+		<table border="1" class="table">
 			<tr>
 				<td>닉네임</td>
 				<td>
@@ -46,6 +47,7 @@
 				</td>
 			</tr>
 		</table>
+		</div>
 	</form>
 </body>
 </html>

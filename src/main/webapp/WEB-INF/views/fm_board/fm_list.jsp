@@ -86,9 +86,9 @@
 
 
 
+	<center><b>전체/ ${count}게시물</b></center>
 
 <c:if test="${fm_category=='match'||fm_category=='result'||fm_category==null}">   
-   <div align="left"><b>전체/ ${count}게시물</b></div>
    
      <c:if test="${fm_category!=null||sessionScope.mem_grade=='admin'}">
       <div align="right">

@@ -215,6 +215,7 @@ public class FBController {
 		
 		int fb_no1=Integer.parseInt(fb_no);
 		FB_boardDTO dto=sqlSession.selectOne("fb_board.contentBoard",fb_no1);
+		//FB_boardDTO fb=sqlSession.selectOne("fb_board.contentBoard",fb_no1);
 		
 		//ModelAndView mv=new ModelAndView();
 		//mv.addObject("pageNum",pageNum);
@@ -223,6 +224,8 @@ public class FBController {
 		
 		model.addAttribute("pageNum",pageNum);
 		model.addAttribute("dto",dto);
+		//model.addAttribute("fb",fb);
+		
 		return ".main.fb_board.fb_updateForm"; // 뷰 이름 
 		
 		//return mv;

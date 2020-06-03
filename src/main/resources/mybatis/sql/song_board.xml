@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- 최대 글번호 얻기 -->
+	<select id="maxNumber" resultType="Integer">
+		select max(no) from song_board
+	</select>
+
+	<!-- 답글 끼워넣기 위치 확보 -->
+	<update id="songStep" parameterType="model.song.Song_boardDTO">
+		update song_board
+		set s_step=s_step+1
+		where s_group=#{s_group} and s_step>#{s_step}
+	</update>
+
+	<!-- 글쓰기,답글쓰기 -->
+	<insert id="insertBoard" parameterType="model.song.Song_boardDTO">
+		insert into	song_board(mem_id,title,date,s_type,s_group,s_step,s_indent,content,ip)
+		values(#{mem_id},#{title},NOW(),#{s_type},#{s_group},#{s_step},#{s_indent},#{content},#{ip})
+	</insert>
+
+	<!-- 글 갯수 -->
+	<select id="selectCount" resultType="int">
+		select count(*) from song_board
+	</select>
+
+	<!-- 리스트 -->
+	<select id="selectList" parameterType="java.util.HashMap" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		order by s_group desc, s_step asc
+		limit #{start},#{cnt}
+	</select>
+
+	<!-- 일반조건리스트 -->
+	<select id="noList" parameterType="java.util.HashMap" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		where s_type="일반"
+		order by s_group desc, s_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="noselectCount" resultType="int">
+		select count(*) from song_board
+		where s_type="일반"
+	</select>
+
+	<!-- 음원조건리스트 -->
+	<select id="songList" parameterType="java.util.HashMap" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		where s_type="음원"
+		order by s_group desc, s_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="songselectCount" resultType="int">
+		select count(*) from song_board
+		where s_type="음원"
+	</select>
+
+	<!-- 음반조건리스트 -->
+	<select id="cdList" parameterType="java.util.HashMap" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		where s_type="음반"
+		order by s_group desc, s_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="cdselectCount" resultType="int">
+		select count(*) from song_board
+		where s_type="음반"
+	</select>
+
+	<!-- 차트조건리스트 -->
+	<select id="chartList" parameterType="java.util.HashMap" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		where s_type="차트"
+		order by s_group desc, s_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="chartselectCount" resultType="int">
+		select count(*) from song_board
+		where s_type="차트"
+	</select>
+
+	<!-- 컴백조건리스트 -->
+	<select id="comeList" parameterType="java.util.HashMap" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		where s_type="컴백"
+		order by s_group desc, s_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="comeselectCount" resultType="int">
+		select count(*) from song_board
+		where s_type="컴백"
+	</select>
+	
+	<!-- 기타조건리스트 -->
+	<select id="etcList" parameterType="java.util.HashMap" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		where s_type="기타"
+		order by s_group desc, s_step asc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="etcselectCount" resultType="int">
+		select count(*) from song_board
+		where s_type="기타"
+	</select>
+
+	<!-- 조횟수 -->
+	<update id="readCount" parameterType="int">
+		update song_board set readcount=readcount+1
+		where no=#{no}
+	</update>
+
+	<!-- 글내용보기 , 글수정 -->
+	<select id="contentBoard" parameterType="int" resultType="model.song.Song_boardDTO">
+		select * from song_board
+		where no=#{no}
+	</select>
+
+	<!--DB글수정 -->
+	<update id="updateBoard" parameterType="model.song.Song_boardDTO">
+		update song_board set
+		mem_id=#{mem_id},
+		title=#{title},
+		s_type=#{s_type},
+		content=#{content}
+		where no=#{no}
+	</update>
+
+	<!--글삭제 -->
+	<delete id="deleteBoard" parameterType="int">
+		delete from song_board where no=#{no}
+	</delete>
+</mapper>

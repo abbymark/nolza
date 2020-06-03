@@ -80,7 +80,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 body {
   text-align: center;
   font-family: 'Lato', 'sans-serif';
-  font-weight: 400;
+  font-weight: 300;
 }
 
 a {
@@ -89,7 +89,7 @@ a {
 
 .info-text {
   text-align: left;
-  width: 100%;
+  width: 70%;
 }
 
 header, form {
@@ -126,7 +126,7 @@ h2.heading {
   padding: 12px;
   font-size: 14px;
   border: 1px solid #c6c6c6;
-  width: 100%;
+  width: 70%;
   margin-bottom: 18px;
   color: #888;
   font-family: 'Lato', 'sans-serif';
@@ -191,7 +191,7 @@ h2.heading {
   position: absolute;
   left: 8px;
   top: 12px;
-  width: 60%;
+  width: 70%;
   color: #999;
   font-size: 16px;
   display: inline-block;
@@ -279,7 +279,7 @@ button:hover {
 
 @media (max-width: 760px) {
   .col-1-4-sm, .col-1-3, .col-2-3 {
-    width: 100%;
+    width: 70%;
   }
 
   [class*='col-'] {
@@ -312,8 +312,7 @@ button:hover {
 
 </head>
 <body translate="no">
-
-<form method="post" name="admin_updateForm" action="admin_updatePro" onsubmit="return check()">
+<form method="post" name="admin_updateForm" action="admin_updatePro" onsubmit="return check()" >
 	<div class="form-group">
 		<h2 class="heading">회원관리 수정</h2>
 
@@ -387,11 +386,7 @@ button:hover {
       $this.next().addClass("active");
       
       //on blur check field and remove class if needed
-      $this.blur(function () {
-        if ($this.val() === '' || $this.val() === 'blank') {
-          $this.next().removeClass();
-        }
-      });
+     
     });
   }
   // just add a class of "floatLabel to the input field!"
@@ -400,5 +395,9 @@ button:hover {
 //# sourceURL=pen.js
     </script>
 <script src="https://static.codepen.io/assets/editor/iframe/iframeRefreshCSS-e03f509ba0a671350b4b363ff105b2eb009850f34a2b4deaadaa63ed5d970b37.js"></script>
+
+
+
+
 </body>
 </html>

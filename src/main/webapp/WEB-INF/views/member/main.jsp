@@ -17,35 +17,24 @@
 
 <body>
 <!-- main -->
-<table border="1" class="table">
+<div class="container list">
+<table class="table">
 	<tr>
-		<td>
+		<td width="50%">
 			<h3>도서 게시판</h3>
 		</td>
-		<td>
+		<td width="50%">
 			<h3>축구 게시판</h3>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<table align="center" width="100%" class="table">
-				<tr>
-					<td>글 종류</td>
-					<td>글제목</td>
-					<td>작성자</td>
-					<td>작성일</td>
-					<td>조회</td>
-					<td>추천</td>
-					<c:if test="${mem_grade=='admin' }">
-						<td>ip</td>
-					</c:if>
-				</tr>
+
 				
 				<c:forEach var="book_dto" items="${list }">
 					<tr>
-						<td>
-							${book_dto.book_type }
-						</td>
+
 						<td>
 							<c:if test="${book_dto.book_indent>0}">
 								<img src="resources/imgs/level.gif" width="${5*book_dto.book_indent }" height="16">
@@ -65,21 +54,9 @@
 								<img src="resources/imgs/hot.gif" border="0">
 							</c:if>
 						</td>
-
-						<td>
-							<em>${book_dto.mem_nick }</em>
-						</td>
-						
-						
-						<td>
-							<fmt:formatDate value="${book_dto.book_date }" pattern="yyyy-MM-dd HH:mm:ss"/>
-						</td>
 						
 						<td>${book_dto.book_readcount }</td>
-						<td>${book_dto.book_like }</td>
-						<c:if test="${mem_grade='admin' }">
-							<td>${book_dto.book_ip }</td>
-						</c:if>
+						
 					</tr>
 				</c:forEach>
 			</table>
@@ -92,20 +69,10 @@
 		
 		<td>
 			<table class="table">
-		       <tr>
-		         <td>카테고리</td>
-		         <td>제목</td>
-		         <td>아이디</td>
-		         <td>닉네임</td>
-		         <td>작성일</td>
-		         <td>조회</td>
-		         <td>ip</td>
-		        </tr>
+		       
 		        
 		        <c:forEach var="fb" items="${list2}">
 		           <tr>             
-		             <td>${fb.fb_category}</td>
-		             
 		             <td>
 		             <c:if test="${fb.fb_indent>0}">
 		               <img src="resources/imgs/level.gif" width="${5*fb.fb_indent}" height="16">
@@ -124,17 +91,7 @@
 		             
 		             &nbsp;&nbsp;(&nbsp;${fb.fb_cmt_cnt}&nbsp;)
 		             </td>
-		             
-		             <td>${fb.mem_id}</td>
-		             <td><em>${fb.mem_nick}</em></td>
-		             
-		             
-		             <td>
-		               <fmt:formatDate value="${fb.fb_date}" pattern="yyyy-MM-dd HH:mm"/>
-		             </td>
-		             
 		             <td> ${fb.fb_readcount}</td>
-		             <td> ${fb.fb_ip}</td>
 		           </tr>
 		           
 		        </c:forEach>
@@ -157,39 +114,18 @@
 			<table class="table">
 			
 			
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>말머리</th>
-						<th>제목</th>
-						<th>닉네임</th>
-						<th>작성일</th>
-						<th>조회</th>
-						<th>추천</th>
-					</tr>
-				</thead>
 			
 				<tbody>
 					<!--상단 공지사항-->
 					<tr class="ub-content us-post" data-type="icon_notice">
-						<td class="gall_num">196828</td>
-						<td class="gall_subject"><b>공지</b></td>
+
 						<td class="gall_tit ub-word"><a href="#"><em
 								class="icon_img icon_notice"></em> <b>자유 게시판 가이드 모음집</b> </a> <a
 							class="reply_numbox" href="#"> <span class="reply_num">[17]</span>
 								<!-- 위치 수정하기 -->
 						</a></td>
-						<td class="gall_writer ub-writer" data-uid="davidd3" data-ip=""
-							data-loc="list"><span class="nickname in"><em>admin</em></span>
-							<a class="writer_nikcon"> <img
-								src="https://nstatic.dcinside.com/dc/w/images/fix_nik.gif"
-								border="0" width="12" height="11"
-								style="margin-left: 2px; cursor: pointer;"
-								alt="갤로그로 이동합니다."> <!-- 위치 수정하기 -->
-						</a></td>
-						<td class="gall_date">19.03.03</td>
+						
 						<td class="gall_count">20253</td>
-						<td class="gall_recommend">22</td>
 					</tr>
 			
 					<!-- 내용 -->
@@ -198,13 +134,7 @@
 						
 						<!-- 리스트 -->
 						<tr>
-							<td>
-								<!-- 글 번호 --> <c:out value="${number}" /> <c:set var="number"
-									value="${number-1}" />
-							</td>
-			
-							<td>맛집</td>
-			
+
 							<td>
 								<!-- 글 내용 보기 --> <a
 								href="../nolza/mat_content?no=${dto.no}&pageNum=${pageNum}"> <em
@@ -214,21 +144,11 @@
 							</a>
 							</td>
 			
-							<td>
-								<!-- 닉네임 --> <span class="nickname"><em>${dto.mem_nick}</em></span>
-							</td>
-			
-							<td>
-								<!-- 날짜 --> ${dto.date}
-							</td>
-			
+							
 							<td>
 								<!-- 조회수 --> ${dto.readcount}
 							</td>
-			
-							<td>
-								<!-- 좋아요 --> ${dto.tolike}
-							</td>
+
 						</tr>
 						
 					</c:forEach>
@@ -237,7 +157,8 @@
 		</td>
 	</tr>
 </table>
-   
+</div>
+  
     <!-- ======= Features Section ======= -->
     <section id="features" class="features">
       <div class="container" data-aos="fade-up">

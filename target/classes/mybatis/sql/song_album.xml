@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="album">
+
+	<!-- 최대 글번호 얻기 -->
+	<select id="maxNumber" resultType="Integer">
+		select max(a_no) from song_album
+	</select>
+		
+	<!-- 메인리스트 -->
+	<select id="selectalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		select count(*) from song_album
+	</select>
+	
+	<!-- 가요리스트 -->
+	<select id="selectSalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="가요"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectSCount" resultType="int">
+		select count(*) from song_album
+		where a_style="가요"
+	</select>
+	
+	<!-- POP리스트 -->
+	<select id="selectPalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="POP"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectPCount" resultType="int">
+		select count(*) from song_album
+		where a_style="POP"
+	</select>
+	
+	<!-- OST리스트 -->
+	<select id="selectOalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="OST"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectOCount" resultType="int">
+		select count(*) from song_album
+		where a_style="OST"
+	</select>
+	
+	<!-- 트롯리스트 -->
+	<select id="selectTalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="트롯"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectTCount" resultType="int">
+		select count(*) from song_album
+		where a_style="트롯"
+	</select>
+	
+	<!-- JAZZ리스트 -->
+	<select id="selectJalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="JAZZ"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectJCount" resultType="int">
+		select count(*) from song_album
+		where a_style="JAZZ"
+	</select>
+	
+	<!-- CLASSIC리스트 -->
+	<select id="selectCalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="CLASSIC"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectCCount" resultType="int">
+		select count(*) from song_album
+		where a_style="CLASSIC"
+	</select>
+	
+	<!-- EDM리스트 -->
+	<select id="selectEalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="EDM"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectECount" resultType="int">
+		select count(*) from song_album
+		where a_style="EDM"
+	</select>
+	
+	<!-- 기타리스트 -->
+	<select id="selectETCalbumList" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_style="기타"
+		order by a_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="selectETCCount" resultType="int">
+		select count(*) from song_album
+		where a_style="기타"
+	</select>
+
+	<!-- 글쓰기 -->
+	<insert id="insertalbum" parameterType="model.song.Song_albumDTO">
+		insert into song_album(mem_id,a_picture,a_title,a_artist,a_style,a_sales,a_manage,a_date,date,a_main,a_content)
+		values(#{mem_id},#{a_picture},#{a_title},#{a_artist},#{a_style},#{a_sales},#{a_manage},#{a_date},NOW(),#{a_main},#{a_content})
+	</insert>
+	
+	<!-- 조횟수 -->
+	<update id="readCount" parameterType="int">
+		update song_album set a_readcount=a_readcount+1
+		where a_no=#{a_no}
+	</update>
+
+	<!-- 글내용보기 , 글수정 -->
+	<select id="contentalbum" parameterType="int" resultType="model.song.Song_albumDTO">
+		select * from song_album
+		where a_no=#{a_no}
+	</select>
+
+	<!--DB글수정 -->
+	<update id="updatealbum" parameterType="model.song.Song_albumDTO">
+		update song_album 
+		set 
+		mem_id=#{mem_id},a_picture=#{a_picture},a_title=#{a_title},a_artist=#{a_artist},a_style=#{a_style},
+		a_sales=#{a_sales},a_manage=#{a_manage},a_date=#{a_date},a_main=#{a_main},a_content=#{a_content}
+		where a_no=#{a_no}
+	</update>
+
+	<!--글삭제 -->
+	<delete id="deletealbum" parameterType="int">
+		delete from song_album where a_no=#{a_no}
+	</delete>
+</mapper>

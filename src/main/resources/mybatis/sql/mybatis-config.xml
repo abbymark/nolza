@@ -14,6 +14,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <mapper resource="/mybatis/sql/fb/fb_board.xml"/>
         
         <mapper resource="/mybatis/sql/fb/fm_board.xml"/>
+        
+        <mapper resource="/mybatis/sql/song_album.xml"/>
+        <mapper resource="/mybatis/sql/song_board.xml"/>
+        <mapper resource="/mybatis/sql/song_notice.xml"/>
+        <mapper resource="/mybatis/sql/song_singer.xml"/>
+        
         <!-- 
         
         <mapper resource="/memboard/sql/board.xml"/>

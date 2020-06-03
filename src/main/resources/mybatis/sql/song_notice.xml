@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+
+	<!-- 최대 글번호 얻기 -->
+	<select id="maxNumber" resultType="Integer">
+		select max(n_no) from song_notice
+	</select>
+
+	<!-- 글쓰기 -->
+	<insert id="insertNotice" parameterType="model.song.Song_noticeDTO">
+		insert into	song_notice(mem_id,n_title,n_date,n_type,n_content)
+		values(#{mem_id},#{n_title},NOW(),#{n_type},#{n_content})
+	</insert>
+
+	<!-- 글 갯수 -->
+	<select id="noticeSelectCount" resultType="int">
+		select count(*) from song_notice
+		where n_type="공지"
+	</select>
+
+	<!-- 리스트 -->
+	<select id="noticeList" parameterType="java.util.HashMap" resultType="model.song.Song_noticeDTO">
+		select * from song_notice
+		where n_type="공지"
+		order by n_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<!-- 공지조건리스트 -->
+	<select id="nmainList" parameterType="java.util.HashMap" resultType="model.song.Song_noticeDTO">
+		select * from song_notice
+		order by n_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="nmainselectCount" resultType="int">
+		select count(*) from song_notice
+	</select>
+	
+	<!-- 이벤트조건리스트 -->
+	<select id="neventList" parameterType="java.util.HashMap" resultType="model.song.Song_noticeDTO">
+		select * from song_notice
+		where n_type="이벤트"
+		order by n_no desc
+		limit #{start},#{cnt}
+	</select>
+	
+	<select id="neventselectCount" resultType="int">
+		select count(*) from song_notice
+		where n_type="이벤트"
+	</select>
+
+	<!-- 조횟수 -->
+	<update id="readCount" parameterType="int">
+		update song_notice set n_readcount=n_readcount+1
+		where n_no=#{n_no}
+	</update>
+
+	<!-- 글내용보기 , 글수정 -->
+	<select id="contentNotice" parameterType="int" resultType="model.song.Song_noticeDTO">
+		select * from song_notice
+		where n_no=#{n_no}
+	</select>
+
+	<!--DB글수정 -->
+	<update id="updateNotice" parameterType="model.song.Song_noticeDTO">
+		update song_notice set
+		mem_id=#{mem_id},
+		n_title=#{n_title},
+		n_type=#{n_type},
+		n_content=#{n_content}
+		where n_no=#{n_no}
+	</update>
+
+	<!--글삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		delete from song_notice where n_no=#{n_no}
+	</delete>
+</mapper>

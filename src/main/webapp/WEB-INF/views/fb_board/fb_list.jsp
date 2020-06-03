@@ -39,7 +39,8 @@
 	}
 	
 }
-  
+ 
+
 </style>   
    
 </head>
@@ -66,26 +67,26 @@
 		 </c:if>
  
  
-  <div class="container">
+	<center><b>전체/ ${count}게시물</b></center>
+	<div class="container list" style="text-align:center;">
 
-   
    <table class="table">
      <c:if test="${fb_category!=null||sessionScope.mem_grade=='admin'}">
-     <tr>
-		 <td align="left"><b>전체/ ${count}게시물</b></td>
-      <td align="right" colspan="2">
-        <a href="fb_writeForm.do?fb_category=${fb_category}">글쓰기</a>
-      </td>
-     </tr>
-     </c:if>
+	     <tr>
+	      <td align="right" colspan="2" width="20%">
+	        <a href="fb_writeForm.do?fb_category=${fb_category}">글쓰기</a>
+	     	 </td>
+	     </tr>
+	   </c:if>
      
-     <tr><td>
+     <tr>
+     	<td>
      <c:if test="${count==0 }">
       	저장된 글이 없습니다
      </c:if>
      
      <c:if test="${count>0 }">
-      <table class="table">
+      <table class="table" align="center" width="100%" style=TABLE-layout:fixed>
        <tr>
          <td id="no" width="5%">No</td>
          <td id="category" width="15%">카테고리</td>
@@ -109,7 +110,7 @@
              
              <td id="category">${fb.fb_category}</td>
              
-             <td id="title">
+             <td id="title" style="text-overflow:ellipsis; overflow:hidden;white-space:nowrap;">
              <c:if test="${fb.fb_indent>0}">
                <img src="resources/imgs/level.gif" width="${5*fb.fb_indent}" height="16">
                <img src="resources/imgs/re.gif">
@@ -148,9 +149,11 @@
       </table>
     
      </c:if>
+     </td>
+     </tr>
 
-     <br>
-
+<tr>
+<td>
  <form method="post" action="fb_search.do?fb_category=${fb_category}" align="center">
  	<select name="searchType">
 		<option value="mem_id">작성자</option>

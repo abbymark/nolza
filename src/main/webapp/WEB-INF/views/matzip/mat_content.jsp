@@ -4,20 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
-
-
-
-<!-- 스타일 시트 적용 -->
-<link rel="stylesheet" type="text/css" href="resources/css/freeBoardt3.css">
-
 <!-- 본문 -->
 <body>
+
 	
 	<center>
 		<h2>글내용보기</h2>
-	</center>
+	</center> <br><br>
 	
-	<table class="freeboard_list">
+	<div class="container list" style="text-align:left;">
+	<table class="table">
 		<tr>
 			<td>글번호</td>
 			<td>${dto.no}</td>
@@ -29,19 +25,25 @@
 			<td>닉네임</td>
 			<td>${dto.mem_nick}</td>
 			<td>작성일</td>
-			<td>${dto.date} <%-- 
-				<fmt:formatDate value="${dto.regdate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				--%>
+			<td>
+				${dto.date} 
 			</td>
 		</tr>
 
 		<tr>
 			<td>글제목</td>
-			<td colspan="3">${dto.title}</td>
+			<td colspan="3">
+			
+			${dto.title}
+			
+			
+			
+			</td>
 		</tr>
 		<tr>
 			<td>글내용</td>
-			<td colspan="3"><textArea rows="10" cols="60" readOnly>${dto.content}</textArea>
+			<td colspan="3">
+				<textArea rows="5" cols="80" readOnly>${dto.content}</textArea>
 			</td>
 		</tr>
 
@@ -90,6 +92,7 @@
 			</td>
 		</tr>
 	</table>
+	</div>
 </body>
 </html>
 

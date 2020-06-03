@@ -74,7 +74,7 @@
   	
   	<!-- 글내용 보기 -->
 	<select id="contentBread" parameterType="String" resultType="model.matzip.BreadDto">
-		select * from bread
+		select bread_name, bread_menu, bread_loc, bread_tel, mem_id, mem_nick,mem_grade from bread
 		where bread_name=#{bread_name}
 	</select>
 	
@@ -93,11 +93,11 @@
   	<select id="contentReview" parameterType="String" resultType="java.util.HashMap">
 		select rev_content
 		     , rev_date
-		     , rev_no 
 		  from review
 	 	 where bread_name = #{bread_name}
 	</select>	
 	
+		
 	<!-- 별점, 리뷰 등록 mem_id 
 	<update id="updateReview" parameterType="model.matzip.ReviewDto">
 		update review
@@ -110,6 +110,11 @@
 	mem_id로 내용들을 찾아서 업데이트 해준다
 	-->
 	
+	<update id="reviewUpdate" parameterType="model.matzip.ReviewDto">
+		update review
+		   set rev_like = 1
+		 where rev_no   = #{rev_no}
+	</update>
 	
 	
 

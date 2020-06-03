@@ -16,82 +16,58 @@
 	</h2>
 
 <!-- 스타일 시트 적용 -->
-<link rel="stylesheet" type="text/css" href="resources/css/freeBoardt3.css">
 
 	<!-- 본문 -->
 
-<article>
-	<div class="inner_cont">
-			<div class="freeboard_list">
-				
-	
+	<table>
 
-			<table>
-					<caption>게시판 리스트</caption>
-					
-		  
-				<thead>
-						<tr>
-							<th id="no">아이디</th>
-							<th id="head">닉네임</th>
-							<th id="title">비밀번호</th>
-							<th id="nick">이메일</th>
-							<th id="date">회원 등급</th>
-							<th id="date">글 개수</th>
-							<th id="read">댓글 갯수</th>
-							<th id="like">로그인 횟수</th>
-							<th id="like">수정</th>
-						</tr>
-					</thead>
-		  
-		  		  <tbody>
-		  		
-		  	<!-- 내용 -->	  	
-		  <c:forEach var="dto" items="${selectList}">
-						<tr>
-							<td>
-								${dto.mem_id}
-							</td>
 
-							<td>
-								${dto.mem_nick}
-							</td>
-				
-							<td>
-								${dto.mem_pw}
-							</td>
-							
-							<td>
-								${dto.mem_email}
-							</td>
+		<thead>
+			<tr>
+				<th id="no">아이디</th>
+				<th id="head">닉네임</th>
+				<th id="title">비밀번호</th>
+				<th id="nick">이메일</th>
+				<th id="date">회원 등급</th>
+				<th id="date">글 개수</th>
+				<th id="read">댓글 갯수</th>
+				<th id="like">로그인 횟수</th>
+				<th id="like">수정</th>
+			</tr>
+		</thead>
 
-							<td>
-								${dto.mem_grade}
-							</td>
-							
-							<td>
-								${dto.mem_article_cnt}
-							</td>
-							
-							<td>
-								${dto.mem_reply_cnt}
-							</td>
-							
-							<td>
-								${dto.mem_login_cnt}
-							</td>
-							
-							<td>
-								<input type="button" onclick="document.location.href='admin_updateForm?mem_id=${dto.mem_id}'" value="수정">
-							</td>
-							
-						</tr>
-					</c:forEach>
-			</tbody>
+		<tbody>
+
+			<!-- 내용 -->
+			<c:forEach var="dto" items="${selectList}">
+				<tr>
+					<td>${dto.mem_id}</td>
+
+					<td>${dto.mem_nick}</td>
+
+					<td>${dto.mem_pw}</td>
+
+					<td>${dto.mem_email}</td>
+
+					<td>${dto.mem_grade}</td>
+
+					<td>${dto.mem_article_cnt}</td>
+
+					<td>${dto.mem_reply_cnt}</td>
+
+					<td>${dto.mem_login_cnt}</td>
+
+					<td><input type="button"
+						onclick="document.location.href='admin_updateForm?mem_id=${dto.mem_id}'"
+						value="수정"></td>
+
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 
 
-<table class="button">
+	<table class="button">
 
 	<tr align="center">
 			<td >
@@ -113,16 +89,7 @@
 				</c:if>
 			</td>
 		</tr>
-
-
 </table>
-
-	</div>
-	</div>
-	
-</article>
-
-
 
 </body>
 </html>

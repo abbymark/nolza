@@ -26,6 +26,35 @@
 </script>
 
 
+<style type="text/css">
+  @media ( max-width: 720px ){
+   #no{
+   display: none;
+   }
+  #category{
+  display: none;   
+  }
+   #title{
+   display: 90%;
+   }
+   #mem_nick{
+   display: 10%;
+   }
+   #date{
+   display: none;   
+   }
+   #readcount{
+   display: none;
+   }
+   #ip{
+   display: none;
+   }
+   
+}
+  
+</style>
+
+
 </head>
 <div class="container list" style="text-align:center;">
 	<table class="table">
@@ -82,12 +111,33 @@
 				<td>맛집</td>
 
 				<td>
-					<!-- 글 내용 보기 --> <a
-					href="../nolza/mat_content?no=${dto.no}&pageNum=${pageNum}"> <em
-						class="icon_img icon_txt"></em>${dto.title}
-				</a> <!-- 댓글 개수 --> <a class="reply_numbox" href="#"> <span
-						class="reply_num">[${dto.indent}]</span>
-				</a>
+					<!-- 글 내용 보기 --> 
+						<c:if test="${dto.step>0}">
+							<img src="resources/imgs/level.gif" width="${5*dto.indent}"
+								height="16">
+							<img src="resources/imgs/re.gif">
+						</c:if> 
+						
+						<c:if test="${dto.step==0}">
+							<img src="resources/imgs/level.gif" width="${5*dto.indent}"
+								height="16">
+						</c:if> 
+						
+							<a href="../nolza/mat_content?no=${dto.no}&pageNum=${pageNum}">
+									 <em class="icon_img icon_txt"></em>${dto.title}
+							</a> <!-- 댓글 개수 --> 
+						
+						
+							<a class="reply_numbox" href="#"> 
+						
+								<span class="reply_num">[${dto.indent}]</span>
+							
+							</a>
+							
+							<c:if test="${dto.readcount>=20 }">
+			               		<img src="resources/imgs/hot.png" border="0" height="18">
+		            		 </c:if>   
+							
 				</td>
 
 				<td>
