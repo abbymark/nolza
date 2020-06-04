@@ -55,7 +55,7 @@
 							</c:if>
 						</td>
 						
-						<td>${book_dto.book_readcount }</td>
+						<td align="right">${book_dto.book_readcount }</td>
 						
 					</tr>
 				</c:forEach>
@@ -91,7 +91,7 @@
 		             
 		             &nbsp;&nbsp;(&nbsp;${fb.fb_cmt_cnt}&nbsp;)
 		             </td>
-		             <td> ${fb.fb_readcount}</td>
+		             <td align="right"> ${fb.fb_readcount}</td>
 		           </tr>
 		           
 		        </c:forEach>
@@ -145,7 +145,7 @@
 							</td>
 			
 							
-							<td>
+							<td align="right">
 								<!-- 조회수 --> ${dto.readcount}
 							</td>
 
@@ -155,6 +155,74 @@
 				</tbody>
 			</table>
 		</td>
+		
+		
+		
+		<td>
+			<table  width="70%" class="table">
+			        
+			        <c:forEach var="dto" items="${list4}">
+			           <tr height="40px">       
+			             <td>
+			             <c:if test="${dto.camja_step>0}">
+			               <img src="imgs/level.gif" width="${5*dto.camja_indent}" height="16">
+			               <img src="imgs/re.gif">
+			             </c:if>
+			             
+			             <c:if test="${dto.camja_step==0}">
+			               <img src="imgs/level.gif" width="${5*dto.camja_indent}" height="16">
+			             </c:if>
+			             
+			             <a href="camja_content.do?camja_no=${dto.camja_no}&pageNum=${pageNum}">${dto.camja_title}</a>
+			             
+			             <c:if test="${dto.camja_readcount>=20 }">
+			               <img src="imgs/hot.png" border="0" height="18">
+			             </c:if>   
+			             </td>  
+			                      
+			             <td align="right"> ${dto.camja_readcount}</td>
+			           </tr>
+			        </c:forEach>     
+			 </table>
+		</td>
+	</tr>
+	
+	
+	
+	
+	
+	<tr>
+		<td>
+			<h3>음악 게시판</h3>
+		</td>
+		
+		<td rowspan="2">
+			
+		</td>
+	</tr>
+	
+	
+	
+	<tr>
+		<td>
+			<table class="table">
+				
+
+				<c:forEach var="dto" items="${list5}">
+					<tr>
+
+						<td>
+							<a href="content.do?no=${dto.no}&pageNum=${pageNum}">${dto.title}</a>
+						</td>
+
+						<td align="right">${dto.readcount}</td>
+					</tr>
+				</c:forEach>
+			</table>
+		</td>
+		
+		
+
 	</tr>
 </table>
 </div>

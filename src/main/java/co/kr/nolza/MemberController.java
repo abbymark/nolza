@@ -86,7 +86,7 @@ public class MemberController {
 		MemberDto memberDto = sqlSession.selectOne("member.selectLogin", map);
 		if(memberDto==null || memberDto.getMem_login_state().equals("1")) {//로그인 실패
 			model.addAttribute("msg", "로그인 실패");
-			return ".main.member.mem_login";
+			return ".main.member.mem_loginFailed";
 		}
 		model.addAttribute("memberDto", memberDto);
 		

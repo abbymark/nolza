@@ -18,8 +18,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <!--  글쓰기, 답글쓰기  -->
 <insert id="insertBoard" parameterType="model.dto.CamjaBoardDTO">
-	insert into camja_board(camja_id, mem_nick, camja_title, camja_date, camja_group, camja_step, camja_indent, camja_content, camja_ip)
-	values(#{camja_id},#{mem_nick},#{camja_title},NOW(),#{camja_group},#{camja_step},#{camja_indent},#{camja_content},#{camja_ip})
+	insert into camja_board(camja_id, mem_nick, mem_id, camja_title, camja_date, camja_group, camja_step, camja_indent, camja_content, camja_ip)
+	values(#{camja_id},#{mem_nick},#{mem_id},#{camja_title},NOW(),#{camja_group},#{camja_step},#{camja_indent},#{camja_content},#{camja_ip})
 </insert>
 
 <!--  글 갯수 -->

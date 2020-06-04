@@ -6,10 +6,7 @@
 <head>
 		<meta charset="UTF-8">
 		<title>camja_updateForm.jsp</title>
-		<style>
-		body{background-color: #7fffd4;}
-		table{margin:auto; line-height: 25px; width:"70%"}
-		</style>
+		
 		
 		<script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 		
@@ -30,9 +27,9 @@
 		</script>
 </head>
 <body>
-<div><h2>글수정</h2></div>
+<div class="container list"><h2>자유게시판 글수정</h2></div>
 <form method="post" name="camja_writeForm" action="camja_updatePro.do?pageNum=${pageNum}">
-	<table border="1">
+	<table class="table">
 		<tr>
 			<td>작성자</td>
 			<td>

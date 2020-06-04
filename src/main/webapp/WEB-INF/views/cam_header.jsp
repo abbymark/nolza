@@ -26,7 +26,6 @@
 
       <nav class="nav-menu d-none d-lg-block ">
         <ul>
-          <li><a href="/nolza/">Main</a></li>
           <li class="drop-down"><a href="book_list.do">도서</a>
             <ul>              
               <li><a style="cursor:pointer;" onclick="location.href='book_list.do'">전체게시판</a></li>
@@ -42,10 +41,10 @@
            <li class="drop-down">
              <a href="map_main">맛집</a>
             <ul>
-              <li><a href="#">전체게시판</a></li>
-              <li><a href="mat_list">자유게시판</a></li>
-              <li><a href="map_main">빵지 순례도</a></li>
-              <li><a href="#">4</a></li>
+              <li><a href="mat_list">전체게시판</a></li>
+              <li><a href="mat_list2">자유게시판</a></li>
+              <li><a href="mat_list3">맛집추천게시판</a></li>
+                <li><a href="map_main">빵지 순례도</a></li>
             </ul>
           </li>
           

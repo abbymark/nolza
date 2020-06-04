@@ -75,7 +75,8 @@ function deleteImg(id){
 		<input type="hidden" name="book_indent" value="${book_indent }">
 		<input type="hidden" name="mem_id" value="${mem_id }">
 		<input type="hidden" name="mem_nick" value="${mem_nick }">
-		<table border="1">
+		<div class="list container">
+		<table border="1" class="table">
 			<tr>
 				<td colspan="2" align="right">
 					<a href="book_list.do">리스트</a>
@@ -136,7 +137,10 @@ function deleteImg(id){
 			
 			<tbody id=rating style="display:none;">
 				<tr>
-					<td colspan="2">
+					<td>
+						평점
+					</td>
+					<td>
 						<span class="starRating">
 						  <input id="rating5" type="radio" name="book_rating" value="5">
 						  <label for="rating5">5</label>
@@ -158,7 +162,7 @@ function deleteImg(id){
 			<tr>
 				<td>글내용</td>
 				<td>
-					<textarea name="book_content" rows="10" cols="60"></textarea>
+					<textarea style="width:100%" name="book_content" rows="10" cols="60"></textarea>
 				</td>
 			</tr>
 			
@@ -201,6 +205,7 @@ function deleteImg(id){
 				</td>
 			</tr>
 		</table>
+		</div>
 	</form>
 </body>
 </html>

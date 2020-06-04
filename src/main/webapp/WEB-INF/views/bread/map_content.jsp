@@ -128,12 +128,26 @@ body {
 
 <script type="text/javascript">
  
+function likeCheck(book_likeState){
+	//alert("likeCheck():"+$("#book_no").val()+"\n"+ $("#mem_id").val())
+	if($("#reader_id").val()==''){
+		alert("로그인후 이용해 주시기 바랍니다");
+		return;
+	}
+}
 
+	function rev_check(){
+		
+		if($("#review_text").val()==''){
+			alert("리뷰 내용을 입력해 주시기 바랍니다");
+			return;
+		}
+	}
  
  
  	function getLogin(){
  		
- 		var id = "1";
+ 		var id = "${dto.mem_id}";
  		//var id = "1";
  		
  		//console.log(id);
@@ -203,9 +217,6 @@ body {
 
 <!-- 나중에 스타일 시트 적용하기 -->
 <body>
-
-
-
 
 
 <div class="header">
@@ -297,11 +308,12 @@ body {
 	</table>	
 	</div>
 	
+<form method="post" name="rev_Update" action="rev_UpdatePro" onsubmit="return rev_check()" >	
 	<div class="container list" style="text-align:center;">	
 	<table width="90%" class="table">
 		<tr>
 			<td colspan="3"><h1>${dto.bread_name}</h1>
-				
+			
 			</td>
 		</tr>
 
@@ -365,7 +377,7 @@ body {
 							<!-- s:이미지 평점 -->
 							<c:forEach var="dto1" items="${summaryReview}">	
 								
-								<!--c:if test="dto.rev_like=1" -->
+								<!--if test="dto.rev_like=1" -->
 								<a href="JavaScript:void(0);" onClick="getLogin();" class="favor" value="Y" >
 									<span>좋아요(<i class="num">${dto1.sum_like}</i>)</span>
 								</a>
@@ -407,7 +419,7 @@ body {
 			
 	</table>
 	</div>
-
+</form>
 	<br>
 
 	<div class="container list" style="text-align:center;">

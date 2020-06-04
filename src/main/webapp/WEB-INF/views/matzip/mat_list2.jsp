@@ -54,11 +54,11 @@
   
 </style>
 
-
 </head>
+
 <div class="container list" style="text-align:center;">
 	<table class="table">
-	<h2>전체게시판</h2><br>
+	<h2>자유 게시판</h2><br>
 
 
 	<thead>
@@ -181,7 +181,7 @@
 				
 			</c:if>
 			
-				<input type="button" class="write" onclick="document.location.href='mat_list'" value="글목록" >
+				<input type="button" class="write" onclick="document.location.href='mat_list2'" value="글목록" >
 		
 		
 			<a class="active" style="float: right" href="#">About</a>
@@ -241,4 +241,5 @@
 		</tr>
 	</table>
 </form>
+
 

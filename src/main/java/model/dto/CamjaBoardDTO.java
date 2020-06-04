@@ -6,6 +6,8 @@ public class CamjaBoardDTO {
 	private int camja_no;
 	private String camja_id;
 	private String mem_nick;
+	private String mem_id;
+	
 	private String camja_title;
 	
 	private Date camja_date;
@@ -25,6 +27,14 @@ public class CamjaBoardDTO {
 	}
 	public void setCamja_no(int camja_no) {
 		this.camja_no = camja_no;
+	}
+	
+	
+	public String getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
 	}
 	public String getCamja_id() {
 		return camja_id;

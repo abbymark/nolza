@@ -71,7 +71,7 @@
 	<div class="container list" style="text-align:center;">
 
    <table class="table">
-     <c:if test="${fb_category!=null||sessionScope.mem_grade=='admin'}">
+     <c:if test="${fb_category!=null&&mem_id!=null||sessionScope.mem_grade=='admin'}">
 	     <tr>
 	      <td align="right" colspan="2" width="20%">
 	        <a href="fb_writeForm.do?fb_category=${fb_category}">글쓰기</a>
@@ -86,7 +86,7 @@
      </c:if>
      
      <c:if test="${count>0 }">
-      <table class="table" align="center" width="100%" style=TABLE-layout:fixed>
+      <table class="table" width="100%" style=TABLE-layout:fixed>
        <tr>
          <td id="no" width="5%">No</td>
          <td id="category" width="15%">카테고리</td>
@@ -110,7 +110,7 @@
              
              <td id="category">${fb.fb_category}</td>
              
-             <td id="title" style="text-overflow:ellipsis; overflow:hidden;white-space:nowrap;">
+             <td id="title" style="text-overflow:ellipsis; overflow:hidden;white-space:nowrap;" align="left">
              <c:if test="${fb.fb_indent>0}">
                <img src="resources/imgs/level.gif" width="${5*fb.fb_indent}" height="16">
                <img src="resources/imgs/re.gif">

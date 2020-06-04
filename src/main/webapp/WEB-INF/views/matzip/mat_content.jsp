@@ -35,9 +35,13 @@
 			<td colspan="3">
 			
 			${dto.title}
+			&nbps;
 			
 			
 			
+			<c:if test="${mem_grade=='admin' }">
+				[${dto.ip}]
+			</c:if>
 			</td>
 		</tr>
 		<tr>

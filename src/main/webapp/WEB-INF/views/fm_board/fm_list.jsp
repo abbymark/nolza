@@ -90,7 +90,7 @@
 
 <c:if test="${fm_category=='match'||fm_category=='result'||fm_category==null}">   
    
-     <c:if test="${fm_category!=null||sessionScope.mem_grade=='admin'}">
+    <c:if test="${fm_category!=null&&mem_id!=null||sessionScope.mem_grade=='admin'}">
       <div align="right">
         <a href="fm_writeForm.do?fm_category=${fm_category}">글쓰기</a>
       </div>

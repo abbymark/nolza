@@ -28,6 +28,7 @@ table {
 		<input type="hidden" name="ggroup" value="${ggroup}"> 
 		<input type="hidden" name="step" value="${step}"> 
 		<input type="hidden" name="indent" value="${indent}">
+		<input type="hidden" name="type" value="${type}">
 
 
 	<div class="container list" style="text-align:left;">
@@ -57,6 +58,18 @@ table {
 					</c:if>
 				</td>
 			</tr>
+
+				<tr>
+					<td>내용</td>
+					
+					<td>
+						<select name="type" id="type">
+							<option value="자유게시판">자유게시판</option>
+							<option value="맛집 추천 게시판">맛집 추천 게시판</option>
+						</select>
+					</td>
+			</tr>
+
 
 			<tr>
 				<td>글내용</td>

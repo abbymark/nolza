@@ -16,6 +16,8 @@
 	line-height:25px;
 	width:60%;
 	}
+	
+	li { list-style: none } 
 </style>
 
 
@@ -33,9 +35,10 @@
 </head>
 <body>
 
-	<div class="contentHero">
+	<!-- <div class="contentHero"> -->
+	<div class="container">
 
-	 <img src="${ctxpath }/resources/imgUpload/${fm.fm_img}"> 
+	 <img src="${ctxpath }/resources/imgUpload/${fm.fm_img}" width="50%"> 
 		<div class="stadGal">
 <!--<img src="https://plab-football.s3.amazonaws.com/media/goalline_rCM7uUY.jpg"	alt="부천 크라우드 76 "> -->			 
     </div>

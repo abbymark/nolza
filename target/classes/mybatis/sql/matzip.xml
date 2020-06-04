@@ -4,12 +4,29 @@
 
 <mapper namespace="matzip">
   
-  	<!-- 리스트 -->
+  	<!-- 전체게시판리스트 -->
 	<select id="mat_selectList" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
 		select * from matzip
 		order by ggroup desc, step asc
 		limit #{start}, #{cnt}
 	</select>
+	
+	<!-- 자유게시판리스트 -->
+	<select id="mat_freeselect" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
+		select * from matzip
+		where type=1
+		limit #{start}, #{cnt}
+		
+	</select>
+
+	<!-- 맛집 추천 게시판리스트 -->
+	<select id="mat_reselect" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
+		select * from matzip
+		where type=2
+		limit #{start}, #{cnt}
+		
+	</select>
+	
 	
 	<!-- 리스트 글 검색 -->
 	<select id="mat_serchList" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
@@ -74,7 +91,7 @@
   	
   	<!-- 글내용 보기 -->
 	<select id="contentBread" parameterType="String" resultType="model.matzip.BreadDto">
-		select bread_name, bread_menu, bread_loc, bread_tel, mem_id, mem_nick,mem_grade from bread
+		select * from bread
 		where bread_name=#{bread_name}
 	</select>
 	
@@ -93,11 +110,11 @@
   	<select id="contentReview" parameterType="String" resultType="java.util.HashMap">
 		select rev_content
 		     , rev_date
+		     , rev_no 
 		  from review
 	 	 where bread_name = #{bread_name}
 	</select>	
 	
-		
 	<!-- 별점, 리뷰 등록 mem_id 
 	<update id="updateReview" parameterType="model.matzip.ReviewDto">
 		update review
@@ -110,11 +127,6 @@
 	mem_id로 내용들을 찾아서 업데이트 해준다
 	-->
 	
-	<update id="reviewUpdate" parameterType="model.matzip.ReviewDto">
-		update review
-		   set rev_like = 1
-		 where rev_no   = #{rev_no}
-	</update>
 	
 	
 

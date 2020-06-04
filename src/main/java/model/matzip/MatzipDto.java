@@ -21,7 +21,7 @@ public class MatzipDto {
 	private String content;
 	private String ip;
 
-	private int type;
+	private String type;
 	private int ggroup;
 	private int step;
 	private int indent;
@@ -94,10 +94,10 @@ public class MatzipDto {
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
-	public int getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	public int getGgroup() {

@@ -10,43 +10,34 @@
 <head>
 <meta charset="UTF-8">
 <title>cam_content.jsp</title>
-<style>
-body .h4 {
-  margin-top: 0px;
-}
-
-</style>
 </head>
 <body>
-<section id="camja_list">
-<div><h4>캠핑 자유게시판</h4> 전체 글 갯수 : ${count}건</div>
-   <form>
-   <table  width="70%">
+<div class="container list"><h4><a href="camja_list.do" >캠핑 자유게시판</a></h4> 전체 글 갯수 : ${count}건
+   <table  width="70%" class="table" >
      <tr>
-      <td align="right" colspan="2">
-        <a href="camja_writeForm.do"><b>글쓰기</b></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      </td>
-     </tr>
-     
-     <tr>
-     	<td>
+     <c:if test="${mem_id != null}">
+        <td align="right" colspan="6"><a href="camja_writeForm.do">글쓰기</a>
+        </td>   
+     </c:if>
+     </tr> 
 	     <c:if test="${count==0 }">
 	      	저장된 글이 없습니다
-	     </c:if>     
+	     </c:if>    
+	      
     	 <c:if test="${count>0 }">
-     <table align="center">
-       <tr height="70px">
-         <td align="center" width="15%">글번호</td>
-         <td align="center"width="25%">글제목</td>
+    
+       <tr>
+         <td align="center" width="10%">글번호</td>
+         <td align="center"width="30%">글제목</td>
          <td align="center" width="15%">글쓴이</td>
-         <td align="center" width="15%">작성일</td>
-         <td align="center" width="15%">조회</td>
+         <td align="center" width="20%">작성일</td>
+         <td align="center" width="10%">조회</td>
          <td align="center" width="15%">IP</td>
        </tr>
         
         <c:forEach var="dto" items="${list}">
-           <tr height="40px">
-             <td align="center">
+           <tr align="center"  >
+             <td >
                <c:out value="${number}"/>
                <c:set var="number" value="${number-1}"/>
              </td>           
@@ -77,13 +68,13 @@ body .h4 {
              
              <td align="center"> ${dto.camja_ip}</td>
            </tr>
-        </c:forEach>
-        
-      </table>
+        </c:forEach>     
+  
      </c:if>
-     </td>
-     </tr>
-     
+     </table>
+     </div>
+   <div class="container list">
+   <table class="table">
 	<tr align="center">
 	<td>
 	 <c:if test="${count>0 }">     
@@ -104,9 +95,7 @@ body .h4 {
 	 </c:if>
 	</td>
 	</tr>
-	     
    </table>
-  </form>
-  
+   </div>
 </body>
 </html>

@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import model.book.Book_boardDto;
+import model.dto.CamjaBoardDTO;
 import model.fb.FB_boardDTO;
+import model.song.Song_boardDTO;
 
 /**
  * Handles requests for the application home page.
@@ -74,6 +76,20 @@ public class HomeController {
 		mat_list3=sqlSession.selectList("matzip.mat_selectList",map2);
 		model.addAttribute("mat_list3",mat_list3);
 		
+		//====================================================================================
+		HashMap<String, Integer>map4= new HashMap<String,Integer>();
+		map4.put("start", 0);
+		map4.put("cnt", 10);		
+		
+		List<CamjaBoardDTO> list4 = sqlSession.selectList("camjaboard.selectList",map4);
+		model.addAttribute("list4", list4);
+		
+		//====================================================================================
+		HashMap<String , Integer> map5=new HashMap<String,Integer>();
+		map5.put("start",0);
+		map5.put("cnt",10);
+		List<Song_boardDTO> list5=sqlSession.selectList("board.selectList",map5);
+		model.addAttribute("list5",list5);
 		
 		return ".main.member.main";
 	}

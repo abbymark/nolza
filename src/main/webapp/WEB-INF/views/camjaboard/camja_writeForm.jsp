@@ -6,24 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title>writeForm.jsp</title>
-<style type="text/css">
-body{background-color: #7fffd4;}
-table{margin:auto; 
-	line-height:25px;}
-</style>
 </head>
 <body>
 
 
-<div class="text-center"><h2>글쓰기</h2></div>
+<div class="container list"><h2>글쓰기</h2></div>
 	<form method="post" name="camja_writeForm" action="camja_writePro.do">
 		<input type="hidden" name="pageNum" value="${pageNum}">
 		<input type="hidden" name="camja_no" value="${camja_no}">
+		<input type="hidden" name="mem_id" value="${mem_id}">
 		<input type="hidden" name="camja_group" value="${camja_group}">
 		<input type="hidden" name="camja_step" value="${camja_step}">
 		<input type="hidden" name="camja_indent" value="${camja_indent}">
 	
-	<table border="1">
+	<table class="table" >
 		<tr>
 			<td colspan="2" align="right">
 				<a href="camja_list.do">리스트</a>
@@ -32,7 +28,9 @@ table{margin:auto;
 		
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" name="mem_nick" size="30" value="${CamjaBoardDTO.mem_nick}"></td>
+			<td>
+			<input type="text" name="mem_nick" size="30" value="${mem_nick}">
+			</td>
 		</tr>		
 		<tr>
 			<td>글제목</td>
