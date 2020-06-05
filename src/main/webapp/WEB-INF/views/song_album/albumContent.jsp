@@ -10,30 +10,25 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	
 </head>
-
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">				
-				<p><img src="${ctxpath }/resources/imgUpload/${dto.a_picture}"></p>
+				<p><img src="${ctxpath }/resources/imgUpload/${dto.a_picture}" style="max-width:300px; max-height:300px" ></p>
 				<br>
 				<h1 class="mt-4">${dto.a_title}</h1>
 				<br>
 				
-				<p class="lead">아티스트 &emsp;&emsp;&nbsp; ${dto.a_artist}</cite></p>
-				<p class="lead">장르/스타일 &emsp;&nbsp;${dto.a_style}</cite></p>
-				<p class="lead">발매사 &emsp;&emsp;&emsp;&nbsp; ${dto.a_sales}</cite></p>
-				<p class="lead">기획사 &emsp;&emsp;&emsp;&nbsp; ${dto.a_manage}</cite></p>
-				<p class="lead">발매일 &emsp;&emsp;&emsp;&nbsp; ${dto.a_date}</cite></p>
+				<p class="lead">아티스트 &emsp;${dto.a_artist}</p>
+				<p class="lead">장르/스타일 &emsp;${dto.a_style}</p>
+				<p class="lead">발매사 &emsp;${dto.a_sales}</p>
+				<p class="lead">기획사 &emsp;${dto.a_manage}</p>
+				<p class="lead">발매일 &emsp;${dto.a_date}</p>
 				<hr>
 				
-				<p class="lead">타이틀곡</p>
-				<h3>${dto.a_main}</h3>
 				
-				<p class="lead">앨범소개</p>
-				<h3>${dto.a_content}</h3>
-				<hr>
 			</div>
 			
 			<table class="table">
@@ -42,17 +37,23 @@
 					<p>${dto.a_readcount}</p><hr>
 					<h4 class="mt-4">작성일</h4>
 					<p><fmt:formatDate value="${dto.date}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
+					<p class="lead">타이틀곡</p>
+					<h3>${dto.a_main}</h3>
+					
+					<p class="lead">앨범소개</p>
+					<h3>${dto.a_content}</h3>
+					<hr>
 				</blockquote>
 			</table>
 			
 			<tr>
-				<td colspan="4" align="right">
+				<td colspan="4" align="center">
 				<c:if test="${sessionScope.mem_grade=='admin'}">
 					<input type="button" value="글수정" onclick="document.location.href='albumUpdateForm.do?a_no=${dto.a_no}&pageNum=${pageNum}'">
 					<input type="button" value="글삭제" onclick="document.location.href='deletealbum.do?a_no=${dto.a_no}&pageNum=${pageNum}'">
 					<input type="button" value="글쓰기" onclick="document.location.href='albumWriteForm.do'">
 				</c:if>			
-				<input type="button" value="글목록" onclick="document.location.href='albumList.do?pageNum=${pageNum}'">
+				<input type="button" value="글목록" onclick="document.location.href='albumMainList.do?pageNum=${pageNum}'">
 				</td>
 			</tr>
 		</div>

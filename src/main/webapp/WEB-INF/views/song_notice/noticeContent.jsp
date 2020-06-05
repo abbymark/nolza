@@ -40,7 +40,7 @@
 			</table>
 			
 			<tr>
-				<td colspan="4" align="right">
+				<td colspan="4" align="center">
 					<c:if test="${sessionScope.mem_grade=='admin' }">
 						<input type="button" value="글수정" onclick="document.location.href='noticeUpdateForm.do?n_no=${dto.n_no}&pageNum=${pageNum}'">
 						<input type="button" value="글삭제" onclick="document.location.href='noticeDelete.do?n_no=${dto.n_no}&pageNum=${pageNum}'">

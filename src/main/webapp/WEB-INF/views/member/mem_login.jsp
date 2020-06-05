@@ -116,6 +116,7 @@ h2.heading {
   position: relative;
 }
 .controls input[type="text"],
+.controls input[type="password"],
 .controls input[type="email"],
 .controls input[type="number"],
 .controls input[type="date"],
@@ -335,7 +336,7 @@ function check(){
 		</div>
 
 		<div class="controls">
-			<input type="text" id="mem_pw" name="mem_pw" class="floatLabel" >
+			<input type="password" id="mem_pw" name="mem_pw" class="floatLabel" >
 			<label for="phone">비밀번호</label>
 		</div>
 		

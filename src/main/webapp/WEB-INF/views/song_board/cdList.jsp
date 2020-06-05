@@ -23,6 +23,12 @@
 				<li><a href="comeList.do">컴백</a>||	</li>
 				<li><a href="etcList.do">기타</a>		</li>
 			</ul>
+			
+			<tr align="right">
+				<c:if test="${sessionScope.mem_id!=null||sessionScope.mem_grade=='admin' }">
+					<td><input type="button" value="글쓰기" onclick="document.location.href='writeForm.do'"></td>
+				</c:if>
+			</tr>
 		</div>
 
 		<tr>
@@ -63,11 +69,7 @@
 			</td>
 		</tr>
 		
-		<tr align="right">
-			<c:if test="${sessionScope.mem_id!=null||sessionScope.mem_grade=='admin' }">
-				<td><input type="button" value="글쓰기" onclick="document.location.href='writeForm.do'"></td>
-			</c:if>
-		</tr>
+		
 
 		<tr align="center">
 			<td>

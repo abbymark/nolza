@@ -64,15 +64,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		 where mem_id=#{mem_id}
 	</update>
 	
-	<!-- 로그인 횟수 증가 -->
-	<update id="admin_mem_login_cnt">
-		update member
-		set mem_login_cnt=mem_login_cnt+1
-	</update>
-	
 	<!--id중복체크 -->
 	<select id="selectOne" parameterType="String" resultType="model.member.MemberDto">
 	  select * from member 
 	          where mem_id=#{mem_id}
 	</select>
+	
+	<!-- 로그인 횟수 증가 -->
+   <update id="admin_mem_login_cnt" parameterType="String">
+      update member
+         set mem_login_cnt
+           = mem_login_cnt+1
+       where mem_id = #{mem_id}
+   </update>
 </mapper>

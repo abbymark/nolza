@@ -41,7 +41,7 @@
 			</table>
 			
 			<tr>
-				<td colspan="4" align="right">
+				<td colspan="4" align="center">
 				<c:if test="${sessionScope.mem_id!=null||sessionScope.mem_grade=='admin' }">
 					<input type="button" value="글수정" onclick="document.location.href='updateForm.do?no=${dto.no}&pageNum=${pageNum}'">
 					<input type="button" value="글삭제" onclick="document.location.href='delete.do?no=${dto.no}&pageNum=${pageNum}'">

@@ -8,14 +8,38 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	
+	<script>
+	//유효성 체크
+	function check(){
+		 
+		if($('#n_type').val()==''){
+			alert("글머리를 선택하주세요");
+			$('#n_type').focus();
+			return false;
+		}
+		
+		if($('#n_title').val()==''){
+			alert("글제목을 입력하세요");
+			$('#n_title').focus();
+			return false;
+		}
+		
+		if($('#n_content').val==''){
+			alert("글내용을 입력하세요");
+			$('#n_content').focus();
+			return false;
+		}
+		
+		return true;
+	}
+	</script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
 				<div class="card-body">
-					<form class="form-signin" method="post" name="noticeWriteForm" action="noticeWritePro.do">
+					<form class="form-signin" method="post" name="noticeWriteForm" action="noticeWritePro.do" onSubmit="return check()">
 						<input type="hidden" name="pageNum" value="${pageNum}">
 						
 						<div class="form-label-group">
@@ -37,13 +61,13 @@
 
 						<div class="form-label-group">
 							<label>글제목</label> 
-							<input type="text" class="form-control" name="n_title" size="30">
+							<input type="text" class="form-control" name="n_title" id="n_title"size="30">
 						</div>
 						<hr>
 
 						<div class="form-label-group">
 							<label>글내용</label>
-							<textarea name="n_content" class="form-control" rows="10" cols="60"></textarea>
+							<textarea name="n_content" id="n_content" class="form-control" rows="10" cols="60"></textarea>
 						</div>
 						<hr>
 

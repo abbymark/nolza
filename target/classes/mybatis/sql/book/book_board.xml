@@ -41,6 +41,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where book_no=#{book_no}
 	</delete>
 	
+	<!-- 글 수정시 이미지 삭제 -->
+	<delete id="deleteDbImg" parameterType="String">
+		delete from book_imgs
+		where img_title=#{img_no}
+	</delete>
+	
 	<!-- 글 갯수 -->
 	<select id="selectCount" resultType="int">
 		select count(*) from book_board

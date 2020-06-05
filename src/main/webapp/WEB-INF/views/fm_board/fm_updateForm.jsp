@@ -6,10 +6,63 @@
 <head>
 		<meta charset="UTF-8">
 		<title>updateForm.jsp</title>
-		<style type="text/css">
-			body{background-color:white;}
-			table{margin:auto; line-height:25px; width:70%;}
-		</style>
+		
+	<style type="text/css">
+		body{background-color:white;}
+		table{
+		margin:auto;
+		line-height:25px;
+		}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+h2.heading {
+  font-size: 18px;
+  text-divansform: uppercase;
+  font-weight: 300;
+  text-align: left;
+  color: #506982;
+  border-bottom: 1px solid #506982;
+  padding-bottom: 3px;
+  margin-bottom: 20px;
+}
+
+.controls {
+  text-align: left;
+  position:relative;
+}
+
+.controls input[type="text"],
+.controls input[type="email"],
+.controls input[type="number"],
+.controls input[type="date"],
+.controls input[type="password"],
+.controls textarea,
+.controls button,
+.controls select {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #c6c6c6;
+  width: 250px;
+  margin-bottom: 18px;
+  color: #888;
+  font-family: 'Lato', 'sans-serif';
+  font-size: 16px;
+  font-weight: 300;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-divansition: all 0.3s;
+  -o-divansition: all 0.3s;
+  -webkit-divansition: all 0.3s;
+  divansition: all 0.3s;
+}
+
+
+</style>
+
 		
 		<script  src="//code.jquery.com/jquery-3.2.1.min.js"></script>
   	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -32,26 +85,26 @@
 	<center><h2>글수정</h2></center>
 	<form method="post" name="fm_writeForm" action="fm_updatePro.do?pageNum=${pageNum }">
 		
-	<table border="1">
+	<table class="form-group">
 
-		<tr>
+		<tr class="controls">
 			<td colspan="2" align="right">
 				<a href="fm_list.do">리스트</a>
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="controls">
 			<td>아이디</td>
 			<td><input type="text" name="mem_id" size="30"  value="${dto.mem_id}"></td>
 		</tr>
 
-		<tr>
+		<tr class="controls">
 			<td>닉네임</td>
 			<td><input type="text" name="mem_nick" size="30" value="${dto.mem_nick}"></td>
 		</tr>
 
 		
-		<tr>
+		<tr class="controls">
 			<td>시간</td>
 			<td>
 			<select name="fm_time" id="fm_time">
@@ -68,7 +121,7 @@
 			</td>
 		</tr>
 		
-		<tr>
+		<tr class="controls">
 			<td>장소</td>
 			<td>
 				<input type="text" name="fm_place" size="30"  value="${dto.fm_place}">
@@ -76,7 +129,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="controls">
 			<td>위치</td>
 			<td>
 				<input type="text" name="fm_location" id="fm_location" value="${dto.fm_location}">
@@ -84,7 +137,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="controls">
 			<td>매치팀</td>
 			<td>
 			<input type="text" name="fm_teamhome" size="15" value="${dto.fm_teamhome}">&nbsp;VS
@@ -92,7 +145,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="controls">
 			<td>카테고리</td>
 			<c:set var="fm_category" value="${dto.fm_category }"/>
 			<c:choose>
@@ -121,7 +174,7 @@
 			
 		</tr>
 		
-		<tr>
+		<tr class="controls">
 			<td>축구/풋살</td>
 			<td>
 			<select name="fm_type" id="fm_type" value="${dto.fm_type }">
@@ -132,7 +185,7 @@
 			</td>
 		</tr>
 
-		<tr>
+		<tr class="controls">
 			<td>이미지</td>
 			<td>
 				<table>
@@ -145,22 +198,26 @@
 			</td>
 		</tr>
 			
-		<tr>
+		<tr class="controls">
 			<td>상세정보</td>
 			<td>
-			<textarea name="fm_detail" rows="10" cols="60" value="${dto.fm_detail }"></textarea>
+				<textarea name="fm_detail" rows="10" cols="60" value="${dto.fm_detail }">${dto.fm_detail }
+				</textarea>
 			</td>
 		</tr>
 
 
-		<tr>
+		<tr class="controls">
 			<td>경기결과</td>
-			<td><input type="text" name="fm_score" size="10" value="${dto.fm_score }"></td>
+			<td>
+				<input type="text" name="fm_score" size="10" value="${dto.fm_score }">
+			</td>
 		</tr>
 		
 		
+		
 				
-		<tr>
+		<tr class="controls">
 			<td colspan="2" align="center">
 				<input type="submit" value="글수정">
 				<input type="reset" value="다시작성">

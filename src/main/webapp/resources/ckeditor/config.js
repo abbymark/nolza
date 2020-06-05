@@ -37,5 +37,9 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 	
 	config.filebrowserUploadUrl = 'C:/_sts/sts_work/.metadata/.plugins/org.eclipse.wst.server.core/tmp1/wtpwebapps/nolza/resources';
-
+	
 };
+
+CKEDITOR.on( 'instanceReady', function( ev ) {
+	ev.editor.dataProcessor.writer.selfClosingEnd = '>';
+	});

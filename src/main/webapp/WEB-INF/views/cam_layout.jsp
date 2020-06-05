@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>cam_layout.jsp</title>
+<title>Nolza</title>
  <link href="resources/assets/img/go.png" rel="icon">
   <link href="resources/assets/img/go.png" rel="apple-touch-icon">
 

@@ -18,6 +18,12 @@
 				<li><a href="noticeList.do">공지</a>||</li>
 				<li><a href="neventList.do">이벤트</a></li>
 			</ul>
+						
+			<tr align="right">
+				<c:if test="${sessionScope.mem_grade=='admin'}">
+					<td><input type="button" value="글쓰기" onclick="document.location.href='noticeWriteForm.do'"></td>
+				</c:if>
+			</tr>
 		</div>
 
 		<tr>
@@ -56,12 +62,6 @@
 					</table>
 				</c:if>
 			</td>
-		</tr>
-			
-		<tr align="right">
-			<c:if test="${sessionScope.mem_grade=='admin'}">
-				<td><input type="button" value="글쓰기" onclick="document.location.href='noticeWriteForm.do'"></td>
-			</c:if>
 		</tr>
 
 		<tr align="center">

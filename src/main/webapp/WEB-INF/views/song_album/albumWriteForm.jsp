@@ -8,6 +8,61 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	<script>
+	//유효성 체크
+	function check(){
+		 
+		if($('#gdsImg').val()==''){
+			alert("사진을 선택해주세요");
+			$('#gdsImg').focus();
+			return false;
+		}
+		
+		if($('#a_title').val()==''){
+			alert("앨범 제목을 입력하세요");
+			$('#a_title').focus();
+			return false;
+		}
+		
+		if($('#a_main').val()==''){
+			alert("타이틀 곡을 입력하세요");
+			$('#a_main').val('').focus();
+			return false;
+		}
+		
+		if($('#a_artist').val()==''){
+			alert("아티스트 이름을 입력하세요");
+			$('#a_artist').focus();
+			return false;
+		}
+		
+		if($('#a_sales').val()==''){
+			alert("발매사를 입력하세요");
+			$('#a_sales').focus();
+			return false;
+		}
+		
+		if($('#a_date').val()==''){
+			alert("발매일을 입력하세요");
+			$('#a_date').focus();
+			return false;
+		}
+		
+		if($('#a_manage').val()==''){
+			alert("소속사를 입력하세요");
+			$('#a_manage').focus();
+			return false;
+		}
+		
+		if($('#a_content').val==''){
+			alert("앨범소개를 입력하세요");
+			$('#a_content').focus();
+			return false;
+		}
+		
+		return true;
+	}
+	</script>
 
 </head>
 <body>
@@ -15,11 +70,11 @@
 		<div class="row">
 			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
 				<div class="card-body">
-					<form class="form-signin" method="post" name="albumWriteForm" action="albumWritePro.do" enctype="multipart/form-data">
+					<form class="form-signin" method="post" name="albumWriteForm" action="albumWritePro.do" enctype="multipart/form-data" onSubmit="return check()">
 						<input type="hidden" name="pageNum" value="${pageNum}">
 						
 						<div class="form-label-group">
-							<label>글쓴이</label>
+							<label>글쓴이</label><br>
 							<input type="hidden" name="mem_id" id="mem_id" size="12" value="${mem_id}">${mem_id}
 						</div>
 						<hr>
@@ -63,38 +118,38 @@
 
 						<div class="form-label-group">
 							<label>앨범제목</label>
-							<input type="text" class="form-control" name="a_title" size="30">
+							<input type="text" class="form-control" name="a_title" id="a_title" size="30">
 						</div>
 						<hr>
 						<div class="form-label-group">
 							<label>타이틀곡</label>
-							<input type="text" class="form-control" name="a_main" size="30">
+							<input type="text" class="form-control" name="a_main" id="a_main" size="30">
 						</div>
 						<hr>
 						<div class="form-label-group">
 							<label>아티스트</label>
-							<input type="text" class="form-control" name="a_artist" size="30">
+							<input type="text" class="form-control" name="a_artist" id="a_artist" size="30">
 						</div>
 						<hr>
 						<div class="form-label-group">
 							<label>발매사</label>
-							<input type="text" class="form-control" name="a_sales" size="30">
+							<input type="text" class="form-control" name="a_sales" id="a_sales" size="30">
 						</div>
 						<hr>
 						<div class="form-label-group">
 							<label>발매일</label>
-							<input type="date" class="form-control" name="a_date" size="30">
+							<input type="date" class="form-control" name="a_date" id="a_date" size="30">
 						</div>
 						<hr>
 						<div class="form-label-group">
 							<label>소속사</label>
-							<input type="text" class="form-control" name="a_manage" size="30">
+							<input type="text" class="form-control" name="a_manage" id="a_manage" size="30">
 						</div>
 						<hr>
 						
 						<div class="form-label-group">
 							<label>앨범소개</label>
-							<textarea name="a_content" class="form-control" rows="10" cols="60"></textarea>
+							<textarea name="a_content" id="a_content" class="form-control" rows="10" cols="60"></textarea>
 						</div>
 						<hr>
 

@@ -8,14 +8,38 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	
+	<script>
+	//유효성 체크
+	function check(){
+		 
+		if($('#s_type').val()==''){
+			alert("글머리를 선택하주세요");
+			$('#s_type').focus();
+			return false;
+		}
+		
+		if($('#title').val()==''){
+			alert("글제목을 입력하세요");
+			$('#title').focus();
+			return false;
+		}
+		
+		if($('#content').val==''){
+			alert("글내용을 입력하세요");
+			$('#content').focus();
+			return false;
+		}
+		
+		return true;
+	}
+	</script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
 				<div class="card-body">
-					<form class="form-signin" method="post" name="writeForm" action="writePro.do">
+					<form class="form-signin" method="post" name="writeForm" action="writePro.do" onSubmit="return check()">
 						<input type="hidden" name="pageNum" value="${pageNum}">
 						<input type="hidden" name="no" value="${no}">
 						<input type="hidden" name="s_group" value="${s_group}">
@@ -47,17 +71,17 @@
 						<div class="form-label-group">
 							<label>글제목</label>
 							<c:if test="${no==0 }">
-								<input type="text" class="form-control" name="title" size="30">
+								<input type="text" class="form-control" name="title" id="title" size="30">
 							</c:if>
 							<c:if test="${no != 0 }">
-								<input type="text" class="form-control" name="title" size="30" value="[답변]">
+								<input type="text" class="form-control" name="title" id="title" size="30" value="[답변]">
 							</c:if>
 						</div>
 						<hr>
 
 						<div class="form-label-group">
 							<label>글내용</label>
-							<textarea name="content" class="form-control" rows="10" cols="60"></textarea>
+							<textarea name="content" id="content" class="form-control" rows="10" cols="60"></textarea>
 						</div>
 						<hr>
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="caminfo">
+<!-- 최대 글번호 얻기  -->
+
+<select id="maxNumber" resultType="Integer">
+	select max(caminfo_no) from caminfo_board
+</select>
+
+<!--  답글 끼워넣기 위치 확보  -->
+<update id="caminfo_Step" parameterType="model.dto.CaminfoDTO">
+	update caminfo_board
+	set caminfo_step=caminfo_step+1
+	where caminfo_group=#{caminfo_group} and caminfo_step>#{caminfo_step}
+</update>
+
+<!--  글쓰기, 답글쓰기  -->
+<insert id="insertBoard" parameterType="model.dto.CaminfoDTO">
+	insert into caminfo_board(caminfo_id, caminfo_type, caminfo_title, caminfo_date, caminfo_group, caminfo_step, caminfo_indent, caminfo_content)
+	values(#{caminfo_id},#{caminfo_type},#{caminfo_title},NOW(),#{caminfo_group},#{caminfo_step},#{caminfo_indent},#{caminfo_content})
+</insert>
+
+<!--  글 갯수 -->
+<select id="selectCount" resultType="int">
+	select count(*) from caminfo_board
+</select>
+
+<!-- 각 카테고리 글 갯수 -->
+	<select id="selectCountCategory" resultType="int">
+		select count(*) from caminfo_board where caminfo_type=#{caminfo_type}
+	</select>
+
+<!--  리스트 -->
+<select id="selectList" parameterType="java.util.HashMap" resultType="model.dto.CaminfoDTO">
+	select * from caminfo_board
+	order by caminfo_group desc, caminfo_step asc limit #{start},#{cnt}
+</select>
+
+<!-- 각 카테고리 글 리스트 -->
+	<select id="selectListCategory" parameterType="java.util.HashMap" resultType="model.dto.CaminfoDTO">
+		select * from caminfo_board 
+		where caminfo_type=#{caminfo_type} 
+		order by caminfo_group desc, caminfo_step asc
+		limit #{start},#{cnt}
+	</select>
+
+<!--  조회수  -->
+<update id="readCount" parameterType="int">
+	update caminfo_board set caminfo_readcount =caminfo_readcount+1 where caminfo_no=#{caminfo_no}
+</update>
+
+<!-- 글내용보기, 글 수정  -->
+<select id="contentBoard" parameterType="int" resultType="model.dto.CaminfoDTO">
+select * from caminfo_board where caminfo_no=#{caminfo_no}
+</select>
+
+<!--  db 글 수정  -->
+<update id="updateBoard" parameterType="model.dto.CaminfoDTO">
+ update caminfo_board set caminfo_id=#{caminfo_id}, mem_nick=#{mem_nick}, mem_id=#{mem_id},caminfo_type=#{caminfo_type},caminfo_title=#{caminfo_title}, caminfo_content=#{caminfo_content} where caminfo_no=#{caminfo_no}
+</update>
+
+<!--  글 삭제   -->
+<delete id="deleteBoard" parameterType="int">
+ delete from caminfo_board where caminfo_no=#{caminfo_no}
+</delete>
+
+
+</mapper>

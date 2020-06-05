@@ -8,19 +8,78 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	
+	<script>
+	//유효성 체크
+	function check(){
+		 
+		if($('#gdsImg').val()==''){
+			alert("사진을 선택해주세요");
+			$('#gdsImg').focus();
+			return false;
+		}
+		
+		if($('#ss_artist').val()==''){
+			alert("아티스트를 입력하세요");
+			$('#ss_artist').focus();
+			return false;
+		}
+		if($('#ss_active').val()==''){
+			alert("활동연대를 선택해주세요");
+			$('#ss_active').focus();
+			return false;
+		}
+		
+		if($('#ss_date').val()==''){
+			alert("데뷔일을 입력하세요");
+			$('#ss_date').val('').focus();
+			return false;
+		}
+		
+		if($('#ss_title').val()==''){
+			alert("데뷔곡을 입력하세요");
+			$('#ss_title').focus();
+			return false;
+		}
+		
+		if($('#ss_nation').val()==''){
+			alert("국적을 입력하세요");
+			$('#ss_nation').focus();
+			return false;
+		}
+		
+		if($('#ss_person').val()==''){
+			alert("멤버수를 입력하세요");
+			$('#ss_person').focus();
+			return false;
+		}
+		
+		if($('#ss_manage').val()==''){
+			alert("소속사를 입력하세요");
+			$('#ss_manage').focus();
+			return false;
+		}
+		
+		if($('#ss_content').val==''){
+			alert("아티스트 소개를 입력하세요");
+			$('#ss_manage').focus();
+			return false;
+		}
+		
+		return true;
+	}
+	</script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
 				<div class="card-body">
-					<form class="form-signin" method="post" name="singerWriteForm" action="singerWritePro.do" enctype="multipart/form-data">
+					<form class="form-signin" method="post" name="singerWriteForm" action="singerWritePro.do" enctype="multipart/form-data" onSubmit="return check()">
 						<input type="hidden" name="pageNum" value="${pageNum}">
 						
 						<div class="form-label-group">
-							<label>글쓴이</label>
-							<input type="text" class="form-control"	name="id" size="30" required autofocus>
+							<label>글쓴이</label><br>
+							<input type="hidden" name="mem_id" id="mem_id" size="12" value="${mem_id}">${mem_id}
 						</div>
 						<hr>
 						
@@ -47,7 +106,7 @@
 						
 						<div class="form-label-group">
 							<label>아티스트</label>
-							<input type="text" class="form-control" name="ss_artist" size="30">
+							<input type="text" class="form-control" name="ss_artist" id="ss_artist" size="30">
 						</div>
 						<hr>
 
@@ -70,43 +129,43 @@
 						
 						<div class="form-label-group">
 							<label>활동유형</label>
-							<input type="text" class="form-control" name="ss_style" size="30">
+							<input type="text" class="form-control" name="ss_style" id="ss_style" size="30">
 						</div>
 						<hr>
 						
 						<div class="form-label-group">
 							<label>데뷔</label>
-							<input type="date" class="form-control" name="ss_date" size="30">
+							<input type="date" class="form-control" name="ss_date" id="ss_date" size="30">
 						</div>
 						<hr>
 						
 						<div class="form-label-group">
 							<label>데뷔곡</label>
-							<input type="text" class="form-control" name="ss_title" size="30">
+							<input type="text" class="form-control" name="ss_title" id="ss_title" size="30">
 						</div>
 						<hr>
 						
 						<div class="form-label-group">
 							<label>국적</label>
-							<input type="text" class="form-control" name="ss_nation" size="30">
+							<input type="text" class="form-control" name="ss_nation" id="ss_nation" size="30">
 						</div>
 						<hr>
 						
 						<div class="form-label-group">
 							<label>멤버</label>
-							<input type="text" class="form-control" name="ss_person" size="30">
+							<input type="text" class="form-control" name="ss_person" id="ss_person" size="30">
 						</div>
 						<hr>
 						
 						<div class="form-label-group">
 							<label>소속사</label>
-							<input type="text" class="form-control" name="ss_manage" size="30">
+							<input type="text" class="form-control" name="ss_manage" id="ss_manage" size="30">
 						</div>
 						<hr>
 						
 						<div class="form-label-group">
 							<label>아티스트 소개</label>
-							<textarea name="ss_content" class="form-control" rows="10" cols="60"></textarea>
+							<textarea name="ss_content" id="ss_content" class="form-control" rows="10" cols="60"></textarea>
 						</div>
 						<hr>
 

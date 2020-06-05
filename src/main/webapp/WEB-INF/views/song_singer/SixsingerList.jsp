@@ -27,6 +27,12 @@
 					<li><a href="FivesingerList.do">1950년대</a>||</li>
 					<li><a href="ETCsingerList.do">그 외 활동연대</a></li>
 				</ul>
+							
+				<tr align="right">
+					<c:if test="${sessionScope.mem_grade=='admin'}">
+						<td><input type="button" value="글쓰기" onclick="document.location.href='noticeWriteForm.do'"></td>
+					</c:if>
+				</tr>
 			</div>
 
 			<tr>
@@ -49,7 +55,7 @@
 	
 									<td>
 										<a href="${ctxpath }/singerContent.do?ss_no=${dto.ss_no}&pageNum=${pageNum}">
-											<img src="${ctxpath }/resources/imgUpload/${dto.ss_picture}">
+											<img src="${ctxpath }/resources/imgUpload/${dto.ss_picture}" style="max-width:200px; max-height:200px">
 										</a>
 									</td>
 	
@@ -69,12 +75,6 @@
 						</table>
 					</c:if>
 				</td>
-			</tr>
-
-			<tr align="right">
-				<c:if test="${sessionScope.mem_grade=='admin'}">
-					<td><input type="button" value="글쓰기" onclick="document.location.href='singerWriteForm.do'"></td>
-				</c:if>
 			</tr>
 
 			<tr align="center">

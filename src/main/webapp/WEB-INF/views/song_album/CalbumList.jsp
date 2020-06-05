@@ -26,6 +26,12 @@
 					<li><a href="EalbumList.do">EDM</a>||</li>
 					<li><a href="ETCalbumList.do">기타</a></li>
 				</ul>
+				
+				<tr align="right">
+					<c:if test="${sessionScope.mem_grade=='admin'}">
+						<td><input type="button" value="글쓰기" onclick="document.location.href='albumWriteForm.do'"></td>
+					</c:if>
+				</tr>
 			</div>
 			
 			<tr>
@@ -48,7 +54,7 @@
 	
 									<td>
 										<a href="${ctxpath }/albumContent.do?a_no=${dto.a_no}&pageNum=${pageNum}">
-											<img src="${ctxpath }/resources/imgUpload/${dto.a_picture}">
+											<img src="${ctxpath }/resources/imgUpload/${dto.a_picture}" style="max-width:200px; max-height:200px">
 										</a>
 									</td>
 	
@@ -75,11 +81,7 @@
 				</td>
 			</tr>
 
-			<tr align="right">
-			<c:if test="${sessionScope.mem_grade=='admin'}">
-				<td><input type="button" value="글쓰기" onclick="document.location.href='albumWriteForm.do'"></td>
-			</c:if>
-			</tr>
+			
 
 			<tr align="center">
 				<td>

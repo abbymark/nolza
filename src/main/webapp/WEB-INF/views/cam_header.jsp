@@ -80,17 +80,19 @@
           </li>
           
           
-          <li class="drop-down"><a href="/nolza/">캠핑</a>
+          <li class="drop-down"><a href="cam_list.do">캠핑</a>
             <ul>
               <li><a href="cam_list.do">캠핑장 검색</a></li>
-              <!-- <li class="drop-down"><a href="#">2</a>
-                 <ul>
-                     <li><a href="#">2-1</a></li>
-                     <li><a href="#">2-2</a></li>
-                     <li><a href="#">2-3</a></li>
-                  </ul> 
-               </li>-->
               <li><a href="camja_list.do">자유게시판</a></li>
+              <li class="drop-down"><a onClick="location.href='caminfo_list.do'">캠핑 정보</a>
+                 <ul>          
+                     <li><a onClick="location.href='caminfo_list.do'">캠핑 정보 전체보기</a></li>
+                     <li><a onClick="location.href='caminfo_list.do?caminfo_type=equip'">캠핑 장비 정보</a></li>
+                     <li><a onClick="location.href='caminfo_list.do?caminfo_type=food'">캠핑 음식 정보</a></li>
+                     <li><a onClick="location.href='caminfo_list.do?caminfo_type=backpack'">백패킹 정보</a></li>
+                     <li><a onClick="location.href='caminfo_list.do?caminfo_type=install'">장비 설치 관련 정보</a></li>
+                  </ul> 
+               </li>
             </ul>
           </li>
          

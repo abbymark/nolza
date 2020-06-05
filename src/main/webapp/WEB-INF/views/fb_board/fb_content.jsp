@@ -45,6 +45,12 @@
 	#content{
 	display: none;
 	}
+	iframe{
+	position : relative;
+	width : 100vw;
+	height : 100vh;
+	padding-bottom : 56.25%;
+	}
 }
   
 </style>   
@@ -60,32 +66,32 @@
 <div class="container">
 	<table  class="table">
 		<tr height="30">
-			<td id="no" align="center" width="125">글번호</td>
-			<td id="no" align="center" width="125">${fb.fb_no}</td>
+			<td id="no" align="center">글번호</td>
+			<td id="no" align="center">${fb.fb_no}</td>
 			
-			<td id="readcount" align="center" width="125">조회수</td>
-			<td align="center" width="125">${fb.fb_readcount}</td>
+			<td id="readcount" align="center">조회수</td>
+			<td align="center">${fb.fb_readcount}</td>
 		</tr>
 
 		<tr height="30">
-			<td id="mem_nick" align="center" width="125">글쓴이</td>
-			<td align="center" width="125">${fb.mem_id}</td>
+			<td id="mem_nick" align="center">글쓴이</td>
+			<td align="center">${fb.mem_id}</td>
 			
-			<td id="date" align="center" width="125">작성일</td>
-			<td align="center" width="125">
+			<td id="date" align="center">작성일</td>
+			<td align="center">
 				<fmt:formatDate value="${fb.fb_date }" pattern="yyyy-MM-dd hh:mm"/>
 			</td>
 		</tr>
 	
 		
 		<tr height="30">
-			<td id="title" align="center" width="125">글제목</td>
-			<td align="center" width="375" colspan="3">${fb.fb_title }</td>
+			<td id="title" align="center">글제목</td>
+			<td align="center" colspan="3">${fb.fb_title }</td>
 		</tr>
 
 		<tr height="30">
-			<td id="content" align="center" width="125">글내용</td>
-			<td align="center" width="375" colspan="3">${fb_content }
+			<td id="content" align="center">글내용</td>
+			<td align="center" colspan="3">${fb_content }
 				<!-- <textarea rows="10" cols="60" readOnly></textarea> -->
 			</td>
 		</tr>

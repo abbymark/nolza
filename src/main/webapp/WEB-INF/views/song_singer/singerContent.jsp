@@ -18,34 +18,36 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8">				
-				<p><img src="${ctxpath }/resources/imgUpload/${dto.ss_picture}"></p>
+				<p><img src="${ctxpath }/resources/imgUpload/${dto.ss_picture}" style="max-width:300px; max-height:300px"></p>
 				<br>
 				<h1 class="mt-4">${dto.ss_artist}</h1>
 				<br>
 				
-				<p class="lead">활동유형 &emsp;&nbsp;${dto.ss_style}</cite></p>
-				<p class="lead">활동연대 &emsp;&nbsp;${dto.ss_active}</cite></p>
-				<p class="lead">데뷔 &emsp;&emsp;&emsp;&nbsp;${dto.ss_date}</cite></p>
-				<p class="lead">국적 &emsp;&emsp;&emsp;&nbsp;${dto.ss_nation}</cite></p>
-				<p class="lead">멤버 &emsp;&emsp;&emsp;&nbsp;${dto.ss_person}</cite></p>
-				<p class="lead">데뷔곡 &emsp;&emsp;&nbsp;${dto.ss_title}</cite></p>
-				<p class="lead">소속사 &emsp;&emsp;&nbsp;${dto.ss_manage}</cite></p>
+				<p class="lead">활동유형&emsp;${dto.ss_style}</p>
+				<p class="lead">활동연대&emsp;${dto.ss_active}</p>
+				<p class="lead">데뷔&emsp;${dto.ss_date}</p>
+				<p class="lead">국적&emsp;${dto.ss_nation}</p>
+				<p class="lead">멤버&emsp;${dto.ss_person}</p>
+				<p class="lead">데뷔곡&emsp;${dto.ss_title}</p>
+				<p class="lead">소속사&emsp;${dto.ss_manage}</p>
 				<hr>
-				
-				<p class="lead">아티스트 소개</p>
-				<h3>${dto.ss_content}</h3>
-				<hr>
+
 			</div>
 			
 			<table class="table">
 				<blockquote class="blockquote">
 					<h4 class="mt-4">조회</h4>
-					<p>${dto.ss_readcount}</p><hr>
+					<p>${dto.ss_readcount}</p>
+					<hr>
+					
+					<p class="lead">아티스트 소개</p>
+					<h3>${dto.ss_content}</h3>
+					<hr>
 				</blockquote>
 			</table>
 			
 			<tr>
-				<td colspan="4" align="right">
+				<td colspan="4" align="center">
 				<c:if test="${sessionScope.mem_grade=='admin' }">
 					<input type="button" value="글수정" onclick="document.location.href='singerUpdateForm.do?ss_no=${dto.ss_no}&pageNum=${pageNum}'">
 					<input type="button" value="글삭제" onclick="document.location.href='deletesinger.do?ss_no=${dto.ss_no}&pageNum=${pageNum}'">

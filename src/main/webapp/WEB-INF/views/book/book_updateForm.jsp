@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="ctxpath" value="<%=request.getContextPath()%>"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,12 +18,44 @@
 		
 		return true;
 	}
+	
+	//이미지 추가
+	function insertImg(){
+		var html='';
+		html +="<tr>"
+		html +="<td>"
+		html +="<input type='file' name='img_title'>"
+		html +="</td>"
+		html +="<td>"
+		html +="<input type='button' value='X' onClick='deleteImg(this)'>"
+		html +="</td>"
+		html +="</tr>"
+		
+		$("#images").append(html);
+			
+	}
+
+	//이미지 삭제
+	function deleteImg(id){
+		
+		$(id).closest("tr").remove();
+	}
+
+	function deleteDbImg(img){
+		$.ajax({
+		type:'POST',
+		url:'book_deleteDbImg.do',
+		async:false,
+		data:"img_no="+img
+		})
+	}
 </script>
 </head>
 <body>
 	<center><h2>글수정</h2></center>
-	<form method="post" name="book_writeForm" action="book_updatePro.do?pageNum=${pageNum}" onsubmit="return check()">
-		<table border="1">
+	<form method="post" name="book_writeForm" action="book_updatePro.do?pageNum=${pageNum}"  encType="multipart/form-data" onsubmit="return check()">
+	<div class="container list">
+		<table border="1" class="table">
 		
 			<tr>
 				<td>이름</td>
@@ -59,6 +92,32 @@
 				</td>
 			</tr>
 			
+			<c:forEach var="imgs" items="${book_imgs }">
+			<tr>
+				<td colspan="2">
+					<img src="${ctxpath }/resources/book_imgs/${imgs}" style="max-width:500px; max-height:500px" id="image">
+					<input type='button' value='X' onClick='deleteImg(this); deleteDbImg("${imgs}");'>
+				</td>
+				
+			</tr>
+			</c:forEach>
+			
+			<tr>
+				<td>이미지</td>
+				<td>
+					<input type="button" onClick="insertImg()" value="이미지 추가">
+				</td>
+			</tr>
+			<tr>
+				<td>이미지 파일</td>
+				<td>
+					
+					<table id="images">
+
+					</table>
+				</td>
+			</tr>
+			
 			<tr>
 				<td colspan="2" align="center">
 					<input type="submit" value="글수정">
@@ -68,6 +127,7 @@
 			</tr>
 			
 		</table>
+		</div>
 	</form>
 </body>
 </html>

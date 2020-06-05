@@ -90,6 +90,10 @@ public class MemberController {
 		}
 		model.addAttribute("memberDto", memberDto);
 		
+		//로그인 횟수 증가
+		sqlSession.update("member.admin_mem_login_cnt", mem_id);
+		
+		
 		session.setAttribute("mem_id", memberDto.getMem_id());
 		session.setAttribute("mem_nick", memberDto.getMem_nick());
 		session.setAttribute("mem_grade", memberDto.getMem_grade());

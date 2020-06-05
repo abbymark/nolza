@@ -405,10 +405,12 @@ public class BookController {
 			throws NamingException, IOException{
 		int book_no1 = Integer.parseInt(book_no);
 		Book_boardDto book_dto = sqlSession.selectOne("book_board.contentBoard", book_no1);
+		List<String> imgs=sqlSession.selectList("book_board.selectImgs", book_no1);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("pageNum", pageNum);
 		mv.addObject("book_dto", book_dto);
+		mv.addObject("book_imgs", imgs);
 		System.out.println(111);
 		mv.setViewName(".main.book.book_updateForm");//뷰이름
 		
@@ -417,15 +419,81 @@ public class BookController {
 	
 	//DB글수정
 	@RequestMapping(value="book_updatePro.do", method=RequestMethod.POST)
-	public ModelAndView updatePro(Book_boardDto book_boardDto, String pageNum)
+	public ModelAndView updatePro(Book_boardDto book_boardDto, String pageNum,
+			 @RequestParam(value="img_title", required=false)MultipartFile multi[],
+			 HttpServletRequest request)
 			throws NamingException, IOException{
+		System.out.println("hei1231");
 		sqlSession.update("book_board.updateBoard", book_boardDto);
+		
+		//이미지 저장====================================================
+				if(multi!=null) {
+					for(MultipartFile multi2:multi) {
+						//파일명
+						String originalFile = multi2.getOriginalFilename();
+						
+						//랜덤생성
+						UUID uuid=UUID.randomUUID();
+						String random=uuid.toString();
+						
+						//날짜
+						String fileName = "";
+						
+						Calendar calendar = Calendar.getInstance();
+						fileName += calendar.get(Calendar.YEAR);
+						fileName += calendar.get(Calendar.MONTH);
+						fileName += calendar.get(Calendar.DATE);
+						fileName += calendar.get(Calendar.HOUR);
+						fileName += calendar.get(Calendar.MINUTE);
+						fileName += calendar.get(Calendar.SECOND);
+						fileName += calendar.get(Calendar.MILLISECOND);
+						fileName += random;
+						
+						//최종 파일명
+						fileName +=originalFile;
+						
+						
+						//파일 확장자 추출
+						//String originalFileExtension = originalFile.substring(originalFile.lastIndexOf("."));
+						
+						//System.out.println(book_boardDto.getBook_title());
+						System.out.println("hello0");
+						String realPath=request.getServletContext().getRealPath("/");
+						String savePath=realPath+"/resources/book_imgs/"+fileName;
+						System.out.println("hello1");
+
+						
+						//저장 위치
+						multi2.transferTo(new File(savePath));
+						System.out.println("hello2");
+						HashMap<String,Object> map=new HashMap<String,Object>();
+						map.put("book_no", book_boardDto.getBook_no());
+						map.put("img_title", fileName);
+						System.out.println("hello3");
+						sqlSession.insert("book_board.insertImgs", map);
+						System.out.println("hello4");
+					}
+				}
+				//이미지 끝==========================================================
+		
+		
+		
+		System.out.println("hello5");
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("pageNum", pageNum);
 		mv.setViewName("redirect:book_list.do");
 		
 		return mv;
 	}//updatePro() end
+	
+	//db이미지 삭제
+	@RequestMapping("book_deleteDbImg.do")
+	public String deleteImg(String img_no) {
+		
+		sqlSession.delete("book_board.deleteDbImg",img_no);
+		System.out.println("이미지 삭제");
+		return "success";
+	}
 	
 	//글삭제
 	@RequestMapping("book_delete.do")

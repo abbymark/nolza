@@ -8,7 +8,31 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	<script>
+	//유효성 체크
+	function check(){
+		 
+		if($('#s_type').val()==''){
+			alert("글머리를 선택하주세요");
+			$('#s_type').focus();
+			return false;
+		}
 		
+		if($('#title').val()==''){
+			alert("글제목을 입력하세요");
+			$('#title').focus();
+			return false;
+		}
+		
+		if($('#content').val==''){
+			alert("글내용을 입력하세요");
+			$('#content').focus();
+			return false;
+		}
+		
+		return true;
+	}
+	</script>
 </head>
 <body>
 	<div class="container">
@@ -42,13 +66,13 @@
 
 						<div class="form-label-group">
 							<label>글제목</label> 
-							<input type="text" class="form-control" name="title" size="30" value="${dto.title}">
+							<input type="text" class="form-control" name="title" id="title" size="30" value="${dto.title}">
 						</div>
 						<hr>
 
 						<div class="form-label-group">
 							<label>글내용</label>
-							<textarea name="content" class="form-control" rows="10" cols="60">${dto.content}</textarea>
+							<textarea name="content" id="content" class="form-control" rows="10" cols="60">${dto.content}</textarea>
 						</div>
 						<hr>
 
