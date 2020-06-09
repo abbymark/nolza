@@ -48,7 +48,7 @@
 						<input type="hidden" name="mem_id" id="mem_id" size="12" value="${mem_id}">
 						
 						<div class="form-label-group">
-							<label>글쓴이</label>
+							<label>글쓴이</label><br>
 							<input type="hidden" name="mem_nick" id="mem_nick" size="12" value="${mem_id}">${mem_id}
 						</div>
 						<hr>

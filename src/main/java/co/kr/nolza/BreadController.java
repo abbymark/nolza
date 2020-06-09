@@ -29,14 +29,49 @@ public class BreadController {
 	
 	//map===============================================================================
 	@RequestMapping("/map_content") //뷰
-	public String map_content(Model model, String bread_name) throws NamingException, IOException{
+	public String map_content(Model model, String bread_name,String mem_id) throws NamingException, IOException{
 		
 	//System.out.println("content_right(bread_name)="+bread_name);  //쟝블랑제리
 		
 		BreadDto dto = sqlSession.selectOne("matzip.contentBread", bread_name); //빵집 내용
 		
 		model.addAttribute("dto",dto); //빵집 내용
-		System.out.println(dto);
+		//System.out.println(dto);
+		
+		
+		// 평균 점수 , 좋아요 총합
+		//ReviewDto dto1 = sqlSession.selectOne("matzip.summaryReview", bread_name);
+		// 평균 점수 , 좋아요 총합
+		List<ReviewDto> summaryReview=sqlSession.selectList("matzip.summaryReview",bread_name);
+		
+		//summaryReview =[{sum_like=0, avg_score=60.0000}]
+		
+		//내용 뽑기
+		List<ReviewDto> contentReview=sqlSession.selectList("matzip.contentReview",bread_name);
+		
+		//list =[{rev_date=2020-05-25 09:30:38, rev_content=정말 맛있고 좋습니다}]
+		
+		//String mat_content=dto.getContent();
+		//content=content.replaceAll("\n", "<br>");
+		
+		model.addAttribute("bread_name",bread_name);
+		model.addAttribute("summaryReview",summaryReview); //글 요약
+		model.addAttribute("contentReview",contentReview); //리뷰 내용
+		model.addAttribute("mem_id",mem_id); //리뷰 내용
+		//System.out.println(contentReview);
+		
+		return ".main.bread.map_content";//뷰 리턴 
+	}//list() end
+	
+	@RequestMapping("/map_content2") //뷰
+	public String map_content2(Model model, String bread_name) throws NamingException, IOException{
+		
+	//System.out.println("content_right(bread_name)="+bread_name);  //쟝블랑제리
+		
+		BreadDto dto = sqlSession.selectOne("matzip.contentBread", bread_name); //빵집 내용
+		
+		model.addAttribute("dto",dto); //빵집 내용
+		//System.out.println(dto);
 		
 		
 		// 평균 점수 , 좋아요 총합
@@ -59,7 +94,7 @@ public class BreadController {
 		model.addAttribute("contentReview",contentReview); //리뷰 내용
 		//System.out.println(contentReview);
 		
-		return ".main.bread.map_content";//뷰 리턴 
+		return ".main.bread.map_content2";//뷰 리턴 
 	}//list() end
 	
 	//내용 왼쪽
@@ -185,20 +220,20 @@ public class BreadController {
 		//int rev_no1=Integer.parseInt(rev_no);
 		
 		return ".main.bread.tt";
+	
+	}
+
+	@RequestMapping(value="/rev_UpdatePro",method=RequestMethod.POST)
+	public String rev_UpdatePro(@ModelAttribute("reviewDto") ReviewDto reviewDto,HttpServletRequest request)
+			throws NamingException,IOException{
+		sqlSession.insert("matzip.updateReview",reviewDto);
+		
+		return ".main.bread.rev_UpdatePro";
+	
 	}
 	
-	@RequestMapping("table_layout")
-	public String table_layout() {
-		
-		//int rev_no1=Integer.parseInt(rev_no);
-		
-		return ".main.bread.table_layout";
-	}
 	
 
-	
-	
-	
 	
 	
 }//class end

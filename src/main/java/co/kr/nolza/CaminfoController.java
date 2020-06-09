@@ -107,7 +107,7 @@ public class CaminfoController {
 			caminfo_type="백패킹 정보";
 			count=sqlSession.selectOne("caminfo.selectCountCategory", caminfo_type);						
 		}else if(caminfo_type.equals("install")) {
-			caminfo_type="장비 설치 동영상";
+			caminfo_type="장비 설치 관련 영상";
 			count=sqlSession.selectOne("caminfo.selectCountCategory", caminfo_type);						
 		}	
 		

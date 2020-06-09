@@ -31,17 +31,15 @@
 				<p class="lead">데뷔곡&emsp;${dto.ss_title}</p>
 				<p class="lead">소속사&emsp;${dto.ss_manage}</p>
 				<hr>
-
+				<p class="lead">아티스트 소개</p>
+				<h3>${dto.ss_content}</h3>
+				<hr>
 			</div>
 			
 			<table class="table">
 				<blockquote class="blockquote">
 					<h4 class="mt-4">조회</h4>
 					<p>${dto.ss_readcount}</p>
-					<hr>
-					
-					<p class="lead">아티스트 소개</p>
-					<h3>${dto.ss_content}</h3>
 					<hr>
 				</blockquote>
 			</table>

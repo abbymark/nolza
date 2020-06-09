@@ -18,9 +18,20 @@
 	}
 	
 	li { list-style: none } 
+	
+	
+#matchDate{
+    padding:0px;
+    border-radius: 60px;
+    text-align: center;
+		background:yellow;
+		width: 80px;
+}  
+	
 </style>
 
 
+<link rel="stylesheet" href="resources/assets/css/flab2.css">
 
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
@@ -55,7 +66,7 @@
 					</div>
 				
 						<div class="titleWrap">
-							<h3>${mem_nick }</h3>
+							<h3>${fm.mem_nick }</h3>
 						</div>
 
 					<div class="matchFee">
@@ -132,14 +143,15 @@ geocoder.addressSearch('${fm.fm_location}', function(result, status) {
 									src="https://plab-football.s3.amazonaws.com/static/img/ic_6vs6.svg"
 									alt="6vs6 매치"> <span class="txt2">6vs6 매치</span></li>
  -->								
-								<li><img src="https://plab-football.s3.amazonaws.com/static/img/ic_male.svg"
-									alt="남성매치" width="500"> <span class="txt2 w700">남성매치</span></li>
+								<li>
+								<img src="https://plab-football.s3.amazonaws.com/static/img/ic_male.svg"
+									alt="남성매치" width="300"> <span class="txt2 w700">남성매치</span>
 								
-								<li><img src="https://plab-football.s3.amazonaws.com/static/img/ic_every.svg"
-									alt="일반" width="500"> <span class="txt2 w700">일반</span></li>
+								<img src="https://plab-football.s3.amazonaws.com/static/img/ic_every.svg"
+									alt="일반" width="300"> <span class="txt2 w700">일반</span>
 								
-								<li><img src="https://plab-football.s3.amazonaws.com/static/img/ic_turf.svg"
-									alt="풋살화"width="500"> <span class="txt2 w700">풋살화</span></li>
+								<img src="https://plab-football.s3.amazonaws.com/static/img/ic_turf.svg"
+									alt="풋살화"width="300"> <span class="txt2 w700">풋살화</span></li>
 								
 <!-- 								<li><img
 									src="https://plab-football.s3.amazonaws.com/static/img/ic_minmax.svg"
@@ -149,10 +161,15 @@ geocoder.addressSearch('${fm.fm_location}', function(result, status) {
 						</div>
 
 						<c:if test="${fm_category=='result'}">
-							<div class="matchFee" align="center">
+							<div class="txt3 w700" align="center">
+							
 								<span>경기결과</span>
-								<p class="txt3">${fm.fm_score}</p>
-								<p class="txt3">${fm.fm_winner} 승</p>
+									<div id="matchDate" align="center">
+										<p class="txt3 w700">${fm.fm_score}</p>
+									</div>
+									<div id="matchDate" align="center">
+										<p class="txt3 w700">${fm.fm_winner} 승</p>
+									</div>
 							</div>
 						</c:if>
 <%-- 
@@ -163,7 +180,7 @@ geocoder.addressSearch('${fm.fm_location}', function(result, status) {
  --%>						
  						
  						<table class="titleWrap">
- 							<tr height="30">
+ 							<tr height="30" class="txt3 w700" align="center">
  								<td>상세정보</td>
  								<td width="375" colspan="3">${fm_detail}
  								</td>

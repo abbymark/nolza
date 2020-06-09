@@ -27,22 +27,20 @@
 				<p class="lead">기획사 &emsp;${dto.a_manage}</p>
 				<p class="lead">발매일 &emsp;${dto.a_date}</p>
 				<hr>
-				
+				<p class="lead">앨범소개</p>
+				<h3>${dto.a_content}</h3>
+				<hr>
 				
 			</div>
 			
 			<table class="table">
 				<blockquote class="blockquote">
 					<h4 class="mt-4">조회</h4>
-					<p>${dto.a_readcount}</p><hr>
+					<p>${dto.a_readcount}</p>
 					<h4 class="mt-4">작성일</h4>
-					<p><fmt:formatDate value="${dto.date}" pattern="yyyy-MM-dd HH:mm:ss" /></p>
+					<p><fmt:formatDate value="${dto.date}" pattern="yyyy-MM-dd HH:mm:ss" /></p><hr>
 					<p class="lead">타이틀곡</p>
 					<h3>${dto.a_main}</h3>
-					
-					<p class="lead">앨범소개</p>
-					<h3>${dto.a_content}</h3>
-					<hr>
 				</blockquote>
 			</table>
 			

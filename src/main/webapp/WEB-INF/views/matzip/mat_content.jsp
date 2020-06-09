@@ -35,7 +35,7 @@
 			<td colspan="3">
 			
 			${dto.title}
-			&nbps;
+			
 			
 			
 			

@@ -28,7 +28,6 @@ table {
 		<input type="hidden" name="ggroup" value="${ggroup}"> 
 		<input type="hidden" name="step" value="${step}"> 
 		<input type="hidden" name="indent" value="${indent}">
-		<input type="hidden" name="type" value="${type}">
 
 
 	<div class="container list" style="text-align:left;">

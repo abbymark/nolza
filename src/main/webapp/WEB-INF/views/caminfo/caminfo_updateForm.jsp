@@ -77,45 +77,31 @@
         </script>
 </head>
 <body>
-	<center>
+	<div align="center" class="container list">
 		<h2>글수정</h2>
-	</center>
+
 	<form method="post" name="caminfo_writeForm" action="caminfo_updatePro.do?pageNum=${pageNum }">
-		<div align="center">
-			</br> </br>
-			<table width="1200px">
+		<div align="center" class="container list">
+			<table align="center" class="table">
 				<tr>
 					<td>제목: 
 					<input type="text" id="caminfo_title" name="caminfo_title"style="width: 600px;" placeholder="제목" value="${dto.caminfo_title}" />
 					</td>
 				</tr>
-				
-				<tr>
-					<td>아이디: 
-					<input type="hidden" id="mem_id" name="mem_id"style="width: 170px;" maxlength="10" placeholder="아이디"	value="${dto.mem_id}" readonly/>${dto.mem_id}
-					</td>
-					
-					<td><input type="hidden" name="caminfo_no" value="${dto.caminfo_no }"></td>
-				</tr>
-				<tr>
-					<td>닉네임: 
-					<input type="hidden" id="mem_nick" name="mem_nick"style="width: 170px;" maxlength="10" placeholder="닉네임" value="${dto.mem_nick}" readonly/>${dto.mem_nick}
-					</td>
-				</tr>
-
+			
 				<tr>
 					<td>카테고리 <c:set var="caminfo_type" value="${dto.caminfo_type }" /> <c:choose>
 							<c:when test="${caminfo_type eq 'equip'}">
 								<c:set var="caminfo_type" value="캠핑 장비 정보" />
 							</c:when>
-							<c:when test="${caminfo_type eq 'info'}">
+							<c:when test="${caminfo_type eq 'food'}">
 								<c:set var="caminfo_type" value="캠핑 음식 정보" />
 							</c:when>
-							<c:when test="${caminfo_type eq 'solo'}">
+							<c:when test="${caminfo_type eq 'backpack'}">
 								<c:set var="caminfo_type" value="백패킹 정보" />
 							</c:when>
-							<c:when test="${caminfo_type eq 'team'}">
-								<c:set var="caminfo_type" value="장비 설치 영상" />
+							<c:when test="${caminfo_type eq 'install'}">
+								<c:set var="caminfo_type" value="장비 설치 관련 영상" />
 							</c:when>
 
 						</c:choose> <select name="caminfo_type" id="caminfo_type">
@@ -133,17 +119,17 @@
 				</tr>
 
 				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="글쓰기"> <input type="reset" value="다시작성"> <input
-						type="button" value="글목록보기"
-						onClick="document.location.href='caminfo_list.do'"></td>
+					<td colspan="2" align="center"><input type="submit"	value="글쓰기"> 
+					<input type="reset" value="다시작성"> 
+					<input	type="button" value="글목록보기"	onClick="document.location.href='caminfo_list.do'">
+					</td>
 				</tr>
 
 			</table>
 		</div>
 
 	</form>
-
+</div>
 
 </body>
 </html>

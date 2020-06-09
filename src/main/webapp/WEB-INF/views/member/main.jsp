@@ -165,18 +165,18 @@
 			           <tr height="40px">       
 			             <td>
 			             <c:if test="${dto.camja_step>0}">
-			               <img src="imgs/level.gif" width="${5*dto.camja_indent}" height="16">
-			               <img src="imgs/re.gif">
+			               <img src="resources/imgs/level.gif" width="${5*dto.camja_indent}" height="16">
+			               <img src="resources/imgs/re.gif">
 			             </c:if>
 			             
 			             <c:if test="${dto.camja_step==0}">
-			               <img src="imgs/level.gif" width="${5*dto.camja_indent}" height="16">
+			               <img src="resources/imgs/level.gif" width="${5*dto.camja_indent}" height="16">
 			             </c:if>
 			             
 			             <a href="camja_content.do?camja_no=${dto.camja_no}&pageNum=${pageNum}">${dto.camja_title}</a>
 			             
 			             <c:if test="${dto.camja_readcount>=20 }">
-			               <img src="imgs/hot.png" border="0" height="18">
+			               <img src="resources/imgs/hot.png" border="0" height="18">
 			             </c:if>   
 			             </td>  
 			                      

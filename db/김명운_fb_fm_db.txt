@@ -1,0 +1,89 @@
+drop table fb_board;
+
+
+create table fb_board(
+fb_no int(4) not null primary key auto_increment,
+mem_id varchar(50) not null,
+mem_nick varchar(50) not null,
+fb_title varchar(50) not null,
+fb_content text not null,
+fb_img varchar(4000),
+fb_date datetime,
+fb_readcount int(4) default 0,
+fb_like int(4),
+fb_ip varchar(50),
+fb_type varchar(50) not null,
+fb_category varchar(50),
+fb_cmt_cnt int(4) default 0,
+fb_group int(4),
+fb_step int(4),
+fb_indent int(4)
+);
+
+
+
+drop table fm_board;
+
+
+create table fm_board(
+fm_no int(4) not null primary key auto_increment,
+mem_id varchar(50) not null,
+mem_nick varchar(50) not null,
+fm_detail varchar(4000) not null,
+fm_img varchar(4000),
+fm_date datetime,
+fm_readcount int(4) default 0,
+fm_ip varchar(50),
+fm_type varchar(50) not null,
+fm_category varchar(50),
+fm_time varchar(50),
+fm_place varchar(50),
+fm_teamhome varchar(50),
+fm_teamaway varchar(50),
+fm_winner varchar(50),
+fm_location varchar(50),
+fm_score varchar(10),
+fm_mdate varchar(50),
+fm_cmt_cnt int(4) default 0,
+fm_group int(4),
+fm_step int(4),
+fm_indent int(4)
+);
+
+
+
+drop table fb_cmt;
+
+
+create table fb_cmt(
+cmt_no int not null primary key auto_increment,
+fb_no int not null,
+mem_id varchar(50) not null,
+mem_nick varchar(50) not null,
+cmt_content text not null,
+cmt_date datetime not null,
+cmt_ip varchar(20) not null,
+cmt_group int not null,
+cmt_step smallint not null,
+cmt_indent smallint not null
+);
+
+
+
+drop table fm_cmt;
+
+
+create table fm_cmt(
+cmt_no int not null primary key auto_increment,
+fm_no int not null,
+mem_id varchar(50) not null,
+mem_nick varchar(50) not null,
+cmt_content text not null,
+cmt_date datetime not null,
+cmt_ip varchar(20) not null,
+cmt_group int not null,
+cmt_step smallint not null,
+cmt_indent smallint not null
+);
+
+

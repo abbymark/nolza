@@ -30,7 +30,7 @@
 							
 				<tr align="right">
 					<c:if test="${sessionScope.mem_grade=='admin'}">
-						<td><input type="button" value="글쓰기" onclick="document.location.href='noticeWriteForm.do'"></td>
+						<td><input type="button" value="글쓰기" onclick="document.location.href='singerWriteForm.do'"></td>
 					</c:if>
 				</tr>
 			</div>

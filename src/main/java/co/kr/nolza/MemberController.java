@@ -2,6 +2,8 @@ package co.kr.nolza;
 import java.io.IOException;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.stereotype.Controller;
 
@@ -234,6 +236,9 @@ public class MemberController {
 		
 		return "redirect:admin_list"; //뷰이름
 	}
+	
+	
+
 }
 
 

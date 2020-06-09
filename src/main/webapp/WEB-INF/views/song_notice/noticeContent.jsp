@@ -46,9 +46,10 @@
 						<input type="button" value="글삭제" onclick="document.location.href='noticeDelete.do?n_no=${dto.n_no}&pageNum=${pageNum}'">
 						<input type="button" value="글쓰기" onclick="document.location.href='noticeWriteForm.do'">
 					</c:if>
+					<input type="button" value="글목록" onclick="document.location.href='nmainList.do?pageNum=${pageNum}'">
 				</td>
 				
-				<input type="button" value="글목록" onclick="document.location.href='nmainList.do?pageNum=${pageNum}'">
+				
 			</tr>
 		</div>
 	</div>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import co.kr.utils.UploadFileUtils;
 
@@ -70,7 +71,7 @@ public class FMController {
 	
 //DB에 글쓰기
 	@RequestMapping(value="fm_writePro.do",method=RequestMethod.POST)
-	public String writePro(@ModelAttribute("fm_boardDTO") FM_boardDTO fm_boardDTO,MultipartFile file,HttpServletRequest request)
+	public String writePro(@ModelAttribute("fm_boardDTO") FM_boardDTO fm_boardDTO,MultipartFile file,HttpServletRequest request,RedirectAttributes redirectAttr)
 	throws NamingException,IOException,Exception{
 				
 		
@@ -113,6 +114,19 @@ public class FMController {
 		}
 		
 		sqlSession.insert("fm_board.insertBoard",fm_boardDTO);
+		
+		
+		String category="";
+		if(fm_boardDTO.getFm_category().equals("경기매치")){
+			category="match";
+		}else if(fm_boardDTO.getFm_category().equals("경기결과")){
+			category="result";
+		}
+		
+		
+		redirectAttr.addAttribute("fm_category",category);
+
+		
 		return "redirect:fm_list.do"; //response.sendRedirect("List.jsp")
 		
 	}//writePro() end 
@@ -446,8 +460,8 @@ public class FMController {
 				count=sqlSession.selectOne("fm_board.searchCountCategory",map1);		
 			}else if(fm_category.equals("result")) {
 				fm_category="경기결과";
-				map1.put("fb_category",fm_category);
-				count=sqlSession.selectOne("fb_board.searchCountCategory",map1);
+				map1.put("fm_category",fm_category);
+				count=sqlSession.selectOne("fm_board.searchCountCategory",map1);
 			}
 			
 

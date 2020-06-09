@@ -1,0 +1,72 @@
+
+drop table song_board;
+
+create table song_board(
+no int not null auto_increment primary key,
+title varchar(500) not null,
+date datetime,
+readcount int default 0,
+content text not null,
+ip varchar(200),
+s_type varchar(100) not null,
+s_group int not null,
+s_step int not null,
+s_indent int not null,
+mem_id varchar(100)
+
+);
+
+
+drop table song_notice;
+
+create table song_notice(
+n_no int not null auto_increment primary key,
+n_title varchar(500) not null,
+n_date datetime,
+n_readcount int default 0,
+n_content text not null,
+n_type varchar(100) not null,
+mem_id varchar(100)
+
+);
+
+
+drop table song_album;
+
+create table song_album(
+a_no int not null auto_increment primary key,
+a_picture varchar(500) not null,
+a_title varchar(500) not null,
+a_artist varchar(100) not null,
+a_style varchar(100) not null,
+a_sales varchar(100) not null,
+a_manage varchar(200) not null,
+a_date varchar(100) not null,
+date datetime,
+a_main varchar(100) not null,
+a_content text not null,
+a_readcount int default 0,
+mem_id varchar(100)
+
+);
+
+
+drop table song_singer;
+
+create table song_singer(
+ss_no int not null auto_increment primary key,
+ss_picture varchar(500) not null,
+ss_artist varchar(100) not null,
+ss_active varchar(200) not null,
+ss_style varchar(200) not null,
+ss_date varchar(100) not null,
+ss_nation varchar(100) not null,
+ss_person varchar(100) not null,
+ss_manage varchar(200) not null,
+ss_title varchar(200) not null,
+ss_content text not null,
+ss_readcount int default 0,
+mem_id varchar(100)
+
+);
+

@@ -89,7 +89,7 @@
 					src="https://nstatic.dcinside.com/dc/w/images/fix_nik.gif"
 					border="0" width="12" height="11"
 					style="margin-left: 2px; cursor: pointer;"
-					onclick="window.open('//gallog.dcinside.com/davidd3');"
+					onclick="#"
 					alt="갤로그로 이동합니다."> <!-- 위치 수정하기 -->
 			</a></td>
 			<td class="gall_date">19.03.03</td>
@@ -168,7 +168,7 @@
 	<tr>
 		<td>
 			<input type="button" class="write" onclick="document.location.href='mat_list'" value="전체글">
-			<input type="button" class="write" onclick="document.location.href='mat_list'" value="개념글">
+			<input type="button" class="write" onclick="document.location.href='mat_list4'" value="개념글">
 
 	
 			<c:if test="${mem_id == null}" >

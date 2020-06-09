@@ -52,7 +52,7 @@ public class HomeController {
 		list=sqlSession.selectList("book_board.selectList", map);
 		
 		model.addAttribute("list", list);
-		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("pageNum", 1);
 		
 		
 		//====================================================================================
@@ -64,7 +64,7 @@ public class HomeController {
 		list2=sqlSession.selectList("fb_board.selectList",map2);
 		
 		model.addAttribute("list2",list2);
-		model.addAttribute("pageNum",pageNum); ///////// 
+		//model.addAttribute("pageNum",pageNum); ///////// 
 		
 		
 		//====================================================================================

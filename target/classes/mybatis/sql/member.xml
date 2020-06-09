@@ -39,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 로그인 상태 수정 -->
 	<update id="updateLoginState" parameterType="map">
 		update member
-		set mem_login_state=#{mem_login_state}
+		set mem_login_state=0
 		where mem_id=#{mem_id}
 	</update>
 	

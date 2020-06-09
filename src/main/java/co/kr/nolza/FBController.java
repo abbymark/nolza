@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONArray;
@@ -59,7 +60,7 @@ public class FBController {
 	
 //DB에 글쓰기
 	@RequestMapping(value="fb_writePro.do", method=RequestMethod.POST)
-	public String writePro(@ModelAttribute("fb_boardDTO") FB_boardDTO fb_boardDTO,HttpServletRequest request)
+	public String writePro(@ModelAttribute("fb_boardDTO") FB_boardDTO fb_boardDTO,HttpServletRequest request,RedirectAttributes redirectAttr)
 	throws NamingException, IOException{
 		
 		int maxNum=0; //변수
@@ -90,6 +91,23 @@ public class FBController {
 		}
 		
 		sqlSession.insert("fb_board.insertBoard",fb_boardDTO);
+		
+		
+		String category="";
+		if(fb_boardDTO.getFb_category().equals("자유게시판")){
+			category="free";
+		}else if(fb_boardDTO.getFb_category().equals("정보게시판")){
+			category="info";
+		}else if(fb_boardDTO.getFb_category().equals("축구&풋살 동영상")){
+			category="media";
+		}else if(fb_boardDTO.getFb_category().equals("용병신청&구함")){
+			category="solo";
+		}else if(fb_boardDTO.getFb_category().equals("팀원신청&구함")){
+			category="team";
+		}
+		
+		redirectAttr.addAttribute("fb_category",category);
+		
 		return "redirect:fb_list.do"; //response.sendRedirect("List.jsp")
 		
 	}//writePro() end 

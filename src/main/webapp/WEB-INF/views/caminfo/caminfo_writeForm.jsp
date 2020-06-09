@@ -63,9 +63,9 @@
         </script>
 </head>
 <body>
-	<center>
-		<h2>글쓰기</h2>
-	</center>
+<div class="container">
+	<h2>글쓰기</h2>
+
 	<form method="post" name="caminfo_writeForm" action="caminfo_writePro.do" onSubmit="return check()">
 		<input type="hidden" name="pageNum" value="${pageNum}"> 
 		<input type="hidden" name="caminfo_no" value="${caminfo_no}"> 
@@ -74,9 +74,9 @@
 		<input type="hidden" name="caminfo_indent" value="${caminfo_indent}">
 
 		<%-- <input type="hidden" id="mem_id" name="mem_id" value="${mem_id}" /> --%>
-		<div align="center">
+		<div align="center"  class="container">
 			</br> </br>
-			<table width="1200px">
+			<table width="1200px" class="table">
 
 				<tr>
 					<td>제목: <input type="text" id="caminfo_title" name="caminfo_title"
@@ -126,6 +126,7 @@
 		</div>
 
 	</form>
+	</div>
 	
 </body>
 </html>

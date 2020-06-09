@@ -43,8 +43,8 @@
 						<input type="hidden" name="pageNum" value="${pageNum}">
 						
 						<div class="form-label-group">
-							<label>글쓴이</label>
-							<<input type="hidden" name="mem_id" id="mem_id" size="12" value="${mem_id}">${mem_id}
+							<label>글쓴이</label><br>
+							<input type="hidden" name="mem_id" id="mem_id" size="12" value="${mem_id}">${mem_id}
 						</div>
 						<hr>
 

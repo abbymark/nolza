@@ -14,7 +14,7 @@
 	<!-- 자유게시판리스트 -->
 	<select id="mat_freeselect" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
 		select * from matzip
-		where type=1
+		where type='자유게시판'
 		limit #{start}, #{cnt}
 		
 	</select>
@@ -22,7 +22,15 @@
 	<!-- 맛집 추천 게시판리스트 -->
 	<select id="mat_reselect" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
 		select * from matzip
-		where type=2
+		where type='맛집 추천 게시판'
+		limit #{start}, #{cnt}
+		
+	</select>
+	
+	<!-- 개념글 게시판리스트 -->
+	<select id="mat_readselect" parameterType="java.util.HashMap" resultType="model.matzip.MatzipDto">
+		select * from matzip
+		where readcount >= 20
 		limit #{start}, #{cnt}
 		
 	</select>
@@ -49,8 +57,8 @@
 	
 	<!-- 글쓰기, 답글 쓰기 -->
 	<insert id="mat_insertBoard" parameterType="model.matzip.MatzipDto">
-		insert into matzip(mem_id,mem_nick,title,content,date,ggroup,step, indent, ip)
-		values(#{mem_id},#{mem_nick},#{title},#{content},NOW(),#{ggroup},#{step},#{indent},#{ip})
+		insert into matzip(mem_id,mem_nick,title,content,date,ggroup,step, indent, ip,type)
+		values(#{mem_id},#{mem_nick},#{title},#{content},NOW(),#{ggroup},#{step},#{indent},#{ip},#{type})
 	</insert>
 	
 	<!-- 글 개수 -->
@@ -127,7 +135,12 @@
 	mem_id로 내용들을 찾아서 업데이트 해준다
 	-->
 	
-	
+	<!-- 리뷰 쓰기 -->
+	<update id="updateReview" parameterType="model.matzip.ReviewDto">
+		update review
+		   set rev_content = #{rev_content}
+		 where mem_id = #{mem_id}
+	</update>
 	
 
 	

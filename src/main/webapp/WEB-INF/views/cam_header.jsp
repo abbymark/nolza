@@ -26,6 +26,8 @@
 
       <nav class="nav-menu d-none d-lg-block ">
         <ul>
+          <li><a href="/nolza/nmainList.do">공지사항</a></li>
+          
           <li class="drop-down"><a href="book_list.do">도서</a>
             <ul>              
               <li><a style="cursor:pointer;" onclick="location.href='book_list.do'">전체게시판</a></li>
@@ -52,8 +54,8 @@
             <ul>
               	<li><a href="/nolza/albumMainList.do">앨범</a></li>
 				<li><a href="/nolza/singerMainList.do">가수</a></li>
-				<li><a href="/nolza/list.do">커뮤니티</a></li>
-				<li><a href="/nolza/nmainList.do">공지사항</a></li>
+				<li><a href="/nolza/list.do">자유게시판</a></li>
+				
             </ul>
           </li>
           

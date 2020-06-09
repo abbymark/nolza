@@ -28,6 +28,7 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #333;
+  height : 52px;
 }
 
 /* Style the topnav links */
@@ -37,7 +38,7 @@ body {
   color: #f2f2f2;
   text-align: center;
   padding: 14px 16px;
-  margin: 20px;
+
   text-decoration: none;
 }
 
@@ -225,10 +226,10 @@ function likeCheck(book_likeState){
 </div>
 
 <div class="topnav">
-
+  <a href="mat_list">전체계시판</a>
+  <a href="mat_list2">자유게시판</a>
+  <a href="mat_list3">맛집추천게시판</a>
   <a href="map_main">빵지 순례도</a>
-  <a href="mat_list">자유게시판</a>
-  <a href="#">Link</a>
 </div>
 
 <div class="row">
@@ -308,7 +309,7 @@ function likeCheck(book_likeState){
 	</table>	
 	</div>
 	
-<form method="post" name="rev_Update" action="rev_UpdatePro" onsubmit="return rev_check()" >	
+
 	<div class="container list" style="text-align:center;">	
 	<table width="90%" class="table">
 		<tr>
@@ -386,20 +387,34 @@ function likeCheck(book_likeState){
 			</tr>
 	
 			<tr>
-				<td colspan="2">
-					<!-- 컨텐트 내용 dto.rev_content 를 받아와서 DB에 저장한다 -->
-					<textArea rows="3" cols="60" name="review_text">
-						
-					</textArea>
-				</td>
+				<c:if test="${sessionScope.mem_id == null }">
+					<td width="500" height="100" colspan="2">
+						<textArea name="content" name="content" cols="65" rows="7" readonly="readonly">
+						로그인 후 이용가능한 서비스입니다
+						</textArea>				
+					</td>
+				</c:if>
+				<c:if test="${sessionScope.mem_id != null }">
+					<td width="500" height="100" colspan="2">
+						<textArea name="content" name="content" cols="65" rows="7"></textArea>				
+					</td>
+				</c:if>
 			</tr>
 			
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="등록" width="10">
-				</td>
-			</tr>
-			
+			<form method="post" name="rev_Update" action="rev_UpdatePro?mem_id=${mem_id}" onsubmit="return rev_check()" >	
+				<tr>
+					<c:if test="${sessionScope.mem_id == null }">
+						<td width="500" height="100" colspan="2">
+							<input type="submit" value="등록" width="10" disabled="disabled">		
+						</td>
+					</c:if>
+					<c:if test="${sessionScope.mem_id != null }">
+						<td width="500" height="100" colspan="2">
+							<input type="submit" value="등록" width="10">
+						</td>
+					</c:if>
+				</tr>
+			</form>
 			<tr>
 			 <c:forEach var="dto1" items="${summaryReview}">
 				<td colspan="3">
@@ -419,7 +434,6 @@ function likeCheck(book_likeState){
 			
 	</table>
 	</div>
-</form>
 	<br>
 
 	<div class="container list" style="text-align:center;">
@@ -443,6 +457,7 @@ function likeCheck(book_likeState){
 			<h2>리뷰</h2>
 			</cation>
 			
+			<!-- 리뷰 내용 -->
 			 <c:forEach var="dto2" items="${contentReview}">
 				<tr>
 					<td colspan="3">${dto2.rev_content}</td>

@@ -23,11 +23,11 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan="6" id="content" >${caminfo_content}  <!-- ******************** -->
+		<td colspan="6" id="content">${caminfo_content}  <!-- ******************** -->
 		</td>
 	</tr>
-	<tr>
-		<td colspan="4" align="center">
+	<tr align="center">
+		<td colspan="6" align="center">
 		<c:if test="${mem_grade == 'admin'}">
 		<input type="button" value="글수정" onclick="document.location.href='caminfo_updateForm.do?caminfo_no=${dto.caminfo_no}&pageNum=${pageNum}'"/>
 		<input type="button" value="글삭제" onclick="document.location.href='caminfo_delete.do?caminfo_no=${dto.caminfo_no}&pageNum=${pageNum}'"/>

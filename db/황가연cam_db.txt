@@ -1,0 +1,110 @@
+mysql> set names euckr; (커맨드 창에서 한글깨질때)
+
+use nolza;
+
+drop table cam_board;
+
+create table cam_board(
+cam_no int(4) not null primary key auto_increment,
+cam_id varchar(30),
+cam_title varchar(50),
+cam_date datetime,
+cam_readcount int(5) default 0,
+cam_like int(5) default 0,
+cam_content text,
+cam_ip varchar(20),
+cam_type varchar(20),
+cam_group int(4) default  0,
+cam_step int(4) default 0,
+cam_indent int(4) default 0
+);
+
+drop table camja_board;
+
+create table camja_board(
+camja_no int(4) not null primary key auto_increment,
+camja_id varchar(30),
+camja_title varchar(50),
+camja_date datetime,
+camja_readcount int(5) default 0,
+camja_like int(5) default 0,
+camja_content text,
+camja_ip varchar(20),
+camja_type varchar(20),
+camja_group int(4) default  0,
+camja_step int(4) default 0,
+camja_indent int(4) default 0,
+mem_nick varchar(100) default 0,
+mem_id varchar(100) default 0
+);
+
+
+drop table caminfo_board;
+
+create table caminfo_board(
+caminfo_no int(4) not null primary key auto_increment,
+caminfo_id varchar(30),
+mem_id varchar(100) not null default 0,
+mem_nick varchar(100) not null default 0,
+caminfo_title varchar(50),
+caminfo_date datetime,
+caminfo_readcount int(5) default 0,
+caminfo_like int(5) default 0,
+caminfo_content text,
+caminfo_ip varchar(20),
+caminfo_type varchar(20),
+caminfo_group int(4) default  0,
+caminfo_step int(4) default 0,
+caminfo_indent int(4) default 0
+);
+
+
+drop table goods;
+
+create table goods(
+gdsNo int(5) not null primary key default 0,
+gdsName varchar(100) not null default 0,
+gdsCat  varchar(50) not null default 0,
+gdsNewadd varchar(200),
+gdsOldadd varchar(200),
+gdsTel varchar(20),
+gdsNos int(5),
+gdsNop int(5),
+gdsCon varchar(500),
+gdsSafe varchar(500),
+gdsEtc varchar(500),
+gdsUtime varchar(300),
+gdsPrice varchar(500),
+gdsImg varchar(200),
+gdsTimg varchar(200),
+gdsDate datetime
+);
+
+//csv파일 디비에 일괄적으로 입력하기 
+LOAD DATA LOCAL INFILE 'C:/Users/hong/Desktop/0527.csv' INTO TABLE goods CHARACTER SET UTF8 FIELDS TERMINATED BY ',' 
+ENCLOSED BY ''
+LINES TERMINATED BY '\r\n'
+IGNORE 1 LINES;
+
+// 컬럼 추가 방법
+alter table camja_board add mem_id varchar(100) not null default '0'; 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

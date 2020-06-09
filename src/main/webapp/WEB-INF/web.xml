@@ -55,5 +55,9 @@
 	    <location>/WEB-INF/views/member/error.jsp</location>
 	</error-page>
 
+<!-- 세선이 죽었는지 생성되었는지 감시해주는 설정 -->
+	<listener>
+		<listener-class>co.kr.nolza.SessionLogout</listener-class>
+	</listener>
 
 </web-app>

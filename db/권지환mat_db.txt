@@ -1,0 +1,189 @@
+use nolza;
+
+테이블 이름 : matzip
+NO 번호
+ID 아이디
+TITLE 제목
+passwd 패스워드
+DATE 날짜
+READCOUNT 조회수
+toLIKE 좋아요
+CONTENT 내용
+IP 아이피
+TYPE 테이블 타입
+gGROUP 댓글 그룹
+STEP 댓글 단
+INDENT 댓글횟수
+
+drop table matzip;
+
+create table matzip(
+no 			int(4) not null primary key auto_increment,
+mem_id 		varchar(30),
+mem_nick 	varchar(30),
+mem_grade 	varchar(30),
+title 		varchar(50),
+passwd 		varchar(20),
+date 		datetime,
+readcount 	int(5) default 0,
+tolike 		int(5) default 0,
+content 	text,
+ip			varchar(20),
+type 		varchar(20),
+ggroup 		int(4) default 0,
+step 		int(4) default 0,
+indent 		int(4) default 0
+);
+
+===============================
+
+private int NO;
+private String mem_id;
+private String mem_nick;
+private String mem_grade;
+private String TITLE;
+private Date DATE;
+
+private int READCOUNT;
+private int LIKE;
+
+private String content;
+private String ip;
+
+private String TYPE;
+private int GROUP;
+private int STEP;
+private int INDENT;
+	
+===================================
+
+
+insert into matzip(mem_id,mem_nick,title,content,passwd,date,ggroup,step, indent, ip)
+		values(2,"라언",1,1,1,NOW(),0,0,0,0);
+
+insert into matzip(mem_id,mem_nick,title,content,passwd,date,ggroup,step, indent, ip)
+		values(1,"라이언",1,1,1,NOW(),0,0,0,0);
+==================================
+member 
+
+create table member(
+mem_id 			varchar(50) 	not null,
+mem_nick 		varchar(50) 	not null,
+mem_pw 			varchar(100) 	not null,
+mem_email 		varchar(50) 	not null,
+mem_login_state varchar(10) 	default 0,
+mem_grade 		varchar(10)		default 0,
+mem_article_cnt int default 	0,
+mem_reply_cnt 	int default 	0,
+mem_login_cnt 	int default 	0
+);
+
+
+create table member(
+mem_id   		varchar(50) 	not null,   ----- 아이디    (필수)
+mem_nick  		varchar(50) 	not null,  -----닉네임    (필수)
+mem_pw    		varchar(100) 	not null,    -----비밀번호   (필수)
+mem_email 		varchar(50) 	not null,  ----이메일    (필수)
+mem_login_state varchar(10) 	default 0,    ----로그인상태  (필수)
+mem_grade		varchar(10) 	default 0,         ----회원등급 
+mem_article_cnt int 			default 0,  -----내가쓴글갯수
+mem_reply_cnt 	int 			default 0,     -----내가쓴댓글갯수
+mem_login_cnt	int 			default 0      ----로그인횟수 
+);
+
+=======================================
+ insert into member(mem_id,mem_nick,mem_pw,mem_email)
+	 values(4,4,4,4);
+ 
+ insert into member(mem_id,mem_nick,mem_pw,mem_email)
+ values(,,,);	 
+ 
+====================================================
+빵집
+
+create table bread(
+bread_name varchar(50) not null primary key,
+bread_menu varchar(50),   					
+bread_loc  varchar(50),  					 
+bread_tel  varchar(50),
+mem_id     varchar(30),
+mem_nick   varchar(30),
+mem_grade  varchar(30)  				
+);
+
+
+create table review(
+bread_name 	varchar(50) not null,
+rev_score 	int(10) 	not null default 0,  	  
+rev_like 	int(10) 	not null default 0,   	 
+rev_star 	int(2) 		not null default 0,  		 
+rev_date 	varchar(50),   					 
+rev_content varchar(500),
+rev_no 		int(2) 		not null primary key auto_increment    					  
+);
+
+======================================================
+
+create table bread(
+bread_name varchar(50) not null primary key, 빵집 이름
+bread_menu varchar(50),   					주력 메뉴
+bread_loc varchar(50),  					  위치
+bread_tel varchar(50),  					 전화번호
+mem_id     varchar(30),
+mem_nick   varchar(30),
+mem_grade  varchar(30) 
+);
+
+
+create table review(
+bread_name varchar(50) not null primary key, 빵집 이름
+rev_score int(10) not null default 0,  	  평균 점수
+rev_like int(10) not null default 0,   	 좋아요 개수
+rev_star int(2) not null default 0,  		  별점
+rev_date varchar(50),   					  작성 날짜
+rev_content varchar(500)   					  내용
+);
+
+======================================================
+빵집 테이블
+
+//insert into bread(bread_name,bread_menu,bread_loc,bread_tel)
+//values("태화당","부추빵","동작구","02-1111-2222");	
+
+
+insert into bread(bread_name,bread_menu,bread_loc,bread_tel)
+values("어글리베이커리","부추빵","동작구","02-1111-2222");	
+
+insert into bread(bread_name,bread_menu,bread_loc,bread_tel)
+values("홍철책빵","부추빵","동작구","02-1111-2222");	
+
+insert into bread(bread_name,bread_menu,bread_loc,bread_tel)
+values("아우어베이커리가로수길점","부추빵","동작구","02-1111-2222");	
+
+insert into bread(bread_name,bread_menu,bread_loc,bread_tel)
+values("타르틴베이커리도산점","부추빵","동작구","02-1111-2222");	
+
+insert into bread(bread_name,bread_menu,bread_loc,bread_tel)
+values("쟝블랑제리","부추빵","동작구","02-1111-2222");	
+
+
+=============================================================
+리뷰 테이블
+
+//insert into review(bread_name,rev_score,rev_like,rev_star,rev_date,rev_content)
+//values("태화당",60,0,5,NOW(),"정말 맛있고 좋습니다");	
+
+insert into review(bread_name,rev_score,rev_like,rev_star,rev_date,rev_content)
+values("어글리베이커리",60,0,5,NOW(),"정말 맛있고 좋습니다");	
+
+insert into review(bread_name,rev_score,rev_like,rev_star,rev_date,rev_content)
+values("홍철책빵",60,0,5,NOW(),"정말 맛있고 좋습니다");	
+
+insert into review(bread_name,rev_score,rev_like,rev_star,rev_date,rev_content)
+values("아우어베이커리가로수길점",60,0,5,NOW(),"정말 맛있고 좋습니다");	
+
+insert into review(bread_name,rev_score,rev_like,rev_star,rev_date,rev_content)
+values("타르틴베이커리도산점",60,0,5,NOW(),"정말 맛있고 좋습니다");	
+
+insert into review(bread_name,rev_score,rev_like,rev_star,rev_date,rev_content)
+values("쟝블랑제리",60,0,5,NOW(),"정말 맛있고 좋습니다");	
