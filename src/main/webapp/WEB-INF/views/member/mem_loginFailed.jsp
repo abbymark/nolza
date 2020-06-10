@@ -13,7 +13,7 @@
     }
   </style>
   
- <meta http-equiv="refresh" content="2; url=http://localhost:9000/nolza/mem_login.do"> 
+ <meta http-equiv="refresh" content="2; url=mem_login.do"> 
   
 </head>
 <body>

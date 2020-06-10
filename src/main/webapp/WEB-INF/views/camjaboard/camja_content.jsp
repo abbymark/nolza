@@ -9,8 +9,8 @@
 	<title>camja_content.jsp</title>
 </head>
 <body >
-<div class="container list"><h2>글 내용 보기</h2></div>
-<table class="table" >
+<div class="container list"><h2>${dto.camja_title}</h2>
+<table class="table" width="70%">
 	<tr>
 		<td>글번호</td>
 		<td>${dto.camja_no}</td>
@@ -25,22 +25,20 @@
 		<fmt:formatDate value="${dto.camja_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 		</td>
 	</tr>
-	<tr>
-		<td>글제목</td>
-		<td colspan="3">${dto.camja_title}</td>
+	<tr >
+		<td colspan="2" >글제목</td>
+		<td colspan="2" align="left">${dto.camja_title}</td>
 	</tr>
 	<tr >
-		<td>글내용</td>
-		<td colspan="3" id="content" >
-		<pre>
+		<td colspan="2">글내용</td>
+		<td colspan="2" id="content"   align="left">
 		${camja_content}  <!-- ******************** -->
-		</pre>
 		</td>
 	</tr>
 	
 	<tr>
 		<td colspan="4" align="center">
-		<c:if test="${mem_id == 'admin' }">
+		<c:if test="${mem_grade == 'admin'}">
 		<input type="button" value="글수정" onclick="document.location.href='camja_updateForm.do?camja_no=${dto.camja_no}&pageNum=${pageNum}'"/>
 		<input type="button" value="글삭제" onclick="document.location.href='camja_delete.do?camja_no=${dto.camja_no}&pageNum=${pageNum}'"/>
 		</c:if>
@@ -51,5 +49,6 @@
 	
 	
 </table>
+</div>
 </body>
 </html>

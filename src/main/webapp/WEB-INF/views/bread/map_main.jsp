@@ -371,16 +371,16 @@
 		
 		if(bread_name=="어글리베이커리"){
 			//location.href = "http://localhost:9000/nolza/map_content"; 
-			location.href = "http://localhost:9000/nolza/map_content?bread_name=" + bread_name; 
+			location.href = "http://192.168.56.94:9000/nolza/map_content?bread_name=" + bread_name; 
 			//	<a href="content_right?bread_name=${dto.bread_name}">${dto.bread_name}</a> 이렇게 바꿀 예정
 		}else if(bread_name=="홍철책빵"){
-			location.href = "http://localhost:9000/nolza/map_content?bread_name=" + bread_name; 
+			location.href = "http://192.168.56.94:9000/nolza/map_content?bread_name=" + bread_name; 
 		}else if(bread_name=="아우어베이커리 가로수길점"){
-			location.href = "http://localhost:9000/nolza/map_content?bread_name=" + bread_name; 
+			location.href = "http://192.168.56.94:9000/nolza/map_content?bread_name=" + bread_name; 
 		}else if(bread_name=="타르틴베이커리 도산점"){
-			location.href = "http://localhost:9000/nolza/map_content?bread_name=" + bread_name; 
+			location.href = "http://192.168.56.94:9000/nolza/map_content?bread_name=" + bread_name; 
 		}else if(bread_name=="쟝블랑제리"){
-			location.href = "http://localhost:9000/nolza/map_content?bread_name=" + bread_name; 
+			location.href = "http://192.168.56.94:9000/nolza/map_content?bread_name=" + bread_name; 
 		}
 	}
 	
